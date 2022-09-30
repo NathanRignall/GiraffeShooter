@@ -1,0 +1,56 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            // Use IntelliSense to find out which attributes exist for C# debugging
+            // Use hover for the description of the existing attributes
+            // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+            "name": "server-launch",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "server-build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/GiraffeShooterServer/bin/Debug/net6.0/GiraffeShooterServer.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/GiraffeShooterServer",
+            "stopAtEntry": false,
+            // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
+            // "serverReadyAction": {
+            //     "action": "debugWithChrome",
+            //     "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            // },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            // Use IntelliSense to find out which attributes exist for C# debugging
+            // Use hover for the description of the existing attributes
+            // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+            "name": "client-launch",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "client-build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/GiraffeShooterClient/bin/Debug/net6.0/GiraffeShooterClient.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/GiraffeShooterClient",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+    ],
+    "compounds": [
+        {
+            "name": "launch",
+            "configurations": [
+                "server-launch",
+                "client-launch"
+            ],
+            "stopAll": true
+        }
+    ]
+}
