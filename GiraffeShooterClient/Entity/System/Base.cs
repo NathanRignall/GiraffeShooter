@@ -12,6 +12,11 @@ namespace GiraffeShooterClient.Entity.System
             components.Add(component);
         }
 
+        public static void Deregister(T component)
+        {
+            components.Remove(component);
+        }
+
         public static void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             foreach (T component in components)

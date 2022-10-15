@@ -6,17 +6,17 @@ namespace GiraffeShooterClient.Entity.System
     {
         public int ID { get; set; }
 
-        List<Component> components = new List<Component>();
+        List<Component> _components = new List<Component>();
 
         public void AddComponent(Component component)
         {
-            components.Add(component);
+            _components.Add(component);
             component.entity = this;
         }
-        
+
         public T GetComponent<T>() where T : Component
         {
-            foreach (Component component in components)
+            foreach (Component component in _components)
             {
                 if (component.GetType().Equals(typeof(T)))
                 {
@@ -25,6 +25,22 @@ namespace GiraffeShooterClient.Entity.System
             }
             
             return null;
+        }
+
+        public void RemoveComponent<T>() where T : Component
+        {
+
+            foreach (Component component in _components)
+            {
+                if (component.GetType().Equals(typeof(T)))
+                {
+                    component.Deregister();
+                    _components.Remove(component);
+
+                    break;
+                }
+            }
+            
         }
     }
 }

@@ -10,6 +10,11 @@ namespace GiraffeShooterClient.Container.SplashScreen
         {
             SplashScreenRender = new SplashScreenRender();
         }
+
+        public void Update(Microsoft.Xna.Framework.GameTime gameTime)
+        {
+            SplashScreenRender.Update(gameTime);
+        }
     }
 
 }

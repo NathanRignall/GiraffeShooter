@@ -13,8 +13,6 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
-    private Giraffe _giraffe1;
-
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -25,8 +23,6 @@ public class Game1 : Game
     protected override void Initialize()
     {
         base.Initialize();
-
-        _giraffe1 = new Giraffe();
 
         GameContext.Initialize();
     }
@@ -43,6 +39,20 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
+        switch (GameContext.CurrentState)
+        {
+            case GameContext.State.SplashScreen:
+                GameContext.SplashScreenContext.Update(gameTime);
+                break;
+
+            case GameContext.State.World:
+                GameContext.WorldContext.Update(gameTime);
+                break;
+
+            default:
+                throw new System.Exception();
+        }
+
         base.Update(gameTime);
     }
 
@@ -50,22 +60,23 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        // switch (GameContext.CurrentState)
-        // {
-        //     case GameContext.State.SplashScreen:
-        //         _spriteBatch.Begin();
-        //         GameContext.SplashScreenContext.SplashScreenRender.Draw(gameTime, _spriteBatch);
-        //         _spriteBatch.End();
-        //         break;
+        switch (GameContext.CurrentState)
+        {
+            case GameContext.State.SplashScreen:
+                _spriteBatch.Begin();
+                GameContext.SplashScreenContext.SplashScreenRender.Draw(gameTime, _spriteBatch);
+                _spriteBatch.End();
+                break;
 
-        //     default:
-        //         throw new System.Exception();
-        // }
+            case GameContext.State.World:
+                _spriteBatch.Begin();
+                GameContext.WorldContext.WorldRender.Draw(gameTime, _spriteBatch);
+                _spriteBatch.End();
+                break;
 
-        // test code
-        _spriteBatch.Begin();
-        SpriteSystem.Draw(gameTime, _spriteBatch);
-        _spriteBatch.End();
+            default:
+                throw new System.Exception();
+        }
 
         base.Draw(gameTime);
     }

@@ -19,8 +19,13 @@ namespace GiraffeShooterClient.Entity.System
 
             Transform transform = entity.GetComponent<Transform>();
 
-            spriteBatch.Draw(texture, new Vector2(260, 30), Color.White);
+            spriteBatch.Draw(texture, new Vector2(transform.position.X, transform.position.Y), Color.White);
 
+        }
+
+        public override void Deregister()
+        {
+            SpriteSystem.Deregister(this);
         }
     }
 }

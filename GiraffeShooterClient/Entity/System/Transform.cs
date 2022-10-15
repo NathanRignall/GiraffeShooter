@@ -1,4 +1,4 @@
-using  Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 
 namespace GiraffeShooterClient.Entity.System
 {
@@ -11,6 +11,16 @@ namespace GiraffeShooterClient.Entity.System
         public Transform()
         {
             TransformSystem.Register(this);
+        }
+
+        public void Delete()
+        {
+            TransformSystem.Deregister(this);
+        }
+
+        public override void Deregister()
+        {
+            TransformSystem.Deregister(this);
         }
     }
 }

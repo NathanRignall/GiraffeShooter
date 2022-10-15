@@ -12,11 +12,14 @@ namespace GiraffeShooterClient.Container.Game
         public static State CurrentState;
 
         public static SplashScreen.SplashScreenContext SplashScreenContext;
+        public static World.WorldContext WorldContext;
 
         public static void Initialize()
         {
             SplashScreenContext = new SplashScreen.SplashScreenContext();
-            CurrentState = State.SplashScreen;
+            WorldContext = new World.WorldContext();
+
+            CurrentState = State.World;
         }
     }
 }
