@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+
 using GiraffeShooterClient.Entity.System;
+using GiraffeShooterClient.Utility.Input;
 
 namespace GiraffeShooterClient.Container.World
 {
@@ -13,6 +16,16 @@ namespace GiraffeShooterClient.Container.World
             WorldRender = new WorldRender();
 
             _giraffe = new Giraffe();
+        }
+
+        public void HandleEvents(List<Event> events)
+        {
+            // Print all events to console
+            foreach (Event e in events)
+            {
+                System.Console.WriteLine(e.ToString());
+            }
+
         }
 
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)
