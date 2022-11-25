@@ -37,10 +37,24 @@ namespace GiraffeShooterClient.Container.Camera
             CurrentState = State.Follow;
             ScreenSize = screenSize;
 
-            Zoom = 1f;
+            Zoom = 3f;
             MaxZoom = 4f;
             MinZoom = 0.5f;
 
+            Offset = new Vector2(0, 0);
+            FollowTarget = new Vector2(0, 0);
+
+            _homePosition = ScreenSize / 2 / Zoom;
+            _followOffset = new Vector2(0, 0);
+
+            _position = _homePosition;
+            _velocity = new Vector2(0, 0);
+            _acceleration = new Vector2(0, 0);
+        }
+
+        public static void Reset()
+        {
+            Zoom = 3f;
             Offset = new Vector2(0, 0);
             FollowTarget = new Vector2(0, 0);
 
@@ -69,7 +83,7 @@ namespace GiraffeShooterClient.Container.Camera
                 case State.Follow:
 
                     var _followDiff = FollowTarget - _followOffset;
-                    _followOffset += _followDiff * 0.2f;
+                    _followOffset += _followDiff * 0.05f;
 
                     if (_followDiff.Length() > 0.1f)
                     {
@@ -85,7 +99,7 @@ namespace GiraffeShooterClient.Container.Camera
             }
         }
 
-        public static void HandleEvents(List<Event> events, float scaleFactor)
+        public static void HandleEvents(List<Event> events)
         {
             foreach (Event e in events)
             {
@@ -110,7 +124,7 @@ namespace GiraffeShooterClient.Container.Camera
                         break;
                     case EventType.MouseDrag:
 
-                        _velocity += e.MouseDelta * 15 * 1 / scaleFactor;
+                        _velocity += e.MouseDelta * 15 * 1 / Zoom;
                         break;
 
                     case EventType.MouseScroll:

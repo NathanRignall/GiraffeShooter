@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 
 namespace GiraffeShooterClient.Container.Game
 {
@@ -10,16 +11,29 @@ namespace GiraffeShooterClient.Container.Game
         }
 
         public static State CurrentState;
-
+        public static State NextState;
         public static SplashScreen.SplashScreenContext SplashScreenContext;
         public static World.WorldContext WorldContext;
 
         public static void Initialize()
         {
             SplashScreenContext = new SplashScreen.SplashScreenContext();
-            WorldContext = new World.WorldContext();
+            CurrentState = State.SplashScreen;
+        }
 
-            CurrentState = State.World;
+        public static void SetState(State state)
+        {
+            NextState = state;
+
+            switch (state)
+            {
+                case State.SplashScreen:
+                    SplashScreenContext = new SplashScreen.SplashScreenContext();
+                    break;
+                case State.World:
+                    WorldContext = new World.WorldContext();
+                    break;
+            }
         }
     }
 }

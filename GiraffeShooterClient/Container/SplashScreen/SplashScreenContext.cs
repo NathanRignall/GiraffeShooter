@@ -1,3 +1,4 @@
+using GiraffeShooterClient.Container.Game;
 
 namespace GiraffeShooterClient.Container.SplashScreen
 {
@@ -12,6 +13,11 @@ namespace GiraffeShooterClient.Container.SplashScreen
 
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
+
+            if (gameTime.TotalGameTime.TotalSeconds > 3)
+            {
+                GameContext.SetState(Game.GameContext.State.World);
+            }
             
         }
 

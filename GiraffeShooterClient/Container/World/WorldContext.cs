@@ -15,18 +15,18 @@ namespace GiraffeShooterClient.Container.World
     {
         MapContext _mapContext;
         Player _player;
-        Giraffe _giraffe;
         
         public WorldContext()
         {   
 
             _player = new Player();
-            
-            // _giraffe = new Giraffe();
 
             // setup the additional contexts
             _mapContext = new MapContext();
-            
+
+            // reset the camera
+            CameraContext.Reset();
+
         }
 
         public void HandleEvents(List<Event> events)

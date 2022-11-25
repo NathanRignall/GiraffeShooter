@@ -51,6 +51,9 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
+        // change game state
+        GameContext.CurrentState = GameContext.NextState;
+
         // get network state
 
         // update the game state (for keys)
@@ -65,13 +68,15 @@ public class Game1 : Game
         }
 
         // send the events to camera
-        CameraContext.HandleEvents(events, _scaleFactor);
+        CameraContext.HandleEvents(events);
+
+        // reset scale factor
+        _scaleFactor = 1f;
 
         // update the contexts (this is for animations etc)
         switch (GameContext.CurrentState)
         {
             case GameContext.State.SplashScreen:
-                _scaleFactor = 1f;
                 GameContext.SplashScreenContext.Update(gameTime);
                 break;
 
