@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using GiraffeShooterClient.Container.Camera;
 using GiraffeShooterClient.Utility.Assets;
+
 
 namespace GiraffeShooterClient.Entity.System
 {
@@ -17,9 +19,14 @@ namespace GiraffeShooterClient.Entity.System
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
 
-            Transform transform = entity.GetComponent<Transform>();
+            Physics physics = entity.GetComponent<Physics>();
 
-            spriteBatch.Draw(texture, new Vector2(transform.position.X, transform.position.Y), Color.White);
+            // get the current camera position
+            Vector2 cameraPosition = CameraContext.GetPosition();
+
+            Vector2 position = new Vector2(physics.position.X, physics.position.Y) + cameraPosition;
+
+            spriteBatch.Draw(texture, new Vector2(position.X, position.Y), Color.White);
 
         }
 

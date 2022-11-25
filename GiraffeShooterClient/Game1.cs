@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using GiraffeShooterClient.Container.Game;
+using GiraffeShooterClient.Container.Camera;
+
 using GiraffeShooterClient.Entity.System;
 using GiraffeShooterClient.Utility.Assets;
 using GiraffeShooterClient.Utility.Input;
@@ -18,12 +20,18 @@ public class Game1 : Game
 
     private InputManager _inputManager;
 
+    private const int _scaleFactor = 1;
+    private Matrix _transformMatrix;
+
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
+        _graphics.PreferredBackBufferWidth = 1500;
+        _graphics.PreferredBackBufferHeight = 1000;
+
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
-
+        
         _inputManager = new InputManager();
     }
 
@@ -31,7 +39,10 @@ public class Game1 : Game
     {
         base.Initialize();
 
+        _transformMatrix = Matrix.CreateScale(_scaleFactor, _scaleFactor, 1f);
+
         GameContext.Initialize();
+        CameraContext.Initialize();
     }
 
     protected override void LoadContent()
@@ -49,10 +60,18 @@ public class Game1 : Game
         // get network state
 
         // update the game state (for keys)
-        _inputManager.UpdateState(Keyboard.GetState());
+        _inputManager.UpdateState(Keyboard.GetState(), Mouse.GetState());
 
-        // generate events from the key presses
-        List<Event> events = _inputManager.GenerateEvents();
+        // create empty event list
+        List<Event> events = new List<Event>();
+
+        // generate events
+        if (IsActive) {
+            events = _inputManager.GenerateEvents();
+        }
+
+        // send the events to camera
+        CameraContext.HandleEvents(events);
 
         // update the contexts (this is for animations etc)
         switch (GameContext.CurrentState)
@@ -70,8 +89,9 @@ public class Game1 : Game
                 throw new System.Exception();
         }
 
-        // update the camera
-
+        // update the camera context
+        CameraContext.Update(gameTime);
+        
         // set network state
 
         base.Update(gameTime);
@@ -79,21 +99,19 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
-
-        // draw the correct context
+        GraphicsDevice.Clear(Color.Black);
         
         switch (GameContext.CurrentState)
         {
             case GameContext.State.SplashScreen:
-                _spriteBatch.Begin();
-                GameContext.SplashScreenContext.SplashScreenRender.Draw(gameTime, _spriteBatch);
+                _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: _transformMatrix);
+                GameContext.SplashScreenContext.Draw(gameTime, _spriteBatch);
                 _spriteBatch.End();
                 break;
 
             case GameContext.State.World:
-                _spriteBatch.Begin();
-                GameContext.WorldContext.WorldRender.Draw(gameTime, _spriteBatch);
+                _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: _transformMatrix);
+                GameContext.WorldContext.Draw(gameTime, _spriteBatch);
                 _spriteBatch.End();
                 break;
 

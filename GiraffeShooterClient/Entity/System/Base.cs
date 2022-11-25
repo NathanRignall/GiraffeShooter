@@ -35,7 +35,7 @@ namespace GiraffeShooterClient.Entity.System
 
     }
 
-    class TransformSystem : Base<Transform> { }
+    class PhysicsSystem : Base<Physics> { }
     class ColliderSystem : Base<Collider> { }
     class SpriteSystem : Base<Sprite> { }
 }

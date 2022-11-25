@@ -9,21 +9,25 @@ namespace GiraffeShooterClient.Utility.Assets
     {
 
         public static TiledMap MapMaster { get; private set; }
-        public static TiledMap MapSecondary { get; private set; }
+        // public static TiledLayer MapMasterCollisionLayer { get; private set; }
+
         public static Dictionary<int, TiledTileset> MapTilesets { get; private set; }
-        public static Texture2D MapTilesetMaster { get; private set; }
+        
+        public static Texture2D MapTilesetTextureMain { get; private set; }
 
         public static Texture2D GiraffeTextureTest { get; private set; }
 
         public static void LoadContent(ContentManager content)
         {
 
-            // MapMaster = new TiledMap(content.RootDirectory + "/masterMap.tmx");
-            // MapSecondary = new TiledMap(content.RootDirectory + "/secondaryMap.tmx");
-            // MapTilesets = MapMaster.GetTiledTilesets(content.RootDirectory + "/");
-            // MapTilesetMaster = content.Load<Texture2D>("masterTileset");
+            MapMaster = new TiledMap(content.RootDirectory + "/map_master.tmx");
+            // MapMasterCollisionLayer = MapMaster.Layers.First(l => l.name == "Ground");
 
-            GiraffeTextureTest = content.Load<Texture2D>("GiraffeTextureTest");
+            MapTilesets = MapMaster.GetTiledTilesets(content.RootDirectory + "/");
+
+            MapTilesetTextureMain = content.Load<Texture2D>("master_tileset");
+
+            GiraffeTextureTest = content.Load<Texture2D>("giraffe_texture_test");
             
         }
     }

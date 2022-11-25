@@ -8,23 +8,25 @@ namespace GiraffeShooterClient.Entity.System
     {
         public Giraffe()
         {
-            Transform transform = new Transform();
-            transform.position = new Vector3(100, 0, 0);
-            AddComponent(transform);
+            Physics physics = new Physics();
+            physics.position = new Vector3(100, 0, 0);
+            physics.velocity = new Vector3(0, 0, 0);
+            AddComponent(physics);
 
             Sprite sprite = new Sprite();
             sprite.texture = AssetManager.GiraffeTextureTest;
             AddComponent(sprite);
         }
 
-        public void SetPosition(Vector3 position)
+        public void SetAcceleration(Vector3 acceleration)
         {
-            GetComponent<Transform>().position = position;
+            Physics physics = GetComponent<Physics>();
+            physics.acceleration = acceleration;
         }
 
         public void Delete()
         {
-            RemoveComponent<Transform>();
+            RemoveComponent<Physics>();
             RemoveComponent<Sprite>();
         }
     }
