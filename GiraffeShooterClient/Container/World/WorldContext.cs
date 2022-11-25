@@ -6,6 +6,7 @@ using GiraffeShooterClient.Entity.System;
 using GiraffeShooterClient.Utility.Input;
 
 using GiraffeShooterClient.Container.Map;
+using GiraffeShooterClient.Container.Camera;
 
 namespace GiraffeShooterClient.Container.World
 {
@@ -13,14 +14,15 @@ namespace GiraffeShooterClient.Container.World
     public class WorldContext
     {
         MapContext _mapContext;
-
+        Player _player;
         Giraffe _giraffe;
-
+        
         public WorldContext()
         {   
 
-            // setup test giraffe
-            _giraffe = new Giraffe();
+            _player = new Player();
+            
+            // _giraffe = new Giraffe();
 
             // setup the additional contexts
             _mapContext = new MapContext();
@@ -34,6 +36,24 @@ namespace GiraffeShooterClient.Container.World
 
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
+            
+            // use keyboard input to move the player
+            if (InputManager.IsKeyDown(Keys.Up))
+            {
+                _player.Move(Player.direction.up);
+            }
+            if (InputManager.IsKeyDown(Keys.Down))
+            {
+                _player.Move(Player.direction.down);
+            }
+            if (InputManager.IsKeyDown(Keys.Left))
+            {
+                _player.Move(Player.direction.left);
+            }
+            if (InputManager.IsKeyDown(Keys.Right))
+            {
+                _player.Move(Player.direction.right);
+            }
 
             // update the additional context
             _mapContext.Update(gameTime);
@@ -42,6 +62,9 @@ namespace GiraffeShooterClient.Container.World
             PhysicsSystem.Update(gameTime);
             ColliderSystem.Update(gameTime);
             SpriteSystem.Update(gameTime);
+
+            // external contexts
+            CameraContext.FollowTarget = _player.GetPosition();
 
         }
 

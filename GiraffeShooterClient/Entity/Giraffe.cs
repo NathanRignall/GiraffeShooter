@@ -18,12 +18,6 @@ namespace GiraffeShooterClient.Entity.System
             AddComponent(sprite);
         }
 
-        public void SetAcceleration(Vector3 acceleration)
-        {
-            Physics physics = GetComponent<Physics>();
-            physics.acceleration = acceleration;
-        }
-
         public void Delete()
         {
             RemoveComponent<Physics>();

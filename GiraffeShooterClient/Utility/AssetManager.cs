@@ -15,6 +15,7 @@ namespace GiraffeShooterClient.Utility.Assets
         
         public static Texture2D MapTilesetTextureMain { get; private set; }
 
+        public static Texture2D PlayerTexture { get; private set; }
         public static Texture2D GiraffeTextureTest { get; private set; }
 
         public static void LoadContent(ContentManager content)
@@ -26,7 +27,8 @@ namespace GiraffeShooterClient.Utility.Assets
             MapTilesets = MapMaster.GetTiledTilesets(content.RootDirectory + "/");
 
             MapTilesetTextureMain = content.Load<Texture2D>("master_tileset");
-
+            
+            PlayerTexture = content.Load<Texture2D>("player_texture");
             GiraffeTextureTest = content.Load<Texture2D>("giraffe_texture_test");
             
         }

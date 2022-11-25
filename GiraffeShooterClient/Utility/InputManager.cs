@@ -20,12 +20,14 @@ public struct Event
     public Keys Key;
     public Vector2 MousePosition;
     public Vector2 MouseDelta;
+    public int MouseScrollDelta;
 
     public Event(Keys EventKey) {
         Type = EventType.KeyPress;
         Key = EventKey;
         MousePosition = Vector2.Zero;
         MouseDelta = Vector2.Zero;
+        MouseScrollDelta = 0;
     }
 
     public Event(Vector2 EventMousePosition) {
@@ -33,6 +35,7 @@ public struct Event
         Key = Keys.None;
         MousePosition = EventMousePosition;
         MouseDelta = Vector2.Zero;
+        MouseScrollDelta = 0;
     }
 
     public Event(Vector2 EventMousePosition, Vector2 EventMouseDelta) {
@@ -40,27 +43,36 @@ public struct Event
         Key = Keys.None;
         MousePosition = EventMousePosition;
         MouseDelta = EventMouseDelta;
+        MouseScrollDelta = 0;
+    }
+
+    public Event(int EventMouseScrollDelta) {
+        Type = EventType.MouseScroll;
+        Key = Keys.None;
+        MousePosition = Vector2.Zero;
+        MouseDelta = Vector2.Zero;
+        MouseScrollDelta = EventMouseScrollDelta;
     }
 
 }
 
-public class InputManager
+public static class InputManager
 {
 
-    private KeyboardState _previousKeyboardState;
-    private KeyboardState _currentKeyboardState;
-    private MouseState _previousMouseState;
-    private MouseState _currentMouseState;
-    private bool _mouseDragged;
+    private static KeyboardState _previousKeyboardState;
+    private static KeyboardState _currentKeyboardState;
+    private static MouseState _previousMouseState;
+    private static MouseState _currentMouseState;
+    private static bool _mouseDragged;
 
-    public InputManager()
+    public static void Initialize()
     {
 
         _previousKeyboardState = new KeyboardState();
         _currentKeyboardState = new KeyboardState();
     }
 
-    public void UpdateState(KeyboardState keyboardState, MouseState mouseState ) {
+    public static void UpdateState(KeyboardState keyboardState, MouseState mouseState ) {
 
         _previousKeyboardState = _currentKeyboardState;
         _currentKeyboardState = keyboardState;
@@ -70,7 +82,7 @@ public class InputManager
 
     }
 
-    public List<Event> GenerateEvents()
+    public static List<Event> GenerateEvents()
     {
         var events = new List<Event>();
 
@@ -90,21 +102,23 @@ public class InputManager
             events.Add(new Event(Keys.Right));
         }
 
-        // mouse drag
         if (_previousMouseState.LeftButton == ButtonState.Pressed & _currentMouseState.LeftButton == ButtonState.Pressed) {
             events.Add(new Event(new Vector2(_currentMouseState.X, _currentMouseState.Y), new Vector2(_currentMouseState.X, _currentMouseState.Y) - new Vector2(_previousMouseState.X, _previousMouseState.Y)));
             _mouseDragged = true;
         }
 
-        // mouse press on release
         if (_previousMouseState.LeftButton == ButtonState.Pressed & _currentMouseState.LeftButton == ButtonState.Released & _mouseDragged == false) {
             events.Add(new Event(new Vector2(_currentMouseState.X, _currentMouseState.Y)));
+        }
+
+        if (_previousMouseState.ScrollWheelValue != _currentMouseState.ScrollWheelValue) {
+            events.Add(new Event(_currentMouseState.ScrollWheelValue - _previousMouseState.ScrollWheelValue));
         }
 
         return events;
     }
 
-    public bool IsKeyDown(Keys key) {
+    public static bool IsKeyDown(Keys key) {
         return _currentKeyboardState.IsKeyDown(key);
     }
 }

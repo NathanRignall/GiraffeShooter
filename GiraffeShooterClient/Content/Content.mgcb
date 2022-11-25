@@ -25,6 +25,18 @@
 /processorParam:TextureFormat=Color
 /build:giraffe_texture_test.jpeg
 
+#begin player_texture.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:player_texture.png
+
 #begin master_tileset.png
 /importer:TextureImporter
 /processor:TextureProcessor

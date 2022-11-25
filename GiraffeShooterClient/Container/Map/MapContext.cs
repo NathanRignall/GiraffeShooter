@@ -52,7 +52,7 @@ namespace GiraffeShooterClient.Container.Map
             var tileLayers = map.Layers.Where(x => x.type == TiledLayerType.TileLayer);
             
             // get the current camera position
-            var cameraPosition = CameraContext.GetPosition();
+            var cameraOffset = CameraContext.Offset;
 
             foreach (var layer in tileLayers)
             {
@@ -62,8 +62,8 @@ namespace GiraffeShooterClient.Container.Map
                     {
                         var index = (y * layer.width) + x; // Assuming the default render order is used which is from right to bottom
                         var gid = layer.data[index]; // The tileset tile index
-                        var tileX = x * map.TileWidth + (int)cameraPosition.X;
-                        var tileY = y * map.TileHeight + (int)cameraPosition.Y;
+                        var tileX = x * map.TileWidth + (int)cameraOffset.X;
+                        var tileY = y * map.TileHeight + (int)cameraOffset.Y;
 
                         // Gid 0 is used to tell there is no tile set
                         if (gid == 0)

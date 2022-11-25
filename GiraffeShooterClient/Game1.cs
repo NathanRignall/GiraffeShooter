@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework.Input;
 using GiraffeShooterClient.Container.Game;
 using GiraffeShooterClient.Container.Camera;
 
-using GiraffeShooterClient.Entity.System;
 using GiraffeShooterClient.Utility.Assets;
 using GiraffeShooterClient.Utility.Input;
 
@@ -17,32 +16,27 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-
-    private InputManager _inputManager;
-
-    private const int _scaleFactor = 1;
-    private Matrix _transformMatrix;
+    private float _scaleFactor = 1f;
+    private Vector2 _screenSize = new Vector2(1500, 1000);
 
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
-        _graphics.PreferredBackBufferWidth = 1500;
-        _graphics.PreferredBackBufferHeight = 1000;
+        _graphics.PreferredBackBufferWidth = (int)_screenSize.X;
+        _graphics.PreferredBackBufferHeight = (int)_screenSize.Y;
 
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
-        
-        _inputManager = new InputManager();
     }
 
     protected override void Initialize()
     {
         base.Initialize();
 
-        _transformMatrix = Matrix.CreateScale(_scaleFactor, _scaleFactor, 1f);
+        InputManager.Initialize(); 
 
         GameContext.Initialize();
-        CameraContext.Initialize();
+        CameraContext.Initialize(_screenSize);
     }
 
     protected override void LoadContent()
@@ -60,27 +54,29 @@ public class Game1 : Game
         // get network state
 
         // update the game state (for keys)
-        _inputManager.UpdateState(Keyboard.GetState(), Mouse.GetState());
+        InputManager.UpdateState(Keyboard.GetState(), Mouse.GetState());
 
         // create empty event list
         List<Event> events = new List<Event>();
 
         // generate events
         if (IsActive) {
-            events = _inputManager.GenerateEvents();
+            events = InputManager.GenerateEvents();
         }
 
         // send the events to camera
-        CameraContext.HandleEvents(events);
+        CameraContext.HandleEvents(events, _scaleFactor);
 
         // update the contexts (this is for animations etc)
         switch (GameContext.CurrentState)
         {
             case GameContext.State.SplashScreen:
+                _scaleFactor = 1f;
                 GameContext.SplashScreenContext.Update(gameTime);
                 break;
 
             case GameContext.State.World:
+                _scaleFactor = CameraContext.Zoom;
                 GameContext.WorldContext.HandleEvents(events);
                 GameContext.WorldContext.Update(gameTime);
                 break;
@@ -100,17 +96,19 @@ public class Game1 : Game
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.Black);
+
+        var transformMatrix = Matrix.CreateScale(_scaleFactor, _scaleFactor, 1f);
         
         switch (GameContext.CurrentState)
         {
             case GameContext.State.SplashScreen:
-                _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: _transformMatrix);
+                _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
                 GameContext.SplashScreenContext.Draw(gameTime, _spriteBatch);
                 _spriteBatch.End();
                 break;
 
             case GameContext.State.World:
-                _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: _transformMatrix);
+                _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
                 GameContext.WorldContext.Draw(gameTime, _spriteBatch);
                 _spriteBatch.End();
                 break;
