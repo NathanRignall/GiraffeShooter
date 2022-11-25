@@ -1,5 +1,7 @@
 using GiraffeShooterClient.Container.Game;
 
+using GiraffeShooterClient.Utility;
+
 namespace GiraffeShooterClient.Container.SplashScreen
 {
 
@@ -8,7 +10,7 @@ namespace GiraffeShooterClient.Container.SplashScreen
 
         public SplashScreenContext()
         {
-            
+
         }
 
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -18,14 +20,14 @@ namespace GiraffeShooterClient.Container.SplashScreen
             {
                 GameContext.SetState(Game.GameContext.State.World);
             }
-            
+
         }
 
         public void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
 
-            spriteBatch.Draw(GiraffeShooterClient.Utility.Assets.AssetManager.GiraffeTextureTest, new Microsoft.Xna.Framework.Rectangle(0, 0, 800, 480), Microsoft.Xna.Framework.Color.White);
-            
+            spriteBatch.Draw(GiraffeShooterClient.Utility.AssetManager.GiraffeTextureTest, new Microsoft.Xna.Framework.Rectangle(0, 0, (int)ScreenManager.Size.X, (int)ScreenManager.Size.Y), Microsoft.Xna.Framework.Color.White);
+
         }
     }
 

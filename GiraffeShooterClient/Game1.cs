@@ -5,11 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using GiraffeShooterClient.Container.Game;
-using GiraffeShooterClient.Container.Camera;
 
-using GiraffeShooterClient.Utility.Assets;
-using GiraffeShooterClient.Utility.Input;
-
+using GiraffeShooterClient.Utility;
 namespace GiraffeShooterClient;
 
 public class Game1 : Game
@@ -17,13 +14,14 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private float _scaleFactor = 1f;
-    private Vector2 _screenSize = new Vector2(1500, 1000);
 
     public Game1()
     {
+        ScreenManager.Size = new Vector2(1280, 720);
+
         _graphics = new GraphicsDeviceManager(this);
-        _graphics.PreferredBackBufferWidth = (int)_screenSize.X;
-        _graphics.PreferredBackBufferHeight = (int)_screenSize.Y;
+        _graphics.PreferredBackBufferWidth = (int)ScreenManager.Size.X;
+        _graphics.PreferredBackBufferHeight = (int)ScreenManager.Size.Y;
 
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
@@ -33,10 +31,10 @@ public class Game1 : Game
     {
         base.Initialize();
 
+        Camera.Initialize();
         InputManager.Initialize(); 
 
         GameContext.Initialize();
-        CameraContext.Initialize(_screenSize);
     }
 
     protected override void LoadContent()
@@ -68,7 +66,7 @@ public class Game1 : Game
         }
 
         // send the events to camera
-        CameraContext.HandleEvents(events);
+        Camera.HandleEvents(events);
 
         // reset scale factor
         _scaleFactor = 1f;
@@ -81,7 +79,7 @@ public class Game1 : Game
                 break;
 
             case GameContext.State.World:
-                _scaleFactor = CameraContext.Zoom;
+                _scaleFactor = Camera.Zoom;
                 GameContext.WorldContext.HandleEvents(events);
                 GameContext.WorldContext.Update(gameTime);
                 break;
@@ -91,7 +89,7 @@ public class Game1 : Game
         }
 
         // update the camera context
-        CameraContext.Update(gameTime);
+        Camera.Update(gameTime);
         
         // set network state
 

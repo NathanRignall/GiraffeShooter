@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+
 using TiledCS; 
 
-namespace GiraffeShooterClient.Utility.Assets
+namespace GiraffeShooterClient.Utility
 {
     public static class AssetManager
     {

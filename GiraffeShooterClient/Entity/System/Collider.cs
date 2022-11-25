@@ -1,5 +1,5 @@
 
-namespace GiraffeShooterClient.Entity.System
+namespace GiraffeShooterClient.Entity
 {
     class Collider : Component
     {

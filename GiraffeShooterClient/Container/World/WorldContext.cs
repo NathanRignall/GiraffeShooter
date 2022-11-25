@@ -2,11 +2,10 @@ using System.Collections.Generic;
 
 using Microsoft.Xna.Framework.Input;
 
-using GiraffeShooterClient.Entity.System;
-using GiraffeShooterClient.Utility.Input;
+using GiraffeShooterClient.Entity;
+using GiraffeShooterClient.Utility;
 
 using GiraffeShooterClient.Container.Map;
-using GiraffeShooterClient.Container.Camera;
 
 namespace GiraffeShooterClient.Container.World
 {
@@ -25,7 +24,7 @@ namespace GiraffeShooterClient.Container.World
             _mapContext = new MapContext();
 
             // reset the camera
-            CameraContext.Reset();
+            Camera.Reset();
 
         }
 
@@ -55,6 +54,9 @@ namespace GiraffeShooterClient.Container.World
                 _player.Move(Player.direction.right);
             }
 
+            // update the player position
+            Camera.FollowTarget = _player.GetPosition();
+
             // update the additional context
             _mapContext.Update(gameTime);
 
@@ -62,10 +64,7 @@ namespace GiraffeShooterClient.Container.World
             PhysicsSystem.Update(gameTime);
             ColliderSystem.Update(gameTime);
             SpriteSystem.Update(gameTime);
-
-            // external contexts
-            CameraContext.FollowTarget = _player.GetPosition();
-
+            
         }
 
         public void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)

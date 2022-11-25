@@ -7,10 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using TiledCS;
 
-using GiraffeShooterClient.Container.Camera;
-using GiraffeShooterClient.Entity.System;
-using GiraffeShooterClient.Utility.Input;
-using GiraffeShooterClient.Utility.Assets;
+using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Container.Map
 {
@@ -52,7 +49,7 @@ namespace GiraffeShooterClient.Container.Map
             var tileLayers = map.Layers.Where(x => x.type == TiledLayerType.TileLayer);
             
             // get the current camera position
-            var cameraOffset = CameraContext.Offset;
+            var cameraOffset = Camera.Offset;
 
             foreach (var layer in tileLayers)
             {

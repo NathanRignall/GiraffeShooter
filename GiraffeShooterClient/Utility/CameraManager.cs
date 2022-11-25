@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-using GiraffeShooterClient.Utility.Input;
-
-namespace GiraffeShooterClient.Container.Camera
+namespace GiraffeShooterClient.Utility
 {
-    public static class CameraContext
+    public static class Camera
     {
         public enum State
         {
@@ -16,7 +14,6 @@ namespace GiraffeShooterClient.Container.Camera
         }
 
         public static State CurrentState;
-        public static Vector2 ScreenSize { get; private set; }
 
         public static float Zoom { get; private set; }
         public static float MaxZoom { get; private set; }
@@ -32,10 +29,9 @@ namespace GiraffeShooterClient.Container.Camera
         private static Vector2 _velocity;
         private static Vector2 _acceleration;
 
-        public static void Initialize(Vector2 screenSize)
+        public static void Initialize()
         {
             CurrentState = State.Follow;
-            ScreenSize = screenSize;
 
             Zoom = 3f;
             MaxZoom = 4f;
@@ -44,7 +40,7 @@ namespace GiraffeShooterClient.Container.Camera
             Offset = new Vector2(0, 0);
             FollowTarget = new Vector2(0, 0);
 
-            _homePosition = ScreenSize / 2 / Zoom;
+            _homePosition = ScreenManager.Size / 2 / Zoom;
             _followOffset = new Vector2(0, 0);
 
             _position = _homePosition;
@@ -58,7 +54,7 @@ namespace GiraffeShooterClient.Container.Camera
             Offset = new Vector2(0, 0);
             FollowTarget = new Vector2(0, 0);
 
-            _homePosition = ScreenSize / 2 / Zoom;
+            _homePosition = ScreenManager.Size / 2 / Zoom;
             _followOffset = new Vector2(0, 0);
 
             _position = _homePosition;
@@ -132,7 +128,7 @@ namespace GiraffeShooterClient.Container.Camera
                         Zoom += Zoom * e.MouseScrollDelta / 10000;
                         Zoom = MathHelper.Clamp(Zoom, MinZoom, MaxZoom);
 
-                        var newHomePosition = ScreenSize / 2 / Zoom;
+                        var newHomePosition = ScreenManager.Size / 2 / Zoom;
                         _position = _position - _homePosition + newHomePosition;
                         _homePosition = newHomePosition;
 

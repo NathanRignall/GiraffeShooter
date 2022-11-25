@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace GiraffeShooterClient.Entity.System
+namespace GiraffeShooterClient.Entity
 {
     class Entity
     {

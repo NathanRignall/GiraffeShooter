@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
 
-using GiraffeShooterClient.Utility.Assets;
+using GiraffeShooterClient.Utility;
 
-namespace GiraffeShooterClient.Entity.System
+namespace GiraffeShooterClient.Entity
 {
     class Giraffe : Entity
     {

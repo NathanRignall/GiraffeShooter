@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace GiraffeShooterClient.Entity.System
+namespace GiraffeShooterClient.Entity
 {
     class Physics : Component
     {
