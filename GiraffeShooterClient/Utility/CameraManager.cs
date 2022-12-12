@@ -101,23 +101,6 @@ namespace GiraffeShooterClient.Utility
             {
                 switch (e.Type)
                 {
-                    case EventType.KeyPress:
-                        switch (e.Key)
-                        {
-                            case Keys.Up:
-                                System.Console.WriteLine("Up");
-                                break;
-                            case Keys.Down:
-                                System.Console.WriteLine("Down");
-                                break;
-                            case Keys.Left:
-                                System.Console.WriteLine("Left");
-                                break;
-                            case Keys.Right:
-                                System.Console.WriteLine("Right");
-                                break;
-                        }
-                        break;
                     case EventType.MouseDrag:
 
                         _velocity += e.MouseDelta * 15 * 1 / Zoom;

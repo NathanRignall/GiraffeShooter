@@ -9,6 +9,9 @@ namespace GiraffeShooterClient.Entity
         public Vector3 acceleration = Vector3.Zero;
         public float deceleration = 0.99f;
 
+        public Vector3 size = Vector3.Zero;
+        public float mass = 1.0f;
+
         public Physics()
         {
             PhysicsSystem.Register(this);

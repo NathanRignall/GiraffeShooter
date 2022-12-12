@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 
 namespace GiraffeShooterClient.Entity
 {
     class Entity
     {
-        public int ID { get; set; }
+        public Guid id { get; protected set; }
 
         List<Component> _components = new List<Component>();
 

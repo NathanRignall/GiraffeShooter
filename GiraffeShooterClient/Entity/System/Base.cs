@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace GiraffeShooterClient.Entity
 {
-    class Base<T> where T : Component
+    class BaseComponent<T> where T : Component
     {
 
         public static List<T> components = new List<T>();
@@ -35,7 +36,8 @@ namespace GiraffeShooterClient.Entity
 
     }
 
-    class PhysicsSystem : Base<Physics> { }
-    class ColliderSystem : Base<Collider> { }
-    class SpriteSystem : Base<Sprite> { }
+    class PhysicsSystem : BaseComponent<Physics> { }
+    class ColliderSystem : BaseComponent<Collider> { }
+    class ControlSystem : BaseComponent<Control> { }
+    class SpriteSystem : BaseComponent<Sprite> { }
 }

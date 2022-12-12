@@ -6,37 +6,28 @@ namespace GiraffeShooterClient.Entity
 {
     class Player : Entity
     {
-        public enum direction { up, down, left, right };
-        private int speed = 200;
-
         public Player()
         {
+            id = new System.Guid();
+            
             Physics physics = new Physics();
             physics.deceleration = 0.1f;
             AddComponent(physics);
+
+            Collider collider = new Collider();
+            AddComponent(collider);
+
+            Control control = new Control();
+            AddComponent(control);
 
             Sprite sprite = new Sprite();
             sprite.texture = AssetManager.PlayerTexture;
             AddComponent(sprite);
         }
 
-        public void Move(direction direction) {
-            Physics physics = GetComponent<Physics>();
-
-            switch (direction) {
-                case direction.up:
-                    physics.velocity.Y = -speed;
-                    break;
-                case direction.down:
-                    physics.velocity.Y = speed;
-                    break;
-                case direction.left:
-                    physics.velocity.X = -speed;
-                    break;
-                case direction.right:
-                    physics.velocity.X = speed;
-                    break;
-            }
+        public void Move(Control.Direction direction) {
+            Control control = GetComponent<Control>();
+            control.Move(direction);
         }
 
         public Vector2 SetPosition(Vector2 position) {
