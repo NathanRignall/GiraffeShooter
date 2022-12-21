@@ -86,21 +86,13 @@ public static class InputManager
     {
         var events = new List<Event>();
 
-        if (_previousKeyboardState.IsKeyDown(Keys.Up) & _currentKeyboardState.IsKeyUp(Keys.Up)) {
-            events.Add(new Event(Keys.Up));
+        // for each key add event if key is pressed and was not pressed before
+        foreach (Keys key in _currentKeyboardState.GetPressedKeys()) {
+            if (_previousKeyboardState.IsKeyUp(key)) {
+                events.Add(new Event(key));
+            }
         }
 
-        if (_previousKeyboardState.IsKeyUp(Keys.Down) & _currentKeyboardState.IsKeyDown(Keys.Down)) {
-            events.Add(new Event(Keys.Down));
-        }
-
-        if (_previousKeyboardState.IsKeyUp(Keys.Left) & _currentKeyboardState.IsKeyDown(Keys.Left)) {
-            events.Add(new Event(Keys.Left));
-        }
-
-        if (_previousKeyboardState.IsKeyUp(Keys.Right) & _currentKeyboardState.IsKeyDown(Keys.Right)) {
-            events.Add(new Event(Keys.Right));
-        }
 
         if (_previousMouseState.LeftButton == ButtonState.Pressed & _currentMouseState.LeftButton == ButtonState.Pressed) {
             events.Add(new Event(new Vector2(_currentMouseState.X, _currentMouseState.Y), new Vector2(_currentMouseState.X, _currentMouseState.Y) - new Vector2(_previousMouseState.X, _previousMouseState.Y)));
