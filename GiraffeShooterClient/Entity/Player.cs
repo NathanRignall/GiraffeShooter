@@ -9,8 +9,11 @@ namespace GiraffeShooterClient.Entity
         public Player()
         {
             id = new System.Guid();
+            name = "Player";
             
             Physics physics = new Physics();
+            physics.position = new Vector3(1, 1, 10);
+            physics.size = new Vector3(1, 1, 2);
             physics.deceleration = 0.1f;
             AddComponent(physics);
 

@@ -39,5 +39,6 @@ namespace GiraffeShooterClient.Entity
     class PhysicsSystem : BaseComponent<Physics> { }
     class ColliderSystem : BaseComponent<Collider> { }
     class ControlSystem : BaseComponent<Control> { }
+    class TiledSystem : BaseComponent<Tiled> { }
     class SpriteSystem : BaseComponent<Sprite> { }
 }

@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 
+using GiraffeShooterClient.Utility;
+
 namespace GiraffeShooterClient.Entity
 {
     class Entity
     {
         public Guid id { get; protected set; }
+        public string name { get; protected set; }
 
         List<Component> _components = new List<Component>();
 
@@ -42,6 +45,11 @@ namespace GiraffeShooterClient.Entity
                 }
             }
             
+        }
+
+        public virtual void HandleEvents(List<Event> events)
+        {
+
         }
     }
 }

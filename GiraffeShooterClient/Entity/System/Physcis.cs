@@ -4,6 +4,8 @@ namespace GiraffeShooterClient.Entity
 {
     class Physics : Component
     {
+        public bool isStatic = false;
+
         public Vector3 position = Vector3.Zero;
         public Vector3 velocity = Vector3.Zero;
         public Vector3 acceleration = Vector3.Zero;
@@ -19,6 +21,9 @@ namespace GiraffeShooterClient.Entity
 
         public override void Update(GameTime gameTime)
         {
+
+            if (isStatic) return;
+            
             var dt = gameTime.ElapsedGameTime;
 
             velocity += acceleration * (float)dt.TotalSeconds;;

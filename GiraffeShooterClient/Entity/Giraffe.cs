@@ -9,6 +9,7 @@ namespace GiraffeShooterClient.Entity
         public Giraffe(Vector3 position, Vector3 velocity)
         {
             id = System.Guid.NewGuid();
+            name = "Giraffe";
             
             Physics physics = new Physics();
             physics.position = position;

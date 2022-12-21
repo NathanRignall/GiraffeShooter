@@ -7,14 +7,11 @@ using Microsoft.Xna.Framework.Input;
 using GiraffeShooterClient.Entity;
 using GiraffeShooterClient.Utility;
 
-using GiraffeShooterClient.Container.Map;
-
 namespace GiraffeShooterClient.Container.World
 {
 
     public class WorldContext
     {
-        MapContext _mapContext;
         Collection _collection;
         Player _player;
 
@@ -24,17 +21,15 @@ namespace GiraffeShooterClient.Container.World
             _collection = new Collection();
 
             // register entities
+            _collection.AddEntity(new MasterMap());
             _collection.AddEntity(_player = new Player());
 
             // add 10 giraffes at random positions
             Random random = new Random();
             for (int i = 0; i < 10; i++)
             {
-                _collection.AddEntity(new Giraffe(new Vector3(random.Next(0, 800), random.Next(0, 600), 0), new Vector3(0, 0, 0)));
+                _collection.AddEntity(new Giraffe(new Vector3(random.Next(-10, 10), random.Next(-10, 10), 0), new Vector3(0, 0, 0)));
             }
-
-            // addiional contexts
-            _mapContext = new MapContext();
 
             // reset the camera
             Camera.Reset();
@@ -43,7 +38,7 @@ namespace GiraffeShooterClient.Container.World
 
         public void HandleEvents(List<Event> events)
         {
-
+            
         }
 
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -67,16 +62,14 @@ namespace GiraffeShooterClient.Container.World
                 _player.Move(Control.Direction.right);
             }
 
-            // update the player position
-            Camera.FollowTarget = _player.GetPosition();
-
-            // update the additional context
-            _mapContext.Update(gameTime);
+            // update the player position (convert from tile to pixel coordinates)
+            Camera.FollowTarget = _player.GetPosition() * 1000f / 32f;
 
             // update entities
             PhysicsSystem.Update(gameTime);
             ColliderSystem.Update(gameTime);
             ControlSystem.Update(gameTime);
+            TiledSystem.Update(gameTime);
             SpriteSystem.Update(gameTime);
 
         }
@@ -84,10 +77,8 @@ namespace GiraffeShooterClient.Container.World
         public void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
 
-            // draw the additional contexts
-            _mapContext.Draw(gameTime, spriteBatch);
-
             // draw entities
+            TiledSystem.Draw(gameTime, spriteBatch);
             SpriteSystem.Draw(gameTime, spriteBatch);
 
         }

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using GiraffeShooterClient.Utility;
+
 namespace GiraffeShooterClient.Entity
 {
     class Collection
@@ -39,6 +41,14 @@ namespace GiraffeShooterClient.Entity
         public List<Entity> GetEntities()
         {
             return entities;
+        }
+
+        public void HandleEvents(List<Event> events)
+        {
+            foreach (Entity entity in entities)
+            {
+                entity.HandleEvents(events);
+            }
         }
     }
 }

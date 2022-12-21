@@ -19,8 +19,8 @@ namespace GiraffeShooterClient.Entity
             Physics physics = entity.GetComponent<Physics>();
 
             Vector2 cameraOffset = Camera.Offset;
-            Vector2 position = new Vector2(physics.position.X, physics.position.Y) + cameraOffset - new Vector2(texture.Width / 2, texture.Height / 2);
-            
+            Vector2 position = (new Vector2(physics.position.X, physics.position.Y) * 1000f / 32f  ) + cameraOffset - new Vector2(texture.Width / 2, texture.Height / 2);
+
             spriteBatch.Draw(texture, position, Color.White);
         }
 

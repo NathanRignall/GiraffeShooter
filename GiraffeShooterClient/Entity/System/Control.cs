@@ -5,7 +5,7 @@ namespace GiraffeShooterClient.Entity
     class Control : Component
     {
         public enum Direction { up, down, left, right };
-        private int speed = 200;
+        private int speed = 10;
 
         public Control()
         {
