@@ -8,6 +8,7 @@ namespace GiraffeShooterClient.Entity
     class Collection
     {
         public List<Entity> entities = new List<Entity>();
+        public List<Entity> entitiesToRemove = new List<Entity>();
 
         public Guid AddEntity(Entity entity)
         {
@@ -17,7 +18,7 @@ namespace GiraffeShooterClient.Entity
 
         public void RemoveEntity(Entity entity)
         {
-            entities.Remove(entity);
+            entitiesToRemove.Add(entity);
         }
 
         public Entity GetEntity(Guid id)
@@ -49,6 +50,27 @@ namespace GiraffeShooterClient.Entity
             {
                 entity.HandleEvents(events);
             }
+        }
+
+        public void CleanUp()
+        {
+            // check if any entities are marked for deletion
+            foreach (Entity entity in entities)
+            {
+                if (entity.isDeleted)
+                {
+                    entitiesToRemove.Add(entity);
+                }
+            }
+
+            // remove all entities marked for deletion
+            foreach (Entity entity in entitiesToRemove)
+            {
+                entities.Remove(entity);
+            }
+
+            // clear the list of entities to remove
+            entitiesToRemove.Clear();
         }
     }
 }

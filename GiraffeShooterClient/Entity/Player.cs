@@ -43,12 +43,5 @@ namespace GiraffeShooterClient.Entity
             Physics physics = GetComponent<Physics>();
             return new Vector2(physics.position.X, physics.position.Y);
         }
-
-        public void Delete()
-        {
-            RemoveComponent<Physics>();
-            RemoveComponent<Sprite>();
-        }
     }
-
 }

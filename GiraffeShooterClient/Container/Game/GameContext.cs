@@ -1,7 +1,7 @@
 
 namespace GiraffeShooterClient.Container.Game
 {
-    public static class GameContext
+    static class GameContext
     {
         public enum State
         {

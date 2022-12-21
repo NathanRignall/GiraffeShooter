@@ -27,10 +27,5 @@ namespace GiraffeShooterClient.Entity
             tiled.TilesetTexture = AssetManager.MapTilesetTextureMain;
             AddComponent(tiled);
         }
-
-        public void Delete()
-        {
-            RemoveComponent<Tiled>();
-        }
     }
 }

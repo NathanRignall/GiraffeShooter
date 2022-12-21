@@ -10,7 +10,7 @@ using GiraffeShooterClient.Utility;
 namespace GiraffeShooterClient.Container.World
 {
 
-    public class WorldContext
+    class WorldContext
     {
         Collection _collection;
         Player _player;
@@ -38,7 +38,7 @@ namespace GiraffeShooterClient.Container.World
 
         public void HandleEvents(List<Event> events)
         {
-            
+            _collection.HandleEvents(events);
         }
 
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)
@@ -65,12 +65,29 @@ namespace GiraffeShooterClient.Container.World
             // update the player position (convert from tile to pixel coordinates)
             Camera.FollowTarget = _player.GetPosition() * 1000f / 32f;
 
+            // remove all giraffes
+            if (InputManager.IsKeyDown(Keys.Space))
+            {
+                // for all entities
+                foreach (Entity.Entity entity in _collection.GetEntities())
+                {
+                    // if the entity is a giraffe
+                    if (entity is Giraffe)
+                    {
+                        entity.Delete();
+                    }
+                }
+            }
+
             // update entities
             PhysicsSystem.Update(gameTime);
             ColliderSystem.Update(gameTime);
             ControlSystem.Update(gameTime);
             TiledSystem.Update(gameTime);
             SpriteSystem.Update(gameTime);
+
+            // clean up entities
+            _collection.CleanUp();
 
         }
 

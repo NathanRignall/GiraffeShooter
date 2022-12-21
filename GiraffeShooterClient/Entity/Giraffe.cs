@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 using GiraffeShooterClient.Utility;
@@ -32,11 +33,25 @@ namespace GiraffeShooterClient.Entity
             control.Move(direction);
         }
 
-        public void Delete()
+        public override void HandleEvents(List<Event> events)
         {
-            RemoveComponent<Physics>();
-            RemoveComponent<Sprite>();
+            foreach (Event e in events)
+            {
+                switch (e.Type)
+                {
+                    case EventType.KeyPress:
+                        if (e.Key == Microsoft.Xna.Framework.Input.Keys.G)
+                        {
+                            // pick a number between 1 and 2 and delete if 1
+                            var random = new System.Random();
+                            if (random.Next(1, 3) == 1)
+                            {
+                                Delete();
+                            }
+                        }
+                        break;
+                }
+            }
         }
     }
-
 }

@@ -9,6 +9,7 @@ namespace GiraffeShooterClient.Entity
     {
         public Guid id { get; protected set; }
         public string name { get; protected set; }
+        public bool isDeleted { get; protected set; }
 
         List<Component> _components = new List<Component>();
 
@@ -50,6 +51,18 @@ namespace GiraffeShooterClient.Entity
         public virtual void HandleEvents(List<Event> events)
         {
 
+        }
+
+        public virtual void Delete()
+        {
+            foreach (Component component in _components)
+            {
+                component.Deregister();
+            }
+
+            _components.Clear();
+
+            isDeleted = true;
         }
     }
 }
