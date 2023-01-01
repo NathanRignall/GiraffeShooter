@@ -20,7 +20,7 @@ namespace GiraffeShooterClient.Entity
 
         public static void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            foreach (T component in components)
+            foreach (var component in components)
             {
                 component.Update(gameTime);
             }
@@ -28,7 +28,7 @@ namespace GiraffeShooterClient.Entity
 
         public static void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
-            foreach (T component in components)
+            foreach (var component in components)
             {
                 component.Draw(gameTime, spriteBatch);
             }

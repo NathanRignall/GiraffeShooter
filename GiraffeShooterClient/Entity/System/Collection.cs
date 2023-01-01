@@ -43,10 +43,18 @@ namespace GiraffeShooterClient.Entity
         {
             return entities;
         }
+        
+        public void Update(Microsoft.Xna.Framework.GameTime gameTime)
+        {
+            foreach (var entity in entities)
+            {
+                entity.Update(gameTime);
+            }
+        }
 
         public void HandleEvents(List<Event> events)
         {
-            foreach (Entity entity in entities)
+            foreach (var entity in entities)
             {
                 entity.HandleEvents(events);
             }

@@ -47,13 +47,12 @@ namespace GiraffeShooterClient.Entity
             }
             
         }
+        
+        public virtual void Update(Microsoft.Xna.Framework.GameTime gameTime) { }
 
-        public virtual void HandleEvents(List<Event> events)
-        {
+        public virtual void HandleEvents(List<Event> events) { }
 
-        }
-
-        public virtual void Delete()
+        public void Delete()
         {
             foreach (Component component in _components)
             {

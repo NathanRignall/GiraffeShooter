@@ -59,8 +59,8 @@ public struct Event
 public static class InputManager
 {
 
-    private static KeyboardState _previousKeyboardState;
-    private static KeyboardState _currentKeyboardState;
+    public static KeyboardState PreviousKeyboardState { get; private set; }
+    public static KeyboardState CurrentKeyboardState { get; private set; }
     private static MouseState _previousMouseState;
     private static MouseState _currentMouseState;
     private static bool _mouseDragged;
@@ -68,14 +68,14 @@ public static class InputManager
     public static void Initialize()
     {
 
-        _previousKeyboardState = new KeyboardState();
-        _currentKeyboardState = new KeyboardState();
+        PreviousKeyboardState = new KeyboardState();
+        CurrentKeyboardState = new KeyboardState();
     }
 
     public static void UpdateState(KeyboardState keyboardState, MouseState mouseState ) {
 
-        _previousKeyboardState = _currentKeyboardState;
-        _currentKeyboardState = keyboardState;
+        PreviousKeyboardState = CurrentKeyboardState;
+        CurrentKeyboardState = keyboardState;
 
         _previousMouseState = _currentMouseState;
         _currentMouseState = mouseState;
@@ -87,8 +87,8 @@ public static class InputManager
         var events = new List<Event>();
 
         // for each key add event if key is pressed and was not pressed before
-        foreach (Keys key in _currentKeyboardState.GetPressedKeys()) {
-            if (_previousKeyboardState.IsKeyUp(key)) {
+        foreach (Keys key in CurrentKeyboardState.GetPressedKeys()) {
+            if (PreviousKeyboardState.IsKeyUp(key)) {
                 events.Add(new Event(key));
             }
         }
@@ -111,6 +111,6 @@ public static class InputManager
     }
 
     public static bool IsKeyDown(Keys key) {
-        return _currentKeyboardState.IsKeyDown(key);
+        return CurrentKeyboardState.IsKeyDown(key);
     }
 }
