@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin master_tileset.tsx
+/copy:master_tileset.tsx
+
+#begin map_master.tmx
+/copy:map_master.tmx
+
 #begin giraffe_texture_test.jpeg
 /importer:TextureImporter
 /processor:TextureProcessor

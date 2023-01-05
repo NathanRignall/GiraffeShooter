@@ -23,10 +23,10 @@ namespace GiraffeShooterClient.Utility
         public static void LoadContent(ContentManager content)
         {
 
-            MapMaster = new TiledMap(content.RootDirectory + "/map_master.tmx");
+            MapMaster = new TiledMap("Content/map_master.tmx");
             // MapMasterCollisionLayer = MapMaster.Layers.First(l => l.name == "Ground");
 
-            MapTilesets = MapMaster.GetTiledTilesets(content.RootDirectory + "/");
+            MapTilesets = MapMaster.GetTiledTilesets("Content/");
 
             MapTilesetTextureMain = content.Load<Texture2D>("master_tileset");
             

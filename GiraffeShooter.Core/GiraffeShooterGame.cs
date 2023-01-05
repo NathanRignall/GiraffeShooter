@@ -5,17 +5,17 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using GiraffeShooterClient.Container.Game;
-
 using GiraffeShooterClient.Utility;
+
 namespace GiraffeShooterClient;
 
-public class Game1 : Game
+public class GiraffeShooter : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private float _scaleFactor = 1f;
 
-    public Game1()
+    public GiraffeShooter()
     {
         ScreenManager.Size = new Vector2(1280, 720);
 
