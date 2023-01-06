@@ -33,6 +33,7 @@ public class GiraffeShooter : Game
 
         Camera.Initialize();
         InputManager.Initialize(); 
+        SupabaseManager.Initialize();
 
         GameContext.Initialize();
     }

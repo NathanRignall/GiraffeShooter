@@ -61,8 +61,8 @@ public static class InputManager
 
     public static KeyboardState PreviousKeyboardState { get; private set; }
     public static KeyboardState CurrentKeyboardState { get; private set; }
-    private static MouseState _previousMouseState;
-    private static MouseState _currentMouseState;
+    public static MouseState PreviousMouseState { get; private set; }
+    public static MouseState CurrentMouseState { get; private set; }
     private static bool _mouseDragged;
 
     public static void Initialize()
@@ -77,8 +77,8 @@ public static class InputManager
         PreviousKeyboardState = CurrentKeyboardState;
         CurrentKeyboardState = keyboardState;
 
-        _previousMouseState = _currentMouseState;
-        _currentMouseState = mouseState;
+        PreviousMouseState = CurrentMouseState;
+        CurrentMouseState = mouseState;
 
     }
 
@@ -94,17 +94,17 @@ public static class InputManager
         }
 
 
-        if (_previousMouseState.LeftButton == ButtonState.Pressed & _currentMouseState.LeftButton == ButtonState.Pressed) {
-            events.Add(new Event(new Vector2(_currentMouseState.X, _currentMouseState.Y), new Vector2(_currentMouseState.X, _currentMouseState.Y) - new Vector2(_previousMouseState.X, _previousMouseState.Y)));
+        if (PreviousMouseState.LeftButton == ButtonState.Pressed & CurrentMouseState.LeftButton == ButtonState.Pressed) {
+            events.Add(new Event(new Vector2(CurrentMouseState.X, CurrentMouseState.Y), new Vector2(CurrentMouseState.X, CurrentMouseState.Y) - new Vector2(PreviousMouseState.X, PreviousMouseState.Y)));
             _mouseDragged = true;
         }
 
-        if (_previousMouseState.LeftButton == ButtonState.Pressed & _currentMouseState.LeftButton == ButtonState.Released & _mouseDragged == false) {
-            events.Add(new Event(new Vector2(_currentMouseState.X, _currentMouseState.Y)));
+        if (PreviousMouseState.LeftButton == ButtonState.Pressed & CurrentMouseState.LeftButton == ButtonState.Released & _mouseDragged == false) {
+            events.Add(new Event(new Vector2(CurrentMouseState.X, CurrentMouseState.Y)));
         }
 
-        if (_previousMouseState.ScrollWheelValue != _currentMouseState.ScrollWheelValue) {
-            events.Add(new Event(_currentMouseState.ScrollWheelValue - _previousMouseState.ScrollWheelValue));
+        if (PreviousMouseState.ScrollWheelValue != CurrentMouseState.ScrollWheelValue) {
+            events.Add(new Event(CurrentMouseState.ScrollWheelValue - PreviousMouseState.ScrollWheelValue));
         }
 
         return events;
