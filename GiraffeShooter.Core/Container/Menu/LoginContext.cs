@@ -11,7 +11,7 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Container.Menu
 {
-    public class RegisterContext : Context
+    public class LoginContext : Context
     {
         private readonly Collection _collection;
         private readonly TextInput _emailInput;
@@ -19,7 +19,7 @@ namespace GiraffeShooterClient.Container.Menu
 
         private bool _loading = false;
         
-        public RegisterContext()
+        public LoginContext()
         {
             // create a new collection
             _collection = new Collection();
@@ -28,7 +28,7 @@ namespace GiraffeShooterClient.Container.Menu
             Base.Clear();
             
             // register entities
-            _collection.AddEntity(new Button(new Vector3(0, 0, 0), "Register User"));
+            _collection.AddEntity(new Button(new Vector3(0, 0, 0), "Login User"));
             _collection.AddEntity(_emailInput = new TextInput(new Vector3(0, 1f, 0)));
             _collection.AddEntity(_passwordInput = new TextInput(new Vector3(0, 2f, 0)));
 
@@ -79,16 +79,13 @@ namespace GiraffeShooterClient.Container.Menu
 
             try
             {
-                await SupabaseManager.Client.Auth.SignUp(_emailInput.String, _passwordInput.String);
+                await SupabaseManager.Client.Auth.SignIn(_emailInput.String, _passwordInput.String);
 
-                // set the text input to uid
-                _emailInput.String = SupabaseManager.Client.Auth.CurrentUser.Id;
-                        
                 // stop loading
                 _loading = false;
                 
                 // set the state
-                ContextManager.SetState(ContextManager.State.Menu);
+                ContextManager.SetState(ContextManager.State.World);
             }
             catch (Exception e)
             {

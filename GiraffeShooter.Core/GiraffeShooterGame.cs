@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-using GiraffeShooterClient.Container.Game;
 using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient;
@@ -17,7 +16,7 @@ public class GiraffeShooter : Game
 
     public GiraffeShooter()
     {
-        ScreenManager.SetResolution("1280x720");
+        ScreenManager.SetResolution("1600x900");
 
         _graphics = new GraphicsDeviceManager(this);
         _graphics.PreferredBackBufferWidth = (int)ScreenManager.Size.X;
@@ -34,8 +33,7 @@ public class GiraffeShooter : Game
         Camera.Initialize();
         InputManager.Initialize(); 
         SupabaseManager.Initialize();
-
-        GameContext.Initialize();
+        ContextManager.Initialize();
     }
 
     protected override void LoadContent()
@@ -52,9 +50,6 @@ public class GiraffeShooter : Game
 //         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
 //             Exit();
 // #endif
-
-        // change game state
-        GameContext.CurrentState = GameContext.NextState;
 
         // get network state
 
@@ -76,21 +71,21 @@ public class GiraffeShooter : Game
         _scaleFactor = 1f;
 
         // update the contexts (this is for animations etc)
-        switch (GameContext.CurrentState)
+        switch (ContextManager.CurrentState)
         {
-            case GameContext.State.SplashScreen:
-                GameContext.SplashScreenContext.Update(gameTime);
+            case ContextManager.State.SplashScreen:
+                ContextManager.SplashScreenContext.Update(gameTime);
                 break;
             
-            case GameContext.State.Menu:
-                GameContext.MenuContext.HandleEvents(events);
-                GameContext.MenuContext.Update(gameTime);
+            case ContextManager.State.Menu:
+                ContextManager.MenuContext.HandleEvents(events);
+                ContextManager.MenuContext.Update(gameTime);
                 break;
 
-            case GameContext.State.World:
+            case ContextManager.State.World:
                 _scaleFactor = Camera.Zoom;
-                GameContext.WorldContext.HandleEvents(events);
-                GameContext.WorldContext.Update(gameTime);
+                ContextManager.WorldContext.HandleEvents(events);
+                ContextManager.WorldContext.Update(gameTime);
                 break;
 
             default:
@@ -110,24 +105,24 @@ public class GiraffeShooter : Game
 
         var transformMatrix = Matrix.CreateScale(1f, 1f, 1f);
         
-        switch (GameContext.CurrentState)
+        switch (ContextManager.CurrentState)
         {
-            case GameContext.State.SplashScreen:
+            case ContextManager.State.SplashScreen:
                 _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
-                GameContext.SplashScreenContext.Draw(gameTime, _spriteBatch);
+                ContextManager.SplashScreenContext.Draw(gameTime, _spriteBatch);
                 _spriteBatch.End();
                 break;
             
-            case GameContext.State.Menu:
+            case ContextManager.State.Menu:
                 _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
-                GameContext.MenuContext.Draw(gameTime, _spriteBatch);
+                ContextManager.MenuContext.Draw(gameTime, _spriteBatch);
                 _spriteBatch.End();
                 break;
 
-            case GameContext.State.World:
+            case ContextManager.State.World:
                 transformMatrix = Matrix.CreateScale(_scaleFactor, _scaleFactor, 1f);
                 _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
-                GameContext.WorldContext.Draw(gameTime, _spriteBatch);
+                ContextManager.WorldContext.Draw(gameTime, _spriteBatch);
                 _spriteBatch.End();
                 break;
 

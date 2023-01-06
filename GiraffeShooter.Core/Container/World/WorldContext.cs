@@ -10,7 +10,7 @@ using GiraffeShooterClient.Utility;
 namespace GiraffeShooterClient.Container.World
 {
 
-    class WorldContext
+    public class WorldContext : Context
     {
         Collection _collection;
         Player _player;
@@ -19,10 +19,15 @@ namespace GiraffeShooterClient.Container.World
         {
             // setup the entity collection
             _collection = new Collection();
+            
+            // clear the base
+            Base.Clear();
 
             // register entities
             _collection.AddEntity(new MasterMap());
             _collection.AddEntity(_player = new Player());
+            //_collection.AddEntity(new Button(new Vector3(0, 5, 0), "Exit", new Action(() => { Base.SetContext(new MenuContext()); })));
+            _collection.AddEntity(new Button(new Vector3(0, 5, 0), SupabaseManager.Client.Auth.CurrentUser.Id ));
 
             // add 10 giraffes at random positions
             Random random = new Random();
@@ -37,12 +42,12 @@ namespace GiraffeShooterClient.Container.World
 
         }
 
-        public void HandleEvents(List<Event> events)
+        public override void HandleEvents(List<Event> events)
         {
             _collection.HandleEvents(events);
         }
 
-        public void Update(Microsoft.Xna.Framework.GameTime gameTime)
+        public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
 
             // use keyboard input to move the player
@@ -86,6 +91,7 @@ namespace GiraffeShooterClient.Container.World
             ControlSystem.Update(gameTime);
             TiledSystem.Update(gameTime);
             SpriteSystem.Update(gameTime);
+            TextSystem.Update(gameTime);
             
             // update the entity collection
             _collection.Update(gameTime);
@@ -95,12 +101,13 @@ namespace GiraffeShooterClient.Container.World
 
         }
 
-        public void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
+        public override void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
 
             // draw entities
             TiledSystem.Draw(gameTime, spriteBatch);
             SpriteSystem.Draw(gameTime, spriteBatch);
+            TextSystem.Draw(gameTime, spriteBatch);
 
         }
 

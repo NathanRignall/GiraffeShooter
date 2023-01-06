@@ -51,6 +51,12 @@ namespace GiraffeShooterClient.Entity
                 CursorPosition--;
             }
         }
+        
+        public void ResetString()
+        {
+            String = "";
+            CursorPosition = 0;
+        }
 
         public override void HandleEvents(List<Event> events)
         {

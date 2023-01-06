@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
 
-using GiraffeShooterClient.Container.Game;
 using GiraffeShooterClient.Utility;
 
 
 namespace GiraffeShooterClient.Container.Menu
 {
-    public class MenuContext
+    public class MenuContext : Context
     {
         
         public enum State
@@ -17,55 +16,46 @@ namespace GiraffeShooterClient.Container.Menu
             Register,
             Game
         }
-        
-        public State CurrentState { get; set; }
-        
-        public RegisterContext RegisterContext { get; set; }
+
+        private State _currentState;
+        private Context _currentContext;
 
         public MenuContext()
         {
-            CurrentState = State.Register;
-            RegisterContext = new RegisterContext();
+            _currentState = State.MainMenu;
+            _currentContext = new MainMenuContext();
         }
 
-        public void HandleEvents(List<Event> events)
+        public override void HandleEvents(List<Event> events)
         {
-            switch (CurrentState)
+            _currentContext.HandleEvents(events);
+        }
+        
+        public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
+        {
+            _currentContext.Update(gameTime);
+        }
+        
+        public void SetState(State state)
+        {
+            _currentState = state;
+            switch (_currentState)
             {
+                case State.MainMenu:
+                    _currentContext = new MainMenuContext();
+                    break;
+                case State.Login:
+                    _currentContext = new LoginContext();
+                    break;
                 case State.Register:
-                    RegisterContext.HandleEvents(events);
+                    _currentContext = new RegisterContext();
                     break;
             }
         }
         
-        public void Update(Microsoft.Xna.Framework.GameTime gameTime)
+        public override void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
-
-            switch (CurrentState)
-            {
-                case State.Register:
-                    RegisterContext.Update(gameTime);
-                    break;
-            }
-
-
-            // switch to the game context for test
-            if (gameTime.TotalGameTime.TotalSeconds > 60)
-            {
-                GameContext.SetState(Game.GameContext.State.World);
-            }
-        }
-        
-        public void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
-        {
-
-            switch (CurrentState)
-            {
-                case State.Register:
-                    RegisterContext.Draw(gameTime, spriteBatch);
-                    break;
-            }
-
+            _currentContext.Draw(gameTime, spriteBatch);
         }
 
     }

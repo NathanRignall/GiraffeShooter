@@ -42,4 +42,17 @@ namespace GiraffeShooterClient.Entity
     class TiledSystem : BaseComponent<Tiled> { }
     class SpriteSystem : BaseComponent<Sprite> { }
     class TextSystem : BaseComponent<Text> { }
+    
+    class Base
+    {
+        public static void Clear()
+        {
+            PhysicsSystem.components.Clear();
+            ColliderSystem.components.Clear();
+            ControlSystem.components.Clear();
+            TiledSystem.components.Clear();
+            SpriteSystem.components.Clear();
+            TextSystem.components.Clear();
+        }
+    }
 }
