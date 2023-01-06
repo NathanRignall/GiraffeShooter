@@ -14,7 +14,6 @@ namespace GiraffeShooterClient.Container.World
     {
         Collection _collection;
         Player _player;
-        TextInput _textInput;
 
         public WorldContext()
         {
@@ -24,7 +23,6 @@ namespace GiraffeShooterClient.Container.World
             // register entities
             _collection.AddEntity(new MasterMap());
             _collection.AddEntity(_player = new Player());
-            _collection.AddEntity(_textInput = new TextInput(new Vector2(0, 0)));
 
             // add 10 giraffes at random positions
             Random random = new Random();
@@ -35,6 +33,7 @@ namespace GiraffeShooterClient.Container.World
 
             // reset the camera
             Camera.Reset();
+            Camera.CurrentState = Camera.State.Follow;
 
         }
 
@@ -79,12 +78,6 @@ namespace GiraffeShooterClient.Container.World
                         entity.Delete();
                     }
                 }
-            }
-
-            // print the text from the text input
-            if (InputManager.IsKeyDown(Keys.Enter))
-            {
-                Console.WriteLine(_textInput.GetText());
             }
 
             // update entities

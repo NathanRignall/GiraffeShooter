@@ -6,12 +6,14 @@ namespace GiraffeShooterClient.Container.Game
         public enum State
         {
             SplashScreen,
+            Menu,
             World
         }
 
         public static State CurrentState;
         public static State NextState;
         public static SplashScreen.SplashScreenContext SplashScreenContext;
+        public static Menu.MenuContext MenuContext;
         public static World.WorldContext WorldContext;
 
         public static void Initialize()
@@ -28,6 +30,9 @@ namespace GiraffeShooterClient.Container.Game
             {
                 case State.SplashScreen:
                     SplashScreenContext = new SplashScreen.SplashScreenContext();
+                    break;
+                case State.Menu:
+                    MenuContext = new Menu.MenuContext();
                     break;
                 case State.World:
                     WorldContext = new World.WorldContext();

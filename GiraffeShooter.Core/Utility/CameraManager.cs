@@ -9,7 +9,8 @@ namespace GiraffeShooterClient.Utility
         public enum State
         {
             Follow,
-            Free
+            Free,
+            Frozen,
         }
 
         public static State CurrentState;
@@ -47,9 +48,9 @@ namespace GiraffeShooterClient.Utility
             _acceleration = new Vector2(0, 0);
         }
 
-        public static void Reset()
+        public static void Reset(float zoom = 3f)
         {
-            Zoom = 3f;
+            Zoom = zoom;
             Offset = new Vector2(0, 0);
             FollowTarget = new Vector2(0, 0);
 
@@ -64,22 +65,25 @@ namespace GiraffeShooterClient.Utility
         public static void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
 
-            var dt = gameTime.ElapsedGameTime;
-            _velocity += _acceleration * (float)dt.TotalSeconds;
-            _position += _velocity * (float)dt.TotalSeconds;
-
-            if (_acceleration == Vector2.Zero)
-            {
-                _velocity = _velocity * 0.9f;
-            }
-
             switch (CurrentState)
             {
                 case State.Follow:
+                    // update camera position
+                    var dt = gameTime.ElapsedGameTime;
+                    _velocity += _acceleration * (float)dt.TotalSeconds;
+                    _position += _velocity * (float)dt.TotalSeconds;
 
+                    // decelerate
+                    if (_acceleration == Vector2.Zero)
+                    {
+                        _velocity = _velocity * 0.9f;
+                    }
+                    
+                    // calculate offset
                     var _followDiff = FollowTarget - _followOffset;
                     _followOffset += _followDiff * 0.05f;
 
+                    
                     if (_followDiff.Length() > 0.1f)
                     {
                         var _homeDiff = _homePosition - _position;
@@ -88,7 +92,12 @@ namespace GiraffeShooterClient.Utility
 
                     Offset = _position - _followOffset;
                     break;
+                
                 case State.Free:
+                    Offset = _position;
+                    break;
+                
+                case State.Frozen:
                     Offset = _position;
                     break;
             }
@@ -107,12 +116,17 @@ namespace GiraffeShooterClient.Utility
 
                     case EventType.MouseScroll:
 
-                        Zoom += Zoom * e.MouseScrollDelta / 10000;
-                        Zoom = MathHelper.Clamp(Zoom, MinZoom, MaxZoom);
+                        switch (CurrentState)
+                        {
+                            case State.Follow:
+                                Zoom += Zoom * e.MouseScrollDelta / 10000;
+                                Zoom = MathHelper.Clamp(Zoom, MinZoom, MaxZoom);
 
-                        var newHomePosition = ScreenManager.Size / 2 / Zoom;
-                        _position = _position - _homePosition + newHomePosition;
-                        _homePosition = newHomePosition;
+                                var newHomePosition = ScreenManager.Size / 2 / Zoom;
+                                _position = _position - _homePosition + newHomePosition;
+                                _homePosition = newHomePosition;
+                                break;
+                        }
 
                         break;
                 }

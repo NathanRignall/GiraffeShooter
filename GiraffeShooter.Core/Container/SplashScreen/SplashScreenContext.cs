@@ -18,7 +18,7 @@ namespace GiraffeShooterClient.Container.SplashScreen
 
             if (gameTime.TotalGameTime.TotalSeconds > 3)
             {
-                GameContext.SetState(Game.GameContext.State.World);
+                GameContext.SetState(Game.GameContext.State.Menu);
             }
 
         }

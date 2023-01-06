@@ -17,7 +17,7 @@ public class GiraffeShooter : Game
 
     public GiraffeShooter()
     {
-        ScreenManager.Size = new Vector2(1280, 720);
+        ScreenManager.SetResolution("1280x720");
 
         _graphics = new GraphicsDeviceManager(this);
         _graphics.PreferredBackBufferWidth = (int)ScreenManager.Size.X;
@@ -46,8 +46,11 @@ public class GiraffeShooter : Game
 
     protected override void Update(GameTime gameTime)
     {
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            Exit();
+
+// #if !__IOS__
+//         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+//             Exit();
+// #endif
 
         // change game state
         GameContext.CurrentState = GameContext.NextState;
@@ -77,6 +80,11 @@ public class GiraffeShooter : Game
             case GameContext.State.SplashScreen:
                 GameContext.SplashScreenContext.Update(gameTime);
                 break;
+            
+            case GameContext.State.Menu:
+                GameContext.MenuContext.HandleEvents(events);
+                GameContext.MenuContext.Update(gameTime);
+                break;
 
             case GameContext.State.World:
                 _scaleFactor = Camera.Zoom;
@@ -91,8 +99,7 @@ public class GiraffeShooter : Game
         // update the camera context
         Camera.Update(gameTime);
         
-        // set network state
-
+        // update monogame
         base.Update(gameTime);
     }
 
@@ -100,7 +107,7 @@ public class GiraffeShooter : Game
     {
         GraphicsDevice.Clear(Color.Black);
 
-        var transformMatrix = Matrix.CreateScale(_scaleFactor, _scaleFactor, 1f);
+        var transformMatrix = Matrix.CreateScale(1f, 1f, 1f);
         
         switch (GameContext.CurrentState)
         {
@@ -109,8 +116,15 @@ public class GiraffeShooter : Game
                 GameContext.SplashScreenContext.Draw(gameTime, _spriteBatch);
                 _spriteBatch.End();
                 break;
+            
+            case GameContext.State.Menu:
+                _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
+                GameContext.MenuContext.Draw(gameTime, _spriteBatch);
+                _spriteBatch.End();
+                break;
 
             case GameContext.State.World:
+                transformMatrix = Matrix.CreateScale(_scaleFactor, _scaleFactor, 1f);
                 _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
                 GameContext.WorldContext.Draw(gameTime, _spriteBatch);
                 _spriteBatch.End();

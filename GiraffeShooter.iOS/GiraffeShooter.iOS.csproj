@@ -5,6 +5,13 @@
     <SupportedOSPlatformVersion>11.2</SupportedOSPlatformVersion>
     <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <CreatePackage>false</CreatePackage>
+    <CodesignProvision>iOS Team Provisioning Profile: app.nlr.GiraffeShooter.iOS</CodesignProvision>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <CreatePackage>false</CreatePackage>
+  </PropertyGroup>
   <ItemGroup>
     <MonoGameContentReference Include="..\GiraffeShooter.Core\Content\GiraffeShooter.mgcb">
       <Link>Content\GiraffeShooter.mgcb</Link>

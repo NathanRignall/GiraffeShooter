@@ -8,12 +8,21 @@ namespace GiraffeShooterClient.Entity
 {
     class TextInput : Entity
     {
-        string text = "";
+        string textInput = "";
 
-        public TextInput(Vector2 position)
+        public TextInput(Vector3 position)
         {
             id = System.Guid.NewGuid();
             name = "TextInput";
+            
+            Physics physics = new Physics();
+            physics.position = position;
+            physics.isStatic = true;
+            AddComponent(physics);
+            
+            Text text = new Text();
+            text.String = textInput;
+            AddComponent(text);
             
         }
 
@@ -37,7 +46,7 @@ namespace GiraffeShooterClient.Entity
                             if (e.Key.ToString().Length == 1)
                             {
                                 // add the letter to the text
-                                text += e.Key.ToString().ToUpper();
+                                textInput += e.Key.ToString().ToUpper();
                             }
                         }
                         else
@@ -46,7 +55,7 @@ namespace GiraffeShooterClient.Entity
                             if (e.Key.ToString().Length == 1)
                             {
                                 // add the letter to the text
-                                text += e.Key.ToString().ToLower();
+                                textInput += e.Key.ToString().ToLower();
                             }
                         }
                         
@@ -54,36 +63,33 @@ namespace GiraffeShooterClient.Entity
                         if (e.Key.ToString().Length == 1 && e.Key.ToString()[0] >= '0' && e.Key.ToString()[0] <= '9')
                         {
                             // add the number to the text
-                            text += e.Key.ToString();
+                            textInput += e.Key.ToString();
                         }
                         
                         // check if the key is a space
                         if (e.Key == Keys.Space)
                         {
                             // add a space to the text
-                            text += " ";
+                            textInput += " ";
                         }
                         
                         // check if the key is a backspace
                         if (e.Key == Keys.Back)
                         {
                             // remove the last character from the text
-                            if (text.Length > 0)
+                            if (textInput.Length > 0)
                             {
-                                text = text.Substring(0, text.Length - 1);
+                                textInput = textInput.Substring(0, textInput.Length - 1);
                             }
                         }
                         
                         break;
                 }
             }
-        }
-
-        public string GetText()
-        {
-            var temp = text;
-            text = "";
-            return temp;
+            
+            // update the text
+            GetComponent<Text>().String = textInput;
+            
         }
     }
 }

@@ -41,4 +41,5 @@ namespace GiraffeShooterClient.Entity
     class ControlSystem : BaseComponent<Control> { }
     class TiledSystem : BaseComponent<Tiled> { }
     class SpriteSystem : BaseComponent<Sprite> { }
+    class TextSystem : BaseComponent<Text> { }
 }
