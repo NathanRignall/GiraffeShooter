@@ -35,7 +35,7 @@ namespace GiraffeShooterClient.Utility
             PlayerTexture = content.Load<Texture2D>("player_texture");
             GiraffeTextureTest = content.Load<Texture2D>("giraffe_texture_test");
             
-            Font = content.Load<SpriteFont>("font");
+            Font = content.Load<SpriteFont>("Font");
             
         }
     }
