@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <SupportedOSPlatformVersion>11.2</SupportedOSPlatformVersion>
     <CodesignKey>iPhone Developer</CodesignKey>
+    <ProvisioningType>manual</ProvisioningType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <CreatePackage>false</CreatePackage>
@@ -13,16 +14,23 @@
     <CreatePackage>false</CreatePackage>
   </PropertyGroup>
   <ItemGroup>
-    <MonoGameContentReference Include="..\GiraffeShooter.Core\Content\GiraffeShooter.mgcb">
-      <Link>Content\GiraffeShooter.mgcb</Link>
-    </MonoGameContentReference>
+    <Compile Include="..\GiraffeShooter.Core\Container\**\*.cs" />
+    <Compile Include="..\GiraffeShooter.Core\Entity\**\*.cs" />
+    <Compile Include="..\GiraffeShooter.Core\Utility\**\*.cs" />
+    <Compile Include="..\GiraffeShooter.Core\GiraffeShooterGame.cs" Link="GiraffeShooterGame.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
-    <PackageReference Include="MonoGame.Framework.iOS" Version="3.8.1.303" />
+    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.1-develop" />
+    <PackageReference Include="MonoGame.Framework.iOS" Version="3.8.1.1-develop" />
+    <PackageReference Include="supabase-csharp" Version="0.6.2" />
+    <PackageReference Include="TiledCS" Version="3.3.3" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GiraffeShooter.Core\GiraffeShooter.Core.csproj" />
+    <Folder Include="Content\" />
+    <Folder Include="Game\" />
+  </ItemGroup>
+  <ItemGroup>
+    <MonoGameContentReference Include="..\GiraffeShooter.Core\Content\GiraffeShooter.mgcb" Link="Content\GiraffeShooter.mgcb" />
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />

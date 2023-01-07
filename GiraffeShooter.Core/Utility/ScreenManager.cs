@@ -22,7 +22,8 @@ namespace GiraffeShooterClient.Utility
             { "1920x1200", new Vector2(1920, 1200) },
             { "2560x1440", new Vector2(2560, 1440) },
             { "2560x1600", new Vector2(2560, 1600) },
-            { "3840x2160", new Vector2(3840, 2160) }
+            { "3840x2160", new Vector2(3840, 2160) },
+            { "2556x1179", new Vector2(2556, 1179) }
         };
             
         public static Vector2 Size;

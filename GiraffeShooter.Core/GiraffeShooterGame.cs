@@ -16,7 +16,7 @@ public class GiraffeShooter : Game
 
     public GiraffeShooter()
     {
-        ScreenManager.SetResolution("1600x900");
+        ScreenManager.SetResolution("2556x1179");
 
         _graphics = new GraphicsDeviceManager(this);
         _graphics.PreferredBackBufferWidth = (int)ScreenManager.Size.X;
