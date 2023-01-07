@@ -7,6 +7,10 @@ namespace GiraffeShooterClient.Entity
 {
     class Giraffe : Entity
     {
+        
+        Animation.Frame[] standFrames = new Animation.Frame[1];
+        Animation.Frame[] walkingFrames = new Animation.Frame[3];
+
         public Giraffe(Vector3 position, Vector3 velocity)
         {
             id = System.Guid.NewGuid();
@@ -22,10 +26,21 @@ namespace GiraffeShooterClient.Entity
 
             Control control = new Control();
             AddComponent(control);
-
-            Sprite sprite = new Sprite();
-            sprite.texture = AssetManager.PlayerTexture;
+            
+            Sprite sprite = new Sprite(AssetManager.GiraffeSpriteTexture);
             AddComponent(sprite);
+            
+            // stand animation frames
+            standFrames[0] = new Animation.Frame(32, 0, 32, 64, 100);
+            
+            // walking animation frames
+            walkingFrames[0] = new Animation.Frame(0, 0, 32, 64, 100);
+            walkingFrames[1] = new Animation.Frame(32, 0, 32, 64, 100);
+            walkingFrames[2] = new Animation.Frame(64, 0, 32, 64, 100);
+
+            Animation animation = new Animation(walkingFrames);
+            AddComponent(animation);
+
         }
 
         public void Move(Control.Direction direction) {

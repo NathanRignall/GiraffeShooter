@@ -40,6 +40,7 @@ namespace GiraffeShooterClient.Entity
     class ColliderSystem : BaseComponent<Collider> { }
     class ControlSystem : BaseComponent<Control> { }
     class TiledSystem : BaseComponent<Tiled> { }
+    class AnimationSystem : BaseComponent<Animation> { }
     class SpriteSystem : BaseComponent<Sprite> { }
     class TextSystem : BaseComponent<Text> { }
     
@@ -51,6 +52,7 @@ namespace GiraffeShooterClient.Entity
             ColliderSystem.components.Clear();
             ControlSystem.components.Clear();
             TiledSystem.components.Clear();
+            AnimationSystem.components.Clear();
             SpriteSystem.components.Clear();
             TextSystem.components.Clear();
         }

@@ -23,8 +23,7 @@ namespace GiraffeShooterClient.Entity
             Control control = new Control();
             AddComponent(control);
 
-            Sprite sprite = new Sprite();
-            sprite.texture = AssetManager.PlayerTexture;
+            Sprite sprite = new Sprite(AssetManager.PlayerTexture);
             AddComponent(sprite);
         }
 

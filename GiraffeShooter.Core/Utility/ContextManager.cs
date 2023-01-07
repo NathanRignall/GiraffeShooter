@@ -10,7 +10,7 @@ namespace GiraffeShooterClient.Utility
             World
         }
 
-        public static State CurrentState;
+        public static State CurrentState { get; private set; }
 
         public static Container.SplashScreen.SplashScreenContext SplashScreenContext;
         public static Container.Menu.MenuContext MenuContext;

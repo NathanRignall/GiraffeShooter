@@ -24,8 +24,7 @@ namespace GiraffeShooterClient.Entity
             physics.isStatic = true;
             AddComponent(physics);
             
-            Sprite sprite = new Sprite();
-            sprite.texture = AssetManager.PlayerTexture;
+            Sprite sprite = new Sprite(AssetManager.PlayerTexture);
             AddComponent(sprite);
             
             Text text = new Text();

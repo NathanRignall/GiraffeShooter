@@ -27,13 +27,13 @@ namespace GiraffeShooterClient.Container.World
             _collection.AddEntity(new MasterMap());
             _collection.AddEntity(_player = new Player());
             //_collection.AddEntity(new Button(new Vector3(0, 5, 0), "Exit", new Action(() => { Base.SetContext(new MenuContext()); })));
-            _collection.AddEntity(new Button(new Vector3(0, 5, 0), SupabaseManager.Client.Auth.CurrentUser.Id ));
+            //_collection.AddEntity(new Button(new Vector3(0, 5, 0), SupabaseManager.Client.Auth.CurrentUser.Id ));
 
             // add 10 giraffes at random positions
             Random random = new Random();
             for (int i = 0; i < 10; i++)
             {
-                _collection.AddEntity(new Giraffe(new Vector3(random.Next(-10, 10), random.Next(-10, 10), 0), new Vector3(0, 0, 0)));
+                _collection.AddEntity(new Giraffe(new Vector3(random.Next(-10, 10), random.Next(-10, 10), 0), new Vector3(random.Next(-2, 2), random.Next(-2, 2), 0)));
             }
 
             // reset the camera
@@ -90,6 +90,7 @@ namespace GiraffeShooterClient.Container.World
             ColliderSystem.Update(gameTime);
             ControlSystem.Update(gameTime);
             TiledSystem.Update(gameTime);
+            AnimationSystem.Update(gameTime);
             SpriteSystem.Update(gameTime);
             TextSystem.Update(gameTime);
             

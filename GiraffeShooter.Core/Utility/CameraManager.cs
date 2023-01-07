@@ -16,6 +16,7 @@ namespace GiraffeShooterClient.Utility
         public static State CurrentState;
 
         public static float Zoom { get; private set; }
+        public static float DefaultZoom { get; private set; }
         public static float MaxZoom { get; private set; }
         public static float MinZoom { get; private set; }
 
@@ -33,8 +34,10 @@ namespace GiraffeShooterClient.Utility
         {
             CurrentState = State.Follow;
 
-            Zoom = 3f;
-            MaxZoom = 4f;
+            var screenScale = ScreenManager.Size.Y/ 720f;
+
+            Zoom = DefaultZoom = 3f * screenScale;
+            MaxZoom = 4f * screenScale;
             MinZoom = 0.5f;
 
             Offset = new Vector2(0, 0);
@@ -48,7 +51,21 @@ namespace GiraffeShooterClient.Utility
             _acceleration = new Vector2(0, 0);
         }
 
-        public static void Reset(float zoom = 3f)
+        public static void Reset()
+        {
+            Zoom = DefaultZoom;
+            Offset = new Vector2(0, 0);
+            FollowTarget = new Vector2(0, 0);
+
+            _homePosition = ScreenManager.Size / 2 / Zoom;
+            _followOffset = new Vector2(0, 0);
+
+            _position = _homePosition;
+            _velocity = new Vector2(0, 0);
+            _acceleration = new Vector2(0, 0);
+        }
+        
+        public static void Reset(float zoom)
         {
             Zoom = zoom;
             Offset = new Vector2(0, 0);

@@ -7,26 +7,37 @@ namespace GiraffeShooterClient.Entity
 {
     class Sprite : Component
     {
-        public Texture2D texture;
-        public Rectangle Bounds { get; set; }
+        public Texture2D Texture { get; private set; }
+        public Rectangle SourceRectangle;
+        
+        public Rectangle Bounds { get; private set; }
 
-        public Sprite()
+        public Sprite(Texture2D texture)
         {
+            Texture = texture;
+            SourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
+            SpriteSystem.Register(this);
+        }
+        
+        public Sprite(Texture2D texture, Rectangle sourceRectangle)
+        {
+            Texture = texture;
+            SourceRectangle = sourceRectangle;
             SpriteSystem.Register(this);
         }
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
             // calculate the position of the sprite
-            Physics physics = entity.GetComponent<Physics>();
-            Vector2 cameraOffset = Camera.Offset;
-            Vector2 position = (new Vector2(physics.position.X, physics.position.Y) * 1000f / 32f  ) + cameraOffset - new Vector2(texture.Width / 2, texture.Height / 2);
+            var physics = entity.GetComponent<Physics>();
+            var cameraOffset = Camera.Offset;
+            var position = (new Vector2(physics.position.X, physics.position.Y) * 1000f / 32f  ) + cameraOffset - new Vector2(SourceRectangle.Width / 2, SourceRectangle.Height / 2);
 
             // draw the sprite
-            spriteBatch.Draw(texture, position, Color.White);
+            spriteBatch.Draw(Texture, position, SourceRectangle, Color.White);
             
             // update bounds
-            Bounds = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
+            Bounds = new Rectangle((int)position.X, (int)position.Y, SourceRectangle.Width, SourceRectangle.Height);
         }
 
         public override void Deregister()
