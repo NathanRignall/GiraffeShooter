@@ -28,12 +28,12 @@ namespace GiraffeShooterClient.Entity
                             continue;
                         }
                         
-                        // write the collision to the console
-                        System.Console.WriteLine("Collision detected between " + entity.name + " and " + collider.entity.name);
-
-                        // write bounding box information to the console
-                        System.Console.WriteLine("Entity 1: " + entity.GetComponent<Physics>().BoundingBox.ToString());
-                        System.Console.WriteLine("Entity 2: " + collider.entity.GetComponent<Physics>().BoundingBox.ToString());
+                        // // write the collision to the console
+                        // System.Console.WriteLine("Collision detected between " + entity.name + " and " + collider.entity.name);
+                        //
+                        // // write bounding box information to the console
+                        // System.Console.WriteLine("Entity 1: " + entity.GetComponent<Physics>().BoundingBox.ToString());
+                        // System.Console.WriteLine("Entity 2: " + collider.entity.GetComponent<Physics>().BoundingBox.ToString());
                         
                         // if the second entity is static
                         if (collider.entity.GetComponent<Physics>().IsStatic)

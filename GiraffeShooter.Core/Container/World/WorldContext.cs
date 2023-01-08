@@ -35,6 +35,12 @@ namespace GiraffeShooterClient.Container.World
             {
                 _collection.AddEntity(new Giraffe(new Vector3(random.Next(-10, 10), random.Next(-5, 5), 0), new Vector3(random.Next(-3, 3), random.Next(-2, 2), 0)));
             }
+            
+            // add 10 ammunition at random positions
+            for (int i = 0; i < 10; i++)
+            {
+                _collection.AddEntity(new Ammunition(new Vector3(random.Next(-10, 10), random.Next(-5, 5), 0)));
+            }
 
             // reset the camera
             Camera.Reset();

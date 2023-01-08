@@ -75,6 +75,18 @@
 /processorParam:TextureFormat=Color
 /build:player_texture.png
 
+#begin Sprites/DemoAmmunition.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/DemoAmmunition.png
+
 #begin Sprites/Giraffe.png
 /importer:TextureImporter
 /processor:TextureProcessor

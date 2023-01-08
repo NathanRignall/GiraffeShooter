@@ -9,7 +9,7 @@ namespace GiraffeShooterClient.Entity
     {
         
         Animation.Frame[] standFrames = new Animation.Frame[1];
-        Animation.Frame[] walkingFrames = new Animation.Frame[3];
+        Animation.Frame[] walkingFrames = new Animation.Frame[4];
 
         public Giraffe(Vector3 position, Vector3 velocity)
         {
@@ -18,6 +18,7 @@ namespace GiraffeShooterClient.Entity
             
             Physics physics = new Physics();
             physics.Position = position;
+            physics.Size = new Vector3(1, 1, 2);
             physics.Velocity = velocity;
             AddComponent(physics);
 
@@ -37,6 +38,7 @@ namespace GiraffeShooterClient.Entity
             walkingFrames[0] = new Animation.Frame(0, 0, 32, 64, 100);
             walkingFrames[1] = new Animation.Frame(32, 0, 32, 64, 100);
             walkingFrames[2] = new Animation.Frame(64, 0, 32, 64, 100);
+            walkingFrames[3] = new Animation.Frame(32, 0, 32, 64, 100);
 
             Animation animation = new Animation(walkingFrames);
             AddComponent(animation);

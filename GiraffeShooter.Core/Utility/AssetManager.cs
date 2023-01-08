@@ -22,6 +22,7 @@ namespace GiraffeShooterClient.Utility
         public static Texture2D GiraffeTextureTest { get; private set; }
         
         public static Texture2D GiraffeSpriteTexture { get; private set; }
+        public static Texture2D AmmunitionSpriteTexture { get; private set; }
         
         public static SpriteFont Font { get; private set; }
         public static SpriteFont FontTitle { get; private set; }
@@ -42,6 +43,7 @@ namespace GiraffeShooterClient.Utility
             GiraffeTextureTest = content.Load<Texture2D>("giraffe_texture_test");
             
             GiraffeSpriteTexture = content.Load<Texture2D>("Sprites/Giraffe");
+            AmmunitionSpriteTexture = content.Load<Texture2D>("Sprites/DemoAmmunition");
             
             Font = content.Load<SpriteFont>("Fonts/Normal");
             FontTitle = content.Load<SpriteFont>("Fonts/Title");
