@@ -33,12 +33,14 @@ namespace GiraffeShooterClient.Container.World
             Random random = new Random();
             for (int i = 0; i < 10; i++)
             {
-                _collection.AddEntity(new Giraffe(new Vector3(random.Next(-10, 10), random.Next(-10, 10), 0), new Vector3(random.Next(-2, 2), random.Next(-2, 2), 0)));
+                _collection.AddEntity(new Giraffe(new Vector3(random.Next(-10, 10), random.Next(-5, 5), 0), new Vector3(random.Next(-3, 3), random.Next(-2, 2), 0)));
             }
 
             // reset the camera
             Camera.Reset();
             Camera.CurrentState = Camera.State.Follow;
+            Camera.FollowTarget = _player.GetPosition() * 1000f / 32f;
+            Camera.Snap();
 
         }
 
@@ -49,7 +51,6 @@ namespace GiraffeShooterClient.Container.World
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-
             // use keyboard input to move the player
             if (InputManager.IsKeyDown(Keys.Up))
             {

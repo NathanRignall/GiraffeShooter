@@ -12,8 +12,8 @@ namespace GiraffeShooterClient.Entity
             name = "Player";
             
             Physics physics = new Physics();
-            physics.position = new Vector3(1, 1, 10);
-            physics.size = new Vector3(1, 1, 2);
+            physics.Position = new Vector3(0, 0, 0);
+            physics.Size = new Vector3(1, 1, 2);
             physics.deceleration = 0.1f;
             AddComponent(physics);
 
@@ -23,7 +23,7 @@ namespace GiraffeShooterClient.Entity
             Control control = new Control();
             AddComponent(control);
 
-            Sprite sprite = new Sprite(AssetManager.PlayerTexture);
+            Sprite sprite = new Sprite(AssetManager.GiraffeTextureTest, new Rectangle(300,300,32,32));
             AddComponent(sprite);
         }
 
@@ -32,15 +32,9 @@ namespace GiraffeShooterClient.Entity
             control.Move(direction);
         }
 
-        public Vector2 SetPosition(Vector2 position) {
-            Physics physics = GetComponent<Physics>();
-            physics.position = new Vector3(position, 0);
-            return new Vector2(physics.position.X, physics.position.Y);
-        }
-
         public Vector2 GetPosition() {
             Physics physics = GetComponent<Physics>();
-            return new Vector2(physics.position.X, physics.position.Y);
+            return new Vector2(physics.Position.X, physics.Position.Y);
         }
     }
 }

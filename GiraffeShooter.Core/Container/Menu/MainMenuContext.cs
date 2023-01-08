@@ -37,13 +37,6 @@ namespace GiraffeShooterClient.Container.Menu
         
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            
-            // switch to the game context for test
-            if (gameTime.TotalGameTime.TotalSeconds > 6)
-            {
-                ContextManager.MenuContext.SetState(MenuContext.State.Login);
-            }
-            
             // update entities
             PhysicsSystem.Update(gameTime);
             SpriteSystem.Update(gameTime);

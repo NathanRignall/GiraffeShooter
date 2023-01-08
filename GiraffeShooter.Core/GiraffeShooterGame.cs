@@ -16,8 +16,12 @@ public class GiraffeShooter : Game
 
     public GiraffeShooter()
     {
-        ScreenManager.SetResolution("2556x1179");
-
+        ScreenManager.SetResolution("1280x720");
+        
+#if __IOS__
+        ScreenManager.Size = new Vector2(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
+#endif
+        
         _graphics = new GraphicsDeviceManager(this);
         _graphics.PreferredBackBufferWidth = (int)ScreenManager.Size.X;
         _graphics.PreferredBackBufferHeight = (int)ScreenManager.Size.Y;
@@ -34,6 +38,8 @@ public class GiraffeShooter : Game
         InputManager.Initialize(); 
         SupabaseManager.Initialize();
         ContextManager.Initialize();
+
+        //Microsoft.Xna.Framework.Input.KeyboardInput.Show("en-US", "Giraffe Shooter", "Enter your name", false);
     }
 
     protected override void LoadContent()
@@ -45,13 +51,12 @@ public class GiraffeShooter : Game
 
     protected override void Update(GameTime gameTime)
     {
+        ContextManager.SwitchState();
 
 // #if !__IOS__
 //         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
 //             Exit();
 // #endif
-
-        // get network state
 
         // update the game state (for keys)
         InputManager.UpdateState(Keyboard.GetState(), Mouse.GetState());

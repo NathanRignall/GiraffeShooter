@@ -17,16 +17,16 @@ namespace GiraffeShooterClient.Entity
 
             switch (direction) {
                 case Direction.up:
-                    physics.velocity.Y = -speed;
+                    physics.Velocity.Y = -speed;
                     break;
                 case Direction.down:
-                    physics.velocity.Y = speed;
+                    physics.Velocity.Y = speed;
                     break;
                 case Direction.left:
-                    physics.velocity.X = -speed;
+                    physics.Velocity.X = -speed;
                     break;
                 case Direction.right:
-                    physics.velocity.X = speed;
+                    physics.Velocity.X = speed;
                     break;
             }
         }

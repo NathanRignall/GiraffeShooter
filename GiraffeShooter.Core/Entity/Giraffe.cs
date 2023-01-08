@@ -17,8 +17,8 @@ namespace GiraffeShooterClient.Entity
             name = "Giraffe";
             
             Physics physics = new Physics();
-            physics.position = position;
-            physics.velocity = velocity;
+            physics.Position = position;
+            physics.Velocity = velocity;
             AddComponent(physics);
 
             Collider collider = new Collider();

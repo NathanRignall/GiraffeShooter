@@ -4,15 +4,23 @@ namespace GiraffeShooterClient.Entity
 {
     class Physics : Component
     {
-        public bool isStatic = false;
+        public bool IsStatic = false;
 
-        public Vector3 position = Vector3.Zero;
-        public Vector3 velocity = Vector3.Zero;
-        public Vector3 acceleration = Vector3.Zero;
+        public Vector3 Position = Vector3.Zero;
+        public Vector3 Velocity = Vector3.Zero;
+        public Vector3 Acceleration = Vector3.Zero;
         public float deceleration = 0.99f;
 
-        public Vector3 size = Vector3.Zero;
+        public Vector3 Size = Vector3.Zero;
         public float mass = 1.0f;
+        
+        public BoundingBox BoundingBox
+        {
+            get
+            {
+                return new BoundingBox(Position - Size / 2, Position + Size / 2);
+            }
+        }
 
         public Physics()
         {
@@ -22,14 +30,14 @@ namespace GiraffeShooterClient.Entity
         public override void Update(GameTime gameTime)
         {
 
-            if (isStatic) return;
+            if (IsStatic) return;
             
             var dt = gameTime.ElapsedGameTime;
 
-            velocity += acceleration * (float)dt.TotalSeconds;;
-            position += velocity * (float)dt.TotalSeconds;
+            Velocity += Acceleration * (float)dt.TotalSeconds;;
+            Position += Velocity * (float)dt.TotalSeconds;
             
-            velocity *= deceleration;
+            Velocity *= deceleration;
         }
 
         public override void Deregister()

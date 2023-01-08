@@ -11,6 +11,7 @@ namespace GiraffeShooterClient.Utility
         }
 
         public static State CurrentState { get; private set; }
+        public static State NextState { get; private set; }
 
         public static Container.SplashScreen.SplashScreenContext SplashScreenContext;
         public static Container.Menu.MenuContext MenuContext;
@@ -24,9 +25,9 @@ namespace GiraffeShooterClient.Utility
 
         public static void SetState(State state)
         {
-            CurrentState = state;
+            NextState = state;
 
-            switch (state)
+            switch (NextState)
             {
                 case State.SplashScreen:
                     SplashScreenContext = new Container.SplashScreen.SplashScreenContext();
@@ -37,6 +38,16 @@ namespace GiraffeShooterClient.Utility
                 case State.World:
                     WorldContext = new Container.World.WorldContext();
                     break;
+                default:
+                    break;
+            }
+        }
+        
+        public static void SwitchState()
+        {
+            if (NextState != CurrentState)
+            {
+                CurrentState = NextState;
             }
         }
     }

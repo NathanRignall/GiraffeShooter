@@ -106,6 +106,12 @@ namespace GiraffeShooterClient.Utility
                         var _homeDiff = _homePosition - _position;
                         _position += _homeDiff * 0.1f;
                     }
+                    
+                    // cut off velocity
+                    if (_velocity.Length() < 0.1f)
+                    {
+                        _velocity = Vector2.Zero;
+                    }
 
                     Offset = _position - _followOffset;
                     break;
@@ -118,6 +124,11 @@ namespace GiraffeShooterClient.Utility
                     Offset = _position;
                     break;
             }
+        }
+
+        public static void Snap()
+        {
+            _followOffset = FollowTarget;
         }
 
         public static void HandleEvents(List<Event> events)

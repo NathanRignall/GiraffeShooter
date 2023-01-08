@@ -20,8 +20,8 @@ namespace GiraffeShooterClient.Entity
             name = "TextInput";
             
             Physics physics = new Physics();
-            physics.position = position;
-            physics.isStatic = true;
+            physics.Position = position;
+            physics.IsStatic = true;
             AddComponent(physics);
             
             Sprite sprite = new Sprite(AssetManager.PlayerTexture);

@@ -31,10 +31,11 @@ namespace GiraffeShooterClient.Entity
             // calculate the position of the sprite
             var physics = entity.GetComponent<Physics>();
             var cameraOffset = Camera.Offset;
-            var position = (new Vector2(physics.position.X, physics.position.Y) * 1000f / 32f  ) + cameraOffset - new Vector2(SourceRectangle.Width / 2, SourceRectangle.Height / 2);
+            var position = (new Vector2(physics.Position.X, physics.Position.Y) * 32f ) + cameraOffset - (new Vector2(SourceRectangle.Width / 2, SourceRectangle.Height / 2));
+            var destinationRectangle = new Rectangle((int)position.X, (int)position.Y, SourceRectangle.Width, SourceRectangle.Height);
 
             // draw the sprite
-            spriteBatch.Draw(Texture, position, SourceRectangle, Color.White);
+            spriteBatch.Draw(Texture, destinationRectangle, SourceRectangle, Color.White);
             
             // update bounds
             Bounds = new Rectangle((int)position.X, (int)position.Y, SourceRectangle.Width, SourceRectangle.Height);

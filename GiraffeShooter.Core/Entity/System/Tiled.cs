@@ -17,6 +17,9 @@ namespace GiraffeShooterClient.Entity
         public TiledMap Map;
         public Dictionary<int, TiledTileset> Tilesets;
         public Texture2D TilesetTexture;
+        
+        private Vector2 _startLocation;
+        private List<Wall> _walls = new List<Wall>(); 
 
         enum Trans
         {
@@ -32,8 +35,24 @@ namespace GiraffeShooterClient.Entity
             Rotate_90AndFlip_H = Flip_H | Flip_V | Flip_D,
         }
 
-        public Tiled()
+        public Tiled(TiledMap map, Dictionary<int, TiledTileset> tilesets, Texture2D tilesetTexture, Vector2 startLocation)
         {
+            Map = map;
+            Tilesets = tilesets;
+            TilesetTexture = tilesetTexture;
+            
+            _startLocation = startLocation;
+            
+            var collisionLayer = map.Layers.First(l => l.name == "Walls");
+            foreach (var obj in collisionLayer.objects)
+            {
+            
+                var wallSize = new Vector3(obj.width / Map.TileWidth, obj.height / Map.TileHeight, float.MaxValue);
+                var wallPosition = new Vector3((obj.x + _startLocation.X * Map.TileWidth )/ Map.TileWidth + wallSize.X / 2, (obj.y + _startLocation.Y * Map.TileHeight) / Map.TileHeight + wallSize.Y / 2, float.MaxValue / 2);
+                
+                _walls.Add(new Wall(wallPosition, wallSize));
+            }
+            
             TiledSystem.Register(this);
         }
 
@@ -53,8 +72,9 @@ namespace GiraffeShooterClient.Entity
                     {
                         var index = (y * layer.width) + x; // Assuming the default render order is used which is from right to bottom
                         var gid = layer.data[index]; // The tileset tile index
-                        var tileX = x * Map.TileWidth + (int)cameraOffset.X;
-                        var tileY = y * Map.TileHeight + (int)cameraOffset.Y;
+
+                        var tileX = (x +(int)_startLocation.X) * Map.TileWidth + (int)cameraOffset.X;
+                        var tileY = (y + (int)_startLocation.Y) * Map.TileHeight + (int)cameraOffset.Y;
 
                         // Gid 0 is used to tell there is no tile set
                         if (gid == 0)
@@ -111,11 +131,7 @@ namespace GiraffeShooterClient.Entity
                                 rotation = Math.PI * .5f;
                                 destination.X += Map.TileWidth;
                                 break;
-
-                            default:
-                                break;
                         }
-
 
                         // Render sprite at position tileX, tileY using the rect
                         spriteBatch.Draw(TilesetTexture, destination, source, Color.White, (float)rotation, Vector2.Zero, effects, 0);
@@ -127,6 +143,12 @@ namespace GiraffeShooterClient.Entity
 
         public override void Deregister()
         {
+            // delete each wall
+            foreach (var wall in _walls)
+            {
+                wall.Delete();
+            }
+            
             TiledSystem.Deregister(this);
         }
     }
