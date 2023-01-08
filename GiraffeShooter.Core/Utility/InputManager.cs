@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input.Touch;
 
 namespace GiraffeShooterClient.Utility;
 
@@ -11,7 +13,7 @@ public enum EventType
     MouseClick,
     MouseScroll,
     KeyPress,
-    KeyRelease
+    KeyRelease,
 }
 
 public struct Event
@@ -93,10 +95,17 @@ public static class InputManager
             }
         }
 
-
+        // mouse logic
         if (PreviousMouseState.LeftButton == ButtonState.Pressed & CurrentMouseState.LeftButton == ButtonState.Pressed) {
-            events.Add(new Event(new Vector2(CurrentMouseState.X, CurrentMouseState.Y), new Vector2(CurrentMouseState.X, CurrentMouseState.Y) - new Vector2(PreviousMouseState.X, PreviousMouseState.Y)));
-            _mouseDragged = true;
+            // only add mouse drag event if mouse was moved
+            if (PreviousMouseState.Position != CurrentMouseState.Position) {
+                events.Add(new Event(new Vector2(CurrentMouseState.X, CurrentMouseState.Y), new Vector2(CurrentMouseState.X, CurrentMouseState.Y) - new Vector2(PreviousMouseState.X, PreviousMouseState.Y)));
+                _mouseDragged = true;
+            }
+        } 
+        else if (PreviousMouseState.LeftButton == ButtonState.Released & CurrentMouseState.LeftButton == ButtonState.Released)
+        {
+            _mouseDragged = false;
         }
 
         if (PreviousMouseState.LeftButton == ButtonState.Pressed & CurrentMouseState.LeftButton == ButtonState.Released & _mouseDragged == false) {
@@ -105,6 +114,16 @@ public static class InputManager
 
         if (PreviousMouseState.ScrollWheelValue != CurrentMouseState.ScrollWheelValue) {
             events.Add(new Event(CurrentMouseState.ScrollWheelValue - PreviousMouseState.ScrollWheelValue));
+        }
+        
+        // touch logic
+        var touchCol = TouchPanel.GetState();
+        
+        foreach (var touch in touchCol) {
+            
+            if (touch.State == TouchLocationState.Pressed) {
+                events.Add(new Event(new Vector2(touch.Position.X, touch.Position.Y)));
+            }
         }
 
         return events;
