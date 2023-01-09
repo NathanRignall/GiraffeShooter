@@ -45,7 +45,6 @@ namespace GiraffeShooterClient.Container.Menu
         
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-
             // send email
             if (InputManager.IsKeyDown(Keys.Enter) && !_loading)
             {
@@ -59,9 +58,6 @@ namespace GiraffeShooterClient.Container.Menu
             
             // update the entity collection
             _collection.Update(gameTime);
-
-            // clean up entities
-            _collection.CleanUp();
         }
         
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)

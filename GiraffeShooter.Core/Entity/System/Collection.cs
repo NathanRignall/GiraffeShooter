@@ -46,6 +46,8 @@ namespace GiraffeShooterClient.Entity
         
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
+            CleanUp();
+            
             foreach (var entity in entities)
             {
                 entity.Update(gameTime);
@@ -54,13 +56,15 @@ namespace GiraffeShooterClient.Entity
 
         public void HandleEvents(List<Event> events)
         {
+            CleanUp();
+            
             foreach (var entity in entities)
             {
                 entity.HandleEvents(events);
             }
         }
 
-        public void CleanUp()
+        private void CleanUp()
         {
             // check if any entities are marked for deletion
             foreach (Entity entity in entities)

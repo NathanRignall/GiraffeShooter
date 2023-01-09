@@ -34,7 +34,6 @@ namespace GiraffeShooterClient.Entity
 
         public void RemoveComponent<T>() where T : Component
         {
-
             foreach (Component component in _components)
             {
                 if (component.GetType().Equals(typeof(T)))
@@ -45,7 +44,19 @@ namespace GiraffeShooterClient.Entity
                     break;
                 }
             }
+        }
+        
+        public bool HasComponent<T>() where T : Component
+        {
+            foreach (Component component in _components)
+            {
+                if (component.GetType().Equals(typeof(T)))
+                {
+                    return true;
+                }
+            }
             
+            return false;
         }
         
         public virtual void Update(Microsoft.Xna.Framework.GameTime gameTime) { }
@@ -58,8 +69,6 @@ namespace GiraffeShooterClient.Entity
             {
                 component.Deregister();
             }
-
-            _components.Clear();
 
             isDeleted = true;
         }

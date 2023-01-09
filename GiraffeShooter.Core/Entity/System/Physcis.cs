@@ -5,6 +5,7 @@ namespace GiraffeShooterClient.Entity
     class Physics : Component
     {
         public bool IsStatic = false;
+        public bool IsKinematic = false;
 
         public Vector3 Position = Vector3.Zero;
         public Vector3 Velocity = Vector3.Zero;

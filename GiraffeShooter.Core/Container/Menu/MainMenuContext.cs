@@ -44,9 +44,6 @@ namespace GiraffeShooterClient.Container.Menu
             
             // update the entity collection
             _collection.Update(gameTime);
-
-            // clean up entities
-            _collection.CleanUp();
         }
         
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)

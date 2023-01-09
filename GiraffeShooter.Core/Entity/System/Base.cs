@@ -7,6 +7,7 @@ namespace GiraffeShooterClient.Entity
     {
 
         public static List<T> components = new List<T>();
+        public static List<T> componentsToRemove = new List<T>();
 
         public static void Register(T component)
         {
@@ -15,11 +16,13 @@ namespace GiraffeShooterClient.Entity
 
         public static void Deregister(T component)
         {
-            components.Remove(component);
+            componentsToRemove.Add(component);
         }
 
         public static void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
+            CleanUp();
+            
             foreach (var component in components)
             {
                 component.Update(gameTime);
@@ -28,10 +31,24 @@ namespace GiraffeShooterClient.Entity
 
         public static void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
+            CleanUp();
+            
             foreach (var component in components)
             {
                 component.Draw(gameTime, spriteBatch);
             }
+        }
+        
+        private static void CleanUp()
+        {
+            // remove all components that have been marked for removal
+            foreach (var component in componentsToRemove)
+            {
+                components.Remove(component);
+            }
+            
+            /// clear the list of components to remove
+            componentsToRemove.Clear();
         }
 
     }

@@ -1,3 +1,4 @@
+using System;
 using GiraffeShooterClient.Utility;
 using Microsoft.Xna.Framework;
 
@@ -15,8 +16,10 @@ namespace GiraffeShooterClient.Entity
             AddComponent(physics);
             
             Collider collider = new Collider();
+            Action pickupAction = Delete;
+            collider.AddResponse<Player>(pickupAction);
             AddComponent(collider);
-            
+
             Sprite sprite = new Sprite(AssetManager.AmmunitionSpriteTexture);
             AddComponent(sprite);
 
