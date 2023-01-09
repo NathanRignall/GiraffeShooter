@@ -17,12 +17,8 @@ namespace GiraffeShooterClient.Entity
             physics.Position = position;
             physics.IsStatic = true;
             AddComponent(physics);
-
-            Text text = new Text();
-            text.String = buttonText;
-            AddComponent(text);
             
-            Sprite sprite = new Sprite(AssetManager.GiraffeTextureTest);
+            Sprite sprite = new Sprite(AssetManager.PlayButtonTexture);
             AddComponent(sprite);
 
         }
