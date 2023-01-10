@@ -138,8 +138,11 @@ namespace GiraffeShooterClient.Utility
                 switch (e.Type)
                 {
                     case EventType.MouseDrag:
-
-                        _velocity += e.MouseDelta * 15 * 1 / Zoom;
+                        _velocity += e.Delta * 15 * 1 / Zoom;
+                        break;
+                    
+                    case EventType.TouchDrag:
+                        _velocity += e.Delta * 13 * 1 / Zoom;
                         break;
 
                     case EventType.MouseScroll:
@@ -147,15 +150,39 @@ namespace GiraffeShooterClient.Utility
                         switch (CurrentState)
                         {
                             case State.Follow:
-                                Zoom += Zoom * e.MouseScrollDelta / 10000;
+                                // calculate zoom
+                                Zoom += Zoom * e.ScrollDelta / 10000;
                                 Zoom = MathHelper.Clamp(Zoom, MinZoom, MaxZoom);
 
+                                // update home position
                                 var newHomePosition = ScreenManager.Size / 2 / Zoom;
                                 _position = _position - _homePosition + newHomePosition;
                                 _homePosition = newHomePosition;
                                 break;
                         }
 
+                        break;
+                    
+                    case EventType.TouchPinch:
+                        
+                        switch (CurrentState)
+                        {
+                            case State.Follow:
+                                // calculate distances
+                                var dist = Vector2.Distance(e.Position, e.Position2);
+                                var distOld = Vector2.Distance(e.Position - e.Delta, e.Position2 - e.Delta2);
+
+                                // calculate zoom
+                                Zoom += Zoom * (dist - distOld)/ 500;
+                                Zoom = MathHelper.Clamp(Zoom, MinZoom, MaxZoom);
+
+                                // update home position
+                                var newHomePosition = ScreenManager.Size / 2 / Zoom;
+                                _position = _position - _homePosition + newHomePosition;
+                                _homePosition = newHomePosition;
+                                break;
+                        }
+                        
                         break;
                 }
             }

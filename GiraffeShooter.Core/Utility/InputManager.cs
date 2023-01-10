@@ -14,46 +14,89 @@ public enum EventType
     MouseScroll,
     KeyPress,
     KeyRelease,
+    TouchDrag,
+    TouchPress,
+    TouchPinch,
 }
 
 public struct Event
 {
     public EventType Type;
     public Keys Key;
-    public Vector2 MousePosition;
-    public Vector2 MouseDelta;
-    public int MouseScrollDelta;
+    public Vector2 Position;
+    public Vector2 Position2;
+    public Vector2 Delta;
+    public Vector2 Delta2;
+    public int ScrollDelta;
 
     public Event(Keys EventKey) {
         Type = EventType.KeyPress;
         Key = EventKey;
-        MousePosition = Vector2.Zero;
-        MouseDelta = Vector2.Zero;
-        MouseScrollDelta = 0;
+        Position = Vector2.Zero;
+        Position2 = Vector2.Zero;
+        Delta = Vector2.Zero;
+        Delta2 = Vector2.Zero;
+        ScrollDelta = 0;
     }
 
-    public Event(Vector2 EventMousePosition) {
-        Type = EventType.MouseClick;
-        Key = Keys.None;
-        MousePosition = EventMousePosition;
-        MouseDelta = Vector2.Zero;
-        MouseScrollDelta = 0;
+    public Event(Vector2 position, EventType type) {
+        // check is click or press
+        if (type == EventType.MouseClick || type == EventType.TouchPress) {
+            Type = type;
+            Position = position;
+            Position2 = Vector2.Zero;
+            Delta = Vector2.Zero;
+            Delta2 = Vector2.Zero;
+            ScrollDelta = 0;
+            Key = Keys.None;
+        } else {
+            throw new Exception("Invalid event type");
+        }
     }
 
-    public Event(Vector2 EventMousePosition, Vector2 EventMouseDelta) {
-        Type = EventType.MouseDrag;
-        Key = Keys.None;
-        MousePosition = EventMousePosition;
-        MouseDelta = EventMouseDelta;
-        MouseScrollDelta = 0;
+    public Event(Vector2 position, Vector2 delta, EventType type) {
+        // check is mouse drag or touch drag
+        if (type == EventType.MouseDrag || type == EventType.TouchDrag) {
+            Type = type;
+            Position = position;
+            Position2 = Vector2.Zero;
+            Delta = delta;
+            Delta2 = Vector2.Zero;
+            ScrollDelta = 0;
+            Key = Keys.None;
+        } else {
+            throw new Exception("Invalid event type");
+        }
     }
 
-    public Event(int EventMouseScrollDelta) {
-        Type = EventType.MouseScroll;
-        Key = Keys.None;
-        MousePosition = Vector2.Zero;
-        MouseDelta = Vector2.Zero;
-        MouseScrollDelta = EventMouseScrollDelta;
+    public Event(int scrollDelta, EventType type) {
+        // check is mouse scroll
+        if (type == EventType.MouseScroll) {
+            Type = type;
+            Position = Vector2.Zero;
+            Position2 = Vector2.Zero;
+            Delta = Vector2.Zero;
+            Delta2 = Vector2.Zero;
+            ScrollDelta = scrollDelta;
+            Key = Keys.None;
+        } else {
+            throw new Exception("Invalid event type");
+        }
+    }
+    
+    public Event(Vector2 position, Vector2 position2, Vector2 delta, Vector2 delta2, EventType type) {
+        // check is touch pinch
+        if (type == EventType.TouchPinch) {
+            Type = type;
+            Position = position;
+            Position2 = position2;
+            Delta = delta;
+            Delta2 = delta2;
+            ScrollDelta = 0;
+            Key = Keys.None;
+        } else {
+            throw new Exception("Invalid event type");
+        }
     }
 
 }
@@ -72,6 +115,8 @@ public static class InputManager
 
         PreviousKeyboardState = new KeyboardState();
         CurrentKeyboardState = new KeyboardState();
+
+        TouchPanel.EnabledGestures = GestureType.Pinch | GestureType.FreeDrag;
     }
 
     public static void UpdateState(KeyboardState keyboardState, MouseState mouseState ) {
@@ -99,7 +144,7 @@ public static class InputManager
         if (PreviousMouseState.LeftButton == ButtonState.Pressed & CurrentMouseState.LeftButton == ButtonState.Pressed) {
             // only add mouse drag event if mouse was moved
             if (PreviousMouseState.Position != CurrentMouseState.Position) {
-                events.Add(new Event(new Vector2(CurrentMouseState.X, CurrentMouseState.Y), new Vector2(CurrentMouseState.X, CurrentMouseState.Y) - new Vector2(PreviousMouseState.X, PreviousMouseState.Y)));
+                events.Add(new Event(new Vector2(CurrentMouseState.X, CurrentMouseState.Y), new Vector2(CurrentMouseState.X, CurrentMouseState.Y) - new Vector2(PreviousMouseState.X, PreviousMouseState.Y), EventType.MouseDrag));
                 _mouseDragged = true;
             }
         } 
@@ -109,20 +154,34 @@ public static class InputManager
         }
 
         if (PreviousMouseState.LeftButton == ButtonState.Pressed & CurrentMouseState.LeftButton == ButtonState.Released & _mouseDragged == false) {
-            events.Add(new Event(new Vector2(CurrentMouseState.X, CurrentMouseState.Y)));
+            events.Add(new Event(new Vector2(CurrentMouseState.X, CurrentMouseState.Y), EventType.MouseClick));
         }
 
         if (PreviousMouseState.ScrollWheelValue != CurrentMouseState.ScrollWheelValue) {
-            events.Add(new Event(CurrentMouseState.ScrollWheelValue - PreviousMouseState.ScrollWheelValue));
+            events.Add(new Event(CurrentMouseState.ScrollWheelValue - PreviousMouseState.ScrollWheelValue, EventType.MouseScroll));
         }
         
         // touch logic
         var touchCol = TouchPanel.GetState();
         
         foreach (var touch in touchCol) {
-            
             if (touch.State == TouchLocationState.Pressed) {
-                events.Add(new Event(new Vector2(touch.Position.X, touch.Position.Y)));
+                events.Add(new Event(new Vector2(touch.Position.X, touch.Position.Y), EventType.TouchPress));
+            }
+        }
+        
+        // read gestures
+        while (TouchPanel.IsGestureAvailable) {
+            var gesture = TouchPanel.ReadGesture();
+            
+            // drag
+            if (gesture.GestureType == GestureType.FreeDrag) {
+                events.Add(new Event(gesture.Position, gesture.Delta, EventType.TouchDrag));
+            }
+            
+            // zoom
+            if (gesture.GestureType == GestureType.Pinch) {
+                events.Add(new Event(gesture.Position, gesture.Position2, gesture.Delta, gesture.Delta2, EventType.TouchPinch));
             }
         }
 

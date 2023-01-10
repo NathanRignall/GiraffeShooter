@@ -30,8 +30,9 @@ namespace GiraffeShooterClient.Entity
                 switch (e.Type)
                 {
                     case EventType.MouseClick:
+                    case EventType.TouchPress:
 
-                        if (GetComponent<Sprite>().Bounds.Contains(e.MousePosition))
+                        if (GetComponent<Sprite>().Bounds.Contains(e.Position))
                         {
                             ContextManager.SetState(ContextManager.State.World);
                         }
