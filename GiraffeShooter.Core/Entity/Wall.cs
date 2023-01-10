@@ -18,9 +18,6 @@ namespace GiraffeShooterClient.Entity
             
             Collider collider = new Collider();
             AddComponent(collider);
-            
-            Sprite sprite = new Sprite(AssetManager.GiraffeTextureTest, new Rectangle(0,0,(int)(size.X*32f),(int)(size.Y*32f)));
-            AddComponent(sprite);
         }
     }
 }
