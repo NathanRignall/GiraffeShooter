@@ -22,7 +22,8 @@ namespace GiraffeShooterClient.Container.Menu
             Base.Clear();
             
             // register entities
-            _collection.AddEntity(new Button(new Vector3(0, 0, 0), "Main Menu"));
+            _collection.AddEntity(new Button(new Vector3(0, -2, 0), AssetManager.PlayButtonTexture, () => ContextManager.SetState(ContextManager.State.World)));
+            _collection.AddEntity(new Button(new Vector3(0, 2, 0), AssetManager.OptionsButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Login)));
 
             // reset the camera
             Camera.Reset(1f);

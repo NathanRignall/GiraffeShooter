@@ -38,6 +38,7 @@ public class GiraffeShooter : Game
         InputManager.Initialize(); 
         SupabaseManager.Initialize();
         ContextManager.Initialize();
+        VirtualManager.Initialize();
 
         //Microsoft.Xna.Framework.Input.KeyboardInput.Show("en-US", "Giraffe Shooter", "Enter your name", false);
     }
@@ -69,9 +70,6 @@ public class GiraffeShooter : Game
             events = InputManager.GenerateEvents();
         }
 
-        // send the events to camera
-        Camera.HandleEvents(events);
-
         // reset scale factor
         _scaleFactor = 1f;
 
@@ -88,7 +86,12 @@ public class GiraffeShooter : Game
                 break;
 
             case ContextManager.State.World:
+                VirtualManager.HandleEvents(events);
+                VirtualManager.Update(gameTime);
+                Camera.HandleEvents(events);
+                
                 _scaleFactor = Camera.Zoom;
+
                 ContextManager.WorldContext.HandleEvents(events);
                 ContextManager.WorldContext.Update(gameTime);
                 break;
@@ -128,6 +131,11 @@ public class GiraffeShooter : Game
                 transformMatrix = Matrix.CreateScale(_scaleFactor, _scaleFactor, 1f);
                 _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
                 ContextManager.WorldContext.Draw(gameTime, _spriteBatch);
+                _spriteBatch.End();
+                
+                transformMatrix = Matrix.CreateScale(1f, 1f, 1f);
+                _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
+                VirtualManager.Draw(gameTime, _spriteBatch);
                 _spriteBatch.End();
                 break;
 

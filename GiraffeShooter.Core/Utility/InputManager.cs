@@ -14,6 +14,7 @@ public enum EventType
     MouseScroll,
     KeyPress,
     KeyRelease,
+    KeyHold,
     TouchDrag,
     TouchPress,
     TouchPinch,
@@ -29,14 +30,18 @@ public struct Event
     public Vector2 Delta2;
     public int ScrollDelta;
 
-    public Event(Keys EventKey) {
-        Type = EventType.KeyPress;
-        Key = EventKey;
-        Position = Vector2.Zero;
-        Position2 = Vector2.Zero;
-        Delta = Vector2.Zero;
-        Delta2 = Vector2.Zero;
-        ScrollDelta = 0;
+    public Event(Keys EventKey, EventType type) {
+        if (type == EventType.KeyPress || type == EventType.KeyRelease || type == EventType.KeyHold) {
+            Key = EventKey;
+            Type = type;
+            Position = Vector2.Zero;
+            Position2 = Vector2.Zero;
+            Delta = Vector2.Zero;
+            Delta2 = Vector2.Zero;
+            ScrollDelta = 0;
+        } else {
+            throw new Exception("Invalid event type for key event");
+        }
     }
 
     public Event(Vector2 position, EventType type) {
@@ -136,7 +141,14 @@ public static class InputManager
         // for each key add event if key is pressed and was not pressed before
         foreach (Keys key in CurrentKeyboardState.GetPressedKeys()) {
             if (PreviousKeyboardState.IsKeyUp(key)) {
-                events.Add(new Event(key));
+                events.Add(new Event(key, EventType.KeyPress));
+            }
+        }
+        
+        // for each key add event if key is being held
+        foreach (Keys key in CurrentKeyboardState.GetPressedKeys()) {
+            if (PreviousKeyboardState.IsKeyDown(key)) {
+                events.Add(new Event(key, EventType.KeyHold));
             }
         }
 

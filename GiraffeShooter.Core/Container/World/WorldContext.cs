@@ -53,27 +53,39 @@ namespace GiraffeShooterClient.Container.World
         public override void HandleEvents(List<Event> events)
         {
             _collection.HandleEvents(events);
+
+
+            foreach (Event e in events)
+            {
+                switch (e.Type)
+                {
+                    case EventType.KeyHold:
+
+                        switch (e.Key)
+                        {
+                            case Keys.Up:
+                                _player.Move(Control.Direction.up);
+                                break;
+                            case Keys.Down:
+                                _player.Move(Control.Direction.down);
+                                break;
+                            case Keys.Left:
+                                _player.Move(Control.Direction.left);
+                                break;
+                            case Keys.Right:
+                                _player.Move(Control.Direction.right);
+                                break;
+                                
+                        }
+                        
+                        break;
+                }
+
+            }
         }
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            // use keyboard input to move the player
-            if (InputManager.IsKeyDown(Keys.Up))
-            {
-                _player.Move(Control.Direction.up);
-            }
-            if (InputManager.IsKeyDown(Keys.Down))
-            {
-                _player.Move(Control.Direction.down);
-            }
-            if (InputManager.IsKeyDown(Keys.Left))
-            {
-                _player.Move(Control.Direction.left);
-            }
-            if (InputManager.IsKeyDown(Keys.Right))
-            {
-                _player.Move(Control.Direction.right);
-            }
 
             // update the player position (convert from tile to pixel coordinates)
             Camera.FollowTarget = _player.GetPosition() * 1000f / 32f;

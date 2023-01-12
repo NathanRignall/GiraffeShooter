@@ -17,7 +17,7 @@ namespace GiraffeShooterClient.Entity
             name = "Player";
             
             Physics physics = new Physics();
-            physics.Position = new Vector3(0, 0, 0);
+            physics.Position = new Vector3(0.5f, 0.5f, 0);
             physics.Size = new Vector3(1, 1, 2);
             physics.deceleration = 0.1f;
             AddComponent(physics);
@@ -28,7 +28,7 @@ namespace GiraffeShooterClient.Entity
             Control control = new Control();
             AddComponent(control);
 
-            Sprite sprite = new Sprite(AssetManager.GiraffeSpriteTexture);
+            Sprite sprite = new Sprite(AssetManager.GiraffeSpriteTexture, new Vector2(0,-16));
             AddComponent(sprite);
             
             // stand animation frames

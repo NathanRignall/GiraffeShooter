@@ -21,9 +21,14 @@ namespace GiraffeShooterClient.Utility
         public static Texture2D PlayerTexture { get; private set; }
         public static Texture2D GiraffeTextureTest { get; private set; }
         
+        
         public static Texture2D GiraffeSpriteTexture { get; private set; }
         public static Texture2D AmmunitionSpriteTexture { get; private set; }
         public static Texture2D PlayButtonTexture { get; private set; }
+        public static Texture2D OptionsButtonTexture { get; private set; }
+        public static Texture2D VirtualControlArrowTexture { get; private set; }
+        public static Texture2D VirtualControlBallTexture { get; private set; }
+        public static Texture2D VirtualControlStickTexture { get; private set; }
         
         public static SpriteFont Font { get; private set; }
         public static SpriteFont FontTitle { get; private set; }
@@ -46,6 +51,10 @@ namespace GiraffeShooterClient.Utility
             GiraffeSpriteTexture = content.Load<Texture2D>("Sprites/Giraffe");
             AmmunitionSpriteTexture = content.Load<Texture2D>("Sprites/DemoAmmunition");
             PlayButtonTexture = content.Load<Texture2D>("Sprites/PlayButton");
+            OptionsButtonTexture = content.Load<Texture2D>("Sprites/OptionsButton");
+            VirtualControlArrowTexture = content.Load<Texture2D>("Sprites/VirtualControlArrow");
+            VirtualControlBallTexture = content.Load<Texture2D>("Sprites/VirtualControlBall");
+            VirtualControlStickTexture = content.Load<Texture2D>("Sprites/VirtualControlStick");
             
             Font = content.Load<SpriteFont>("Fonts/Normal");
             FontTitle = content.Load<SpriteFont>("Fonts/Title");

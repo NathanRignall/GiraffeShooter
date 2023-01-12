@@ -28,9 +28,9 @@ namespace GiraffeShooterClient.Container.Menu
             Base.Clear();
             
             // register entities
-            _collection.AddEntity(new Button(new Vector3(0, 0, 0), "Login User"));
-            _collection.AddEntity(_emailInput = new TextInput(new Vector3(0, 1f, 0)));
-            _collection.AddEntity(_passwordInput = new TextInput(new Vector3(0, 2f, 0)));
+            _collection.AddEntity(new Button(new Vector3(0, -2f, 0), AssetManager.OptionsButtonTexture, () => {}));
+            _collection.AddEntity(_emailInput = new TextInput(new Vector3(0, 3f, 0)));
+            _collection.AddEntity(_passwordInput = new TextInput(new Vector3(0, 4f, 0)));
 
             // reset the camera
             Camera.CurrentState = Camera.State.Frozen;

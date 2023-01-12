@@ -9,20 +9,23 @@ namespace GiraffeShooterClient.Entity
     {
         public Texture2D Texture { get; private set; }
         public Rectangle SourceRectangle;
-        
         public Rectangle Bounds { get; private set; }
+        
+        private Vector2 _offset;
 
-        public Sprite(Texture2D texture)
+        public Sprite(Texture2D texture, Vector2 offset = default(Vector2))
         {
             Texture = texture;
             SourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
+            _offset = offset;
             SpriteSystem.Register(this);
         }
         
-        public Sprite(Texture2D texture, Rectangle sourceRectangle)
+        public Sprite(Texture2D texture, Rectangle sourceRectangle, Vector2 offset = default(Vector2))
         {
             Texture = texture;
             SourceRectangle = sourceRectangle;
+            _offset = offset;
             SpriteSystem.Register(this);
         }
 
@@ -31,7 +34,7 @@ namespace GiraffeShooterClient.Entity
             // calculate the position of the sprite
             var physics = entity.GetComponent<Physics>();
             var cameraOffset = Camera.Offset;
-            var position = (new Vector2(physics.Position.X, physics.Position.Y) * 32f ) + cameraOffset - (new Vector2(SourceRectangle.Width / 2, SourceRectangle.Height / 2));
+            var position = (new Vector2(physics.Position.X, physics.Position.Y) * 32f ) + cameraOffset + _offset - (new Vector2(SourceRectangle.Width / 2, SourceRectangle.Height / 2));
             var destinationRectangle = new Rectangle((int)position.X, (int)position.Y, SourceRectangle.Width, SourceRectangle.Height);
 
             // draw the sprite
