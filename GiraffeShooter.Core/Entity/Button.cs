@@ -38,7 +38,7 @@ namespace GiraffeShooterClient.Entity
                     case EventType.MouseClick:
                     case EventType.TouchPress:
 
-                        if (GetComponent<Sprite>().Bounds.Contains(e.Position))
+                        if (GetComponent<Sprite>().Bounds.Contains(e.Position / ScreenManager.GetScaleFactor()))
                         {
                             _action();
                         }

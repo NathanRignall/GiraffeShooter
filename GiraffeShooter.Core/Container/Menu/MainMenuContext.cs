@@ -26,7 +26,7 @@ namespace GiraffeShooterClient.Container.Menu
             _collection.AddEntity(new Button(new Vector3(0, 2, 0), AssetManager.OptionsButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Login)));
 
             // reset the camera
-            Camera.Reset(1f);
+            Camera.Reset(ScreenManager.GetScaleFactor());
             Camera.CurrentState = Camera.State.Frozen;
 
         }

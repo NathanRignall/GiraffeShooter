@@ -1,4 +1,5 @@
 using System;
+
 using Microsoft.Xna.Framework;
 
 using GiraffeShooterClient.Utility;
@@ -22,7 +23,7 @@ namespace GiraffeShooterClient.Entity
             Vector2 position = (new Vector2(physics.Position.X, physics.Position.Y) * 32f ) + cameraOffset - new Vector2((int)AssetManager.Font.MeasureString(String).X / 2, (int)AssetManager.Font.MeasureString(String).Y / 2);
             
             // draw the text
-            spriteBatch.DrawString(AssetManager.Font, String, position, Color.White);
+            spriteBatch.DrawString(AssetManager.Font, String, position * Camera.Zoom, Color.White);
 
         }
         

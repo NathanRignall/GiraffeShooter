@@ -94,7 +94,7 @@ namespace GiraffeShooterClient.Entity
 
                         // Create destination and source rectangles
                         var source = new Rectangle(rect.x, rect.y, rect.width, rect.height);
-                        var destination = new Rectangle(tileX, tileY, Map.TileWidth, Map.TileHeight);
+                        var destination = new Rectangle((int)Math.Ceiling(tileX * Camera.Zoom), (int)Math.Ceiling(tileY * Camera.Zoom), (int)Math.Ceiling(Map.TileWidth * Camera.Zoom), (int)Math.Ceiling(Map.TileHeight * Camera.Zoom));
 
 
                         // You can use the helper methods to get information to handle flips and rotations

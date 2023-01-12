@@ -31,5 +31,14 @@ namespace GiraffeShooterClient.Utility
         {
             Size = Resolutions[resolution];
         }
+
+        public static int GetScaleFactor()
+        {
+            if (Size.Y <= 768)
+                return 1;
+            else
+                return 2;
+        }
+
     }
 }

@@ -12,11 +12,10 @@ public class GiraffeShooter : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
-    private float _scaleFactor = 1f;
 
     public GiraffeShooter()
     {
-        ScreenManager.SetResolution("1280x720");
+        ScreenManager.SetResolution("1920x1080");
         
 #if __IOS__
         ScreenManager.Size = new Vector2(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
@@ -55,7 +54,7 @@ public class GiraffeShooter : Game
         ContextManager.SwitchState();
 
 // #if !__IOS__
-//         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+//         if (Keyboard.GetState().IsKeyDown(Keys.Escape))
 //             Exit();
 // #endif
 
@@ -70,9 +69,6 @@ public class GiraffeShooter : Game
             events = InputManager.GenerateEvents();
         }
 
-        // reset scale factor
-        _scaleFactor = 1f;
-
         // update the contexts (this is for animations etc)
         switch (ContextManager.CurrentState)
         {
@@ -83,14 +79,16 @@ public class GiraffeShooter : Game
             case ContextManager.State.Menu:
                 ContextManager.MenuContext.HandleEvents(events);
                 ContextManager.MenuContext.Update(gameTime);
+                
+                Camera.Update(gameTime);
                 break;
 
             case ContextManager.State.World:
                 VirtualManager.HandleEvents(events);
                 VirtualManager.Update(gameTime);
-                Camera.HandleEvents(events);
                 
-                _scaleFactor = Camera.Zoom;
+                Camera.HandleEvents(events);
+                Camera.Update(gameTime);
 
                 ContextManager.WorldContext.HandleEvents(events);
                 ContextManager.WorldContext.Update(gameTime);
@@ -100,9 +98,6 @@ public class GiraffeShooter : Game
                 throw new System.Exception();
         }
 
-        // update the camera context
-        Camera.Update(gameTime);
-        
         // update monogame
         base.Update(gameTime);
     }
@@ -128,18 +123,13 @@ public class GiraffeShooter : Game
                 break;
 
             case ContextManager.State.World:
-                transformMatrix = Matrix.CreateScale(_scaleFactor, _scaleFactor, 1f);
                 _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
                 ContextManager.WorldContext.Draw(gameTime, _spriteBatch);
-                _spriteBatch.End();
 
                 if (InputManager.TouchConnected)
-                {
-                    transformMatrix = Matrix.CreateScale(1f, 1f, 1f);
-                    _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
                     VirtualManager.Draw(gameTime, _spriteBatch);
-                    _spriteBatch.End();
-                }
+
+                _spriteBatch.End();
                 
                 break;
 

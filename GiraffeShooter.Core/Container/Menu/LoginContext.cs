@@ -33,8 +33,8 @@ namespace GiraffeShooterClient.Container.Menu
             _collection.AddEntity(_passwordInput = new TextInput(new Vector3(0, 4f, 0)));
 
             // reset the camera
+            Camera.Reset(ScreenManager.GetScaleFactor());
             Camera.CurrentState = Camera.State.Frozen;
-            Camera.Reset(1f);
 
         }
 

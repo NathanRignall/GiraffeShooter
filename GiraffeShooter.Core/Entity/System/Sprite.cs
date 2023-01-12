@@ -1,3 +1,5 @@
+using System;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -34,8 +36,9 @@ namespace GiraffeShooterClient.Entity
             // calculate the position of the sprite
             var physics = entity.GetComponent<Physics>();
             var cameraOffset = Camera.Offset;
-            var position = (new Vector2(physics.Position.X, physics.Position.Y) * 32f ) + cameraOffset + _offset - (new Vector2(SourceRectangle.Width / 2, SourceRectangle.Height / 2));
-            var destinationRectangle = new Rectangle((int)position.X, (int)position.Y, SourceRectangle.Width, SourceRectangle.Height);
+            var position = new Vector2(physics.Position.X, physics.Position.Y) * 32f  + cameraOffset + _offset - new Vector2(SourceRectangle.Width / 2, SourceRectangle.Height / 2);
+            var destinationRectangle = new Rectangle((int)Math.Ceiling(position.X * Camera.Zoom), (int)Math.Ceiling(position.Y * Camera.Zoom), 
+                (int)Math.Ceiling(SourceRectangle.Width * Camera.Zoom), (int)Math.Ceiling(SourceRectangle.Height * Camera.Zoom));
 
             // draw the sprite
             spriteBatch.Draw(Texture, destinationRectangle, SourceRectangle, Color.White);
