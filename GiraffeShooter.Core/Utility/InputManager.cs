@@ -111,15 +111,24 @@ public static class InputManager
 
     public static KeyboardState PreviousKeyboardState { get; private set; }
     public static KeyboardState CurrentKeyboardState { get; private set; }
+    
     public static MouseState PreviousMouseState { get; private set; }
     public static MouseState CurrentMouseState { get; private set; }
     private static bool _mouseDragged;
-
+    
+    public static bool TouchConnected { get; private set; }
+    
     public static void Initialize()
     {
 
         PreviousKeyboardState = new KeyboardState();
         CurrentKeyboardState = new KeyboardState();
+        
+        PreviousMouseState = new MouseState();
+        CurrentMouseState = new MouseState();
+        
+        _mouseDragged = false;
+        TouchConnected = false;
 
         TouchPanel.EnabledGestures = GestureType.Pinch | GestureType.FreeDrag;
     }
@@ -175,7 +184,8 @@ public static class InputManager
         
         // touch logic
         var touchCol = TouchPanel.GetState();
-        
+        TouchConnected = touchCol.IsConnected;
+
         foreach (var touch in touchCol) {
             if (touch.State == TouchLocationState.Pressed) {
                 events.Add(new Event(new Vector2(touch.Position.X, touch.Position.Y), EventType.TouchPress));

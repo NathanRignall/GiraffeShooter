@@ -132,11 +132,15 @@ public class GiraffeShooter : Game
                 _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
                 ContextManager.WorldContext.Draw(gameTime, _spriteBatch);
                 _spriteBatch.End();
+
+                if (InputManager.TouchConnected)
+                {
+                    transformMatrix = Matrix.CreateScale(1f, 1f, 1f);
+                    _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
+                    VirtualManager.Draw(gameTime, _spriteBatch);
+                    _spriteBatch.End();
+                }
                 
-                transformMatrix = Matrix.CreateScale(1f, 1f, 1f);
-                _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
-                VirtualManager.Draw(gameTime, _spriteBatch);
-                _spriteBatch.End();
                 break;
 
             default:

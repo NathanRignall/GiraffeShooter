@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace GiraffeShooterClient.Utility
@@ -119,6 +118,30 @@ namespace GiraffeShooterClient.Utility
                     case EventType.MouseDrag:
                     case EventType.TouchDrag:
                         
+                        if (_arrowUp.Contains(e.Position))
+                        {
+                            eventsToAdd.Add(new Event(Keys.Up, EventType.KeyHold));
+                            eventsToRemove.Add(e);
+                        }
+                        
+                        if (_arrowDown.Contains(e.Position))
+                        {
+                            eventsToAdd.Add(new Event(Keys.Down, EventType.KeyHold));
+                            eventsToRemove.Add(e);
+                        }
+                        
+                        if (_arrowLeft.Contains(e.Position))
+                        {
+                            eventsToAdd.Add(new Event(Keys.Left, EventType.KeyHold));
+                            eventsToRemove.Add(e);
+                        }
+                        
+                        if (_arrowRight.Contains(e.Position))
+                        {
+                            eventsToAdd.Add(new Event(Keys.Right, EventType.KeyHold));
+                            eventsToRemove.Add(e);
+                        }
+                        
                         // get the start position of the drag
                         var startPosition = e.Position - e.Delta;
                         
@@ -210,13 +233,13 @@ namespace GiraffeShooterClient.Utility
             }
             
             // remove the events that we handled
-            foreach (Event e in eventsToRemove)
+            foreach (var e in eventsToRemove)
             {
                 events.Remove(e);
             }
             
             // add the new events
-            foreach (Event e in eventsToAdd)
+            foreach (var e in eventsToAdd)
             {
                 events.Add(e);
             }
