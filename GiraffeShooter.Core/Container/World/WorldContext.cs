@@ -27,7 +27,9 @@ namespace GiraffeShooterClient.Container.World
             _collection.AddEntity(new MasterMap());
             _collection.AddEntity(_player = new Player());
             //_collection.AddEntity(new Button(new Vector3(0, 5, 0), "Exit", new Action(() => { Base.SetContext(new MenuContext()); })));
-            //_collection.AddEntity(new Button(new Vector3(0, 5, 0), SupabaseManager.Client.Auth.CurrentUser.Id ));
+
+            if (SupabaseManager.Client.Auth.CurrentUser != null)
+                _collection.AddEntity(new TextDisplay(new Vector3(0, 5, 0), SupabaseManager.Client.Auth.CurrentUser.Id));
 
             // add 10 giraffes at random positions
             Random random = new Random();

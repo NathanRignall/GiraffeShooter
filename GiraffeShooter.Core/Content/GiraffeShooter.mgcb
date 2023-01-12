@@ -75,6 +75,18 @@
 /processorParam:TextureFormat=Color
 /build:player_texture.png
 
+#begin Sprites/BackButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/BackButton.png
+
 #begin Sprites/DemoAmmunition.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -99,6 +111,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Giraffe.png
 
+#begin Sprites/LoginButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/LoginButton.png
+
 #begin Sprites/OptionsButton.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -122,6 +146,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/PlayButton.png
+
+#begin Sprites/SettingsButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/SettingsButton.png
 
 #begin Sprites/VirtualControlArrow.png
 /importer:TextureImporter

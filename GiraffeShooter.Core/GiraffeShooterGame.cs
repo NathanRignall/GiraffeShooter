@@ -53,10 +53,10 @@ public class GiraffeShooter : Game
     {
         ContextManager.SwitchState();
 
-// #if !__IOS__
-//         if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-//             Exit();
-// #endif
+#if !__IOS__
+         if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+             Exit();
+#endif
 
         // update the game state (for keys)
         InputManager.UpdateState(Keyboard.GetState(), Mouse.GetState());

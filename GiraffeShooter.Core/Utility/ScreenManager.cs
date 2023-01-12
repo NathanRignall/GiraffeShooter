@@ -34,7 +34,8 @@ namespace GiraffeShooterClient.Utility
 
         public static int GetScaleFactor()
         {
-            if (Size.Y <= 768)
+            
+            if (Size.Y <= 768 | !InputManager.TouchConnected)
                 return 1;
             else
                 return 2;

@@ -28,9 +28,10 @@ namespace GiraffeShooterClient.Container.Menu
             Base.Clear();
             
             // register entities
-            _collection.AddEntity(new Button(new Vector3(0, -2f, 0), AssetManager.OptionsButtonTexture, () => {}));
-            _collection.AddEntity(_emailInput = new TextInput(new Vector3(0, 3f, 0)));
-            _collection.AddEntity(_passwordInput = new TextInput(new Vector3(0, 4f, 0)));
+            _collection.AddEntity(new Button(new Vector3(0, -2f, 0), AssetManager.BackButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.MainMenu)));
+            _collection.AddEntity(_emailInput = new TextInput(new Vector3(0, 1f, 0)));
+            _collection.AddEntity(_passwordInput = new TextInput(new Vector3(0, 2f, 0)));
+            _collection.AddEntity(new Button(new Vector3(0, 4f, 0), AssetManager.LoginButtonTexture, () => { Login(); }));
 
             // reset the camera
             Camera.Reset(ScreenManager.GetScaleFactor());
@@ -41,16 +42,28 @@ namespace GiraffeShooterClient.Container.Menu
         public override void HandleEvents(List<Event> events)
         {
             _collection.HandleEvents(events);
+
+            foreach (var e in events)
+            {
+                switch (e.Type)
+                {
+                    case EventType.KeyPress:
+                        
+                        if (e.Key == Keys.Enter)
+                        {
+                            if (!_loading)
+                            {
+                                Login();
+                            }
+                        }
+
+                        break;
+                }
+            }
         }
         
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            // send email
-            if (InputManager.IsKeyDown(Keys.Enter) && !_loading)
-            {
-                Login();
-            }
-
             // update entities
             PhysicsSystem.Update(gameTime);
             SpriteSystem.Update(gameTime);
