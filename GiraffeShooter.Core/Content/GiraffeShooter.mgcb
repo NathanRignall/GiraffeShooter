@@ -123,18 +123,6 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/LoginButton.png
 
-#begin Sprites/OptionsButton.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Sprites/OptionsButton.png
-
 #begin Sprites/PlayButton.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -170,18 +158,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Shoot.png
-
-#begin Sprites/VirtualControlArrow.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Sprites/VirtualControlArrow.png
 
 #begin Sprites/VirtualControlBall.png
 /importer:TextureImporter
