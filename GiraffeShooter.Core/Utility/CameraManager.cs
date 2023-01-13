@@ -98,7 +98,7 @@ namespace GiraffeShooterClient.Utility
                     
                     // calculate offset
                     var _followDiff = FollowTarget - _followOffset;
-                    _followOffset += _followDiff * 0.05f;
+                    _followOffset += _followDiff * 0.1f;
 
                     
                     if (_followDiff.Length() > 0.1f)

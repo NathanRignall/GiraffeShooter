@@ -70,6 +70,7 @@ namespace GiraffeShooterClient.Utility
                 {
                     case EventType.MouseClick:
                     case EventType.TouchPress:
+                    case EventType.TouchHold:
 
                         if (_arrowUp.Contains(e.Position))
                         {

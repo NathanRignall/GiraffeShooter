@@ -17,6 +17,7 @@ public enum EventType
     KeyHold,
     TouchDrag,
     TouchPress,
+    TouchHold,
     TouchPinch,
 }
 
@@ -46,7 +47,7 @@ public struct Event
 
     public Event(Vector2 position, EventType type) {
         // check is click or press
-        if (type == EventType.MouseClick || type == EventType.TouchPress) {
+        if (type == EventType.MouseClick || type == EventType.TouchPress || type == EventType.TouchHold) {
             Type = type;
             Position = position;
             Position2 = Vector2.Zero;
@@ -115,8 +116,16 @@ public static class InputManager
     public static MouseState PreviousMouseState { get; private set; }
     public static MouseState CurrentMouseState { get; private set; }
     private static bool _mouseDragged;
+
+    public struct Touch
+    {
+        public int Count;
+        public Vector2 Position;
+    }
     
     public static bool TouchConnected { get; private set; }
+    public static Touch[] TouchState;
+    private static bool _touchGesture;
     
     public static void Initialize()
     {
@@ -126,9 +135,11 @@ public static class InputManager
         
         PreviousMouseState = new MouseState();
         CurrentMouseState = new MouseState();
-        
         _mouseDragged = false;
+        
         TouchConnected = false;
+        TouchState = new Touch[10];
+        _touchGesture = false;
 
         TouchPanel.EnabledGestures = GestureType.Pinch | GestureType.FreeDrag;
     }
@@ -186,11 +197,45 @@ public static class InputManager
         var touchCol = TouchPanel.GetState();
         TouchConnected = touchCol.IsConnected;
 
-        foreach (var touch in touchCol) {
-            if (touch.State == TouchLocationState.Pressed) {
-                events.Add(new Event(new Vector2(touch.Position.X, touch.Position.Y), EventType.TouchPress));
+        // for loop over touch collection
+        for (int i = 0; i < touchCol.Count; i++) {
+            // if touch is pressed
+            if (touchCol[i].State == TouchLocationState.Pressed) {
+                // set touch state to pressed
+                TouchState[i].Count = 1;
+                TouchState[i].Position = new Vector2(touchCol[i].Position.X, touchCol[i].Position.Y);
+            }
+            
+            // if touch move update touch state
+            if (touchCol[i].State == TouchLocationState.Moved) {
+                // update position
+                if (TouchState[i].Count > 0) {
+                    TouchState[i].Position = new Vector2(touchCol[i].Position.X, touchCol[i].Position.Y);
+                }
+            }
+            
+
+            // if touch is released
+             if (touchCol[i].State == TouchLocationState.Released) {
+                 // check touch state
+                 if (TouchState[i].Count <= 15)
+                     events.Add(new Event(TouchState[i].Position, EventType.TouchPress));
+                 
+                 // reset touch state
+                 TouchState[i].Count = 0;
+                 TouchState[i].Position = Vector2.Zero;
+             }
+        }
+        
+        // loop over touch state and increment value if not 0
+        for (int i = 0; i < TouchState.Length; i++) {
+            if (TouchState[i].Count != 0) {
+                TouchState[i].Count++;
             }
         }
+
+        // reset gesture state
+        _touchGesture = false;
         
         // read gestures
         while (TouchPanel.IsGestureAvailable) {
@@ -199,11 +244,23 @@ public static class InputManager
             // drag
             if (gesture.GestureType == GestureType.FreeDrag) {
                 events.Add(new Event(gesture.Position, gesture.Delta, EventType.TouchDrag));
+                _touchGesture = true;
             }
             
             // zoom
             if (gesture.GestureType == GestureType.Pinch) {
                 events.Add(new Event(gesture.Position, gesture.Position2, gesture.Delta, gesture.Delta2, EventType.TouchPinch));
+                _touchGesture = true;
+            }
+        }
+        
+        // if no gesture send hold events loop over touch state and add hold events
+        if (_touchGesture == false) {
+            for (int i = 0; i < TouchState.Length; i++) {
+                if (TouchState[i].Count > 15) {
+                    // send hold event
+                    events.Add(new Event(TouchState[i].Position, EventType.TouchHold));
+                }
             }
         }
 

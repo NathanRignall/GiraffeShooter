@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {

@@ -205,6 +205,10 @@ namespace GiraffeShooterClient.Entity
             {
                 // get the result
                 var result = await Microsoft.Xna.Framework.Input.KeyboardInput.Show("Input", "Giraffe Shooter", "Enter your name", false);
+
+                // prevent null
+                if (result == null)
+                    result = "";
                 
                 // set the string
                 String = result;
