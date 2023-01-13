@@ -1,3 +1,4 @@
+using System;
 
 using Microsoft.Xna.Framework;
 
@@ -8,8 +9,8 @@ namespace GiraffeShooterClient.Entity
 
         public TextDisplay(Vector3 position, string message)
         {
-            id = System.Guid.NewGuid();
-            name = "Text";
+            Id = Guid.NewGuid();
+            Name = "Text";
 
             Physics physics = new Physics();
             physics.Position = position;

@@ -49,7 +49,7 @@ namespace GiraffeShooterClient.Entity
                         // call the collision response
                         if (_responses.ContainsKey(collider.entity.GetType()))
                         {
-                            Console.WriteLine("Collision detected between " + entity.name + " and " + collider.entity.name);
+                            Console.WriteLine("Collision detected between " + entity.Name + " and " + collider.entity.Name);
                             _responses[collider.entity.GetType()]();
                         }
 

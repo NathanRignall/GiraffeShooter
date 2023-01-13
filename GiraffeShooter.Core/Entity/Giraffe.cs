@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+
 using Microsoft.Xna.Framework;
 
 using GiraffeShooterClient.Utility;
@@ -13,8 +15,8 @@ namespace GiraffeShooterClient.Entity
 
         public Giraffe(Vector3 position, Vector3 velocity)
         {
-            id = System.Guid.NewGuid();
-            name = "Giraffe";
+            Id = Guid.NewGuid();
+            Name = "Giraffe";
             
             Physics physics = new Physics();
             physics.Position = position;

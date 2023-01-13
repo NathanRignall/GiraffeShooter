@@ -1,4 +1,4 @@
-
+using System;
 using Microsoft.Xna.Framework;
 
 using GiraffeShooterClient.Utility;
@@ -9,8 +9,8 @@ namespace GiraffeShooterClient.Entity
     {
         public MasterMap()
         {
-            id = new System.Guid();
-            name = "MasterMap";
+            Id = Guid.NewGuid();
+            Name = "MasterMap";
 
             Physics physics = new Physics();
             physics.IsStatic = true;

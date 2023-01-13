@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 using GiraffeShooterClient.Utility;
@@ -10,11 +11,13 @@ namespace GiraffeShooterClient.Entity
         
         Animation.Frame[] standFrames = new Animation.Frame[1];
         Animation.Frame[] walkingFrames = new Animation.Frame[4];
+
+        private Shoot _shoot;
         
         public Player()
         {
-            id = new System.Guid();
-            name = "Player";
+            Id = Guid.NewGuid();
+            Name = "Player";
             
             Physics physics = new Physics();
             physics.Position = new Vector3(0.5f, 0.5f, 0);
@@ -26,6 +29,7 @@ namespace GiraffeShooterClient.Entity
             AddComponent(collider);
 
             Control control = new Control();
+            control.Speed = 5;
             AddComponent(control);
 
             Sprite sprite = new Sprite(AssetManager.GiraffeSpriteTexture, new Vector2(0,-16));
@@ -42,6 +46,9 @@ namespace GiraffeShooterClient.Entity
 
             Animation animation = new Animation(standFrames);
             AddComponent(animation);
+            
+            // shoot component
+            _shoot = new Shoot();
         }
 
         public void Move(Control.Direction direction) {
@@ -68,6 +75,14 @@ namespace GiraffeShooterClient.Entity
                 animation.SetFrames(standFrames);
             }
             
+            // set shoot position to player position
+            _shoot.SetPosition(physics.Position);
+            
+        }
+
+        public override void HandleEvents(List<Event> events)
+        {
+            _shoot.HandleEvents(events);
         }
     }
 }

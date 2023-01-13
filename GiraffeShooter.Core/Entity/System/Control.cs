@@ -5,7 +5,7 @@ namespace GiraffeShooterClient.Entity
     class Control : Component
     {
         public enum Direction { up, down, left, right };
-        private int speed = 10;
+        public int Speed { get; set; } = 10;
 
         public Control()
         {
@@ -17,16 +17,16 @@ namespace GiraffeShooterClient.Entity
 
             switch (direction) {
                 case Direction.up:
-                    physics.Velocity.Y = -speed;
+                    physics.Velocity.Y = -Speed;
                     break;
                 case Direction.down:
-                    physics.Velocity.Y = speed;
+                    physics.Velocity.Y = Speed;
                     break;
                 case Direction.left:
-                    physics.Velocity.X = -speed;
+                    physics.Velocity.X = -Speed;
                     break;
                 case Direction.right:
-                    physics.Velocity.X = speed;
+                    physics.Velocity.X = Speed;
                     break;
             }
         }

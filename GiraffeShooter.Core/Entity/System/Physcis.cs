@@ -14,7 +14,7 @@ namespace GiraffeShooterClient.Entity
 
         public Vector3 Size = Vector3.Zero;
         public float mass = 1.0f;
-        
+
         public BoundingBox BoundingBox
         {
             get

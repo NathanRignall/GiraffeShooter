@@ -1,6 +1,8 @@
 using System;
-using GiraffeShooterClient.Utility;
+
 using Microsoft.Xna.Framework;
+
+using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
@@ -8,8 +10,8 @@ namespace GiraffeShooterClient.Entity
     {
         public Ammunition(Vector3 position)
         {
-            id = System.Guid.NewGuid();
-            name = "Ammunition";
+            Id = Guid.NewGuid();
+            Name = "Ammunition";
             
             Physics physics = new Physics();
             physics.Position = position;

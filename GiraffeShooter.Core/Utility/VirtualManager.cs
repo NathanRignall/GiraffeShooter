@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
@@ -14,8 +15,9 @@ namespace GiraffeShooterClient.Utility
         
         private static Rectangle _controlStick;
         private static Rectangle _controlBall;
-        
         private static Vector2 _controlOffset;
+        
+        private static Rectangle _shootButton;
 
         public static void Initialize()
         {
@@ -38,7 +40,7 @@ namespace GiraffeShooterClient.Utility
             _arrowDown = new Rectangle((int)downPosition.X, (int)downPosition.Y, (int)buttonSize.X, (int)buttonSize.Y);
             _arrowLeft = new Rectangle((int)leftPosition.X, (int)leftPosition.Y, (int)buttonSize.X, (int)buttonSize.Y);
             _arrowRight = new Rectangle((int)rightPosition.X, (int)rightPosition.Y, (int)buttonSize.X, (int)buttonSize.Y);
-            
+
             
             // control stick size
             var controlStickSize = new Vector2(256, 256) * screenScale;
@@ -52,6 +54,16 @@ namespace GiraffeShooterClient.Utility
             
             // create the control ball rectangle
             _controlBall = new Rectangle((int)controlStickPosition.X + (int)controlStickSize.X / 2 - (int)controlButtonSize.X / 2, (int)controlStickPosition.Y + (int)controlStickSize.Y / 2 - (int)controlButtonSize.Y / 2, (int)controlButtonSize.X, (int)controlButtonSize.Y);
+            
+            
+            // shoot button size
+            var shootButtonSize = new Vector2(64, 64) * screenScale;
+            
+            // shoot button position half way up the screen on left
+            var shootButtonPosition = new Vector2(shootButtonSize.X * 1.5f, ScreenManager.Size.Y / 2 - shootButtonSize.Y / 2);
+            
+            // create the shoot button rectangle
+            _shootButton = new Rectangle((int)shootButtonPosition.X, (int)shootButtonPosition.Y, (int)shootButtonSize.X, (int)shootButtonSize.Y);
 
         }
 
@@ -233,6 +245,13 @@ namespace GiraffeShooterClient.Utility
                 }
             }
             
+            // if the control offset is not zero, add the event
+            if (_controlOffset != Vector2.Zero)
+            {
+                Console.WriteLine(_controlOffset);
+                eventsToAdd.Add(new Event(_controlOffset, EventType.StickMove));
+            }
+            
             // remove the events that we handled
             foreach (var e in eventsToRemove)
             {
@@ -268,6 +287,12 @@ namespace GiraffeShooterClient.Utility
             // draw the control stick at center of the rectangle
             spriteBatch.Draw(AssetManager.VirtualControlStickTexture, _controlStick, controlStickSource, Color.White);
             spriteBatch.Draw(AssetManager.VirtualControlBallTexture, new Rectangle((int)newControlBallPosition.X, (int)newControlBallPosition.Y, _controlBall.Width, _controlBall.Height), controlBallSource, Color.White);
+            
+            // source rectangle for shoot
+            var shootSource = new Rectangle(0, 0, 64, 64);
+            
+            // draw shoot button
+            spriteBatch.Draw(AssetManager.VirtualControlShootTexture, _shootButton, shootSource, Color.White);
         }
     }
 }

@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using Microsoft.Xna.Framework;
-using GiraffeShooterClient.Utility;
 using Microsoft.Xna.Framework.Input;
+
+using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
@@ -18,8 +20,8 @@ namespace GiraffeShooterClient.Entity
 
         public TextInput(Vector3 position)
         {
-            id = Guid.NewGuid();
-            name = "TextInput";
+            Id = Guid.NewGuid();
+            Name = "TextInput";
 
             Physics physics = new Physics();
             physics.Position = position;

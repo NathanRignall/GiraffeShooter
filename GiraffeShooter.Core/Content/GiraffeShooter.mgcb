@@ -159,7 +159,7 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/SettingsButton.png
 
-#begin Sprites/VirtualControlArrow.png
+#begin Sprites/Shoot.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -169,7 +169,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/VirtualControlArrow.png
+/build:Sprites/Shoot.png
 
 #begin Sprites/VirtualControlArrow.png
 /importer:TextureImporter
@@ -194,6 +194,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/VirtualControlBall.png
+
+#begin Sprites/VirtualControlShoot.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/VirtualControlShoot.png
 
 #begin Sprites/VirtualControlStick.png
 /importer:TextureImporter

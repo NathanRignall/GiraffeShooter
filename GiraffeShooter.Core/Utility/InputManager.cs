@@ -19,6 +19,7 @@ public enum EventType
     TouchPress,
     TouchHold,
     TouchPinch,
+    StickMove,
 }
 
 public struct Event
@@ -47,11 +48,23 @@ public struct Event
 
     public Event(Vector2 position, EventType type) {
         // check is click or press
-        if (type == EventType.MouseClick || type == EventType.TouchPress || type == EventType.TouchHold) {
+        if (type == EventType.MouseClick || type == EventType.TouchPress || type == EventType.TouchHold)
+        {
             Type = type;
             Position = position;
             Position2 = Vector2.Zero;
             Delta = Vector2.Zero;
+            Delta2 = Vector2.Zero;
+            ScrollDelta = 0;
+            Key = Keys.None;
+        }
+        // stick move
+        else if (type == EventType.StickMove)
+        {
+            Type = type;
+            Position = Vector2.Zero;
+            Position2 = Vector2.Zero;
+            Delta = position;
             Delta2 = Vector2.Zero;
             ScrollDelta = 0;
             Key = Keys.None;

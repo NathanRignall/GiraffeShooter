@@ -13,7 +13,7 @@ namespace GiraffeShooterClient.Entity
         public Guid AddEntity(Entity entity)
         {
             entities.Add(entity);
-            return entity.id;
+            return entity.Id;
         }
 
         public void RemoveEntity(Entity entity)
@@ -25,7 +25,7 @@ namespace GiraffeShooterClient.Entity
         {
             foreach (Entity entity in entities)
             {
-                if (entity.id == id)
+                if (entity.Id == id)
                 {
                     return entity;
                 }
@@ -69,7 +69,7 @@ namespace GiraffeShooterClient.Entity
             // check if any entities are marked for deletion
             foreach (Entity entity in entities)
             {
-                if (entity.isDeleted)
+                if (entity.IsDeleted)
                 {
                     entitiesToRemove.Add(entity);
                 }

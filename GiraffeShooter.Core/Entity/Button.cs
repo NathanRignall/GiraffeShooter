@@ -14,8 +14,8 @@ namespace GiraffeShooterClient.Entity
         
         public Button(Vector3 position, Texture2D texture, Action action)
         {
-            id = System.Guid.NewGuid();
-            name = "Button";
+            Id = Guid.NewGuid();
+            Name = "Button";
             
             _action = action;
             

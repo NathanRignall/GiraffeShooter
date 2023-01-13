@@ -1,4 +1,5 @@
-using GiraffeShooterClient.Utility;
+using System;
+
 using Microsoft.Xna.Framework;
 
 namespace GiraffeShooterClient.Entity
@@ -7,8 +8,8 @@ namespace GiraffeShooterClient.Entity
     {
         public Wall(Vector3 position, Vector3 size)
         {
-            id = new System.Guid();
-            name = "Wall";
+            Id = Guid.NewGuid();
+            Name = "Wall";
 
             Physics physics = new Physics();
             physics.IsStatic = true;
