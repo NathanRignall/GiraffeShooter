@@ -81,6 +81,18 @@ namespace GiraffeShooterClient.Container.World
                         }
                         
                         break;
+                    
+                    case EventType.StickLeftMove:
+
+                        // use delta to calculate rotation
+                        Vector2 delta = e.Delta;
+                        
+                        // set rotation
+                        var direction = (float)Math.Atan2(delta.Y, delta.X);
+                        
+                        _player.Move(direction, delta.Length());
+
+                        break;
                 }
 
             }

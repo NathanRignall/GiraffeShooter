@@ -19,7 +19,8 @@ public enum EventType
     TouchPress,
     TouchHold,
     TouchPinch,
-    StickMove,
+    StickLeftMove,
+    StickRightMove,
 }
 
 public struct Event
@@ -33,7 +34,7 @@ public struct Event
     public int ScrollDelta;
 
     public Event(Keys EventKey, EventType type) {
-        if (type == EventType.KeyPress || type == EventType.KeyRelease || type == EventType.KeyHold) {
+        if (type == EventType.KeyPress | type == EventType.KeyRelease | type == EventType.KeyHold) {
             Key = EventKey;
             Type = type;
             Position = Vector2.Zero;
@@ -48,7 +49,7 @@ public struct Event
 
     public Event(Vector2 position, EventType type) {
         // check is click or press
-        if (type == EventType.MouseClick || type == EventType.TouchPress || type == EventType.TouchHold)
+        if (type == EventType.MouseClick | type == EventType.TouchPress | type == EventType.TouchHold)
         {
             Type = type;
             Position = position;
@@ -59,7 +60,7 @@ public struct Event
             Key = Keys.None;
         }
         // stick move
-        else if (type == EventType.StickMove)
+        else if (type == EventType.StickLeftMove | type == EventType.StickRightMove)
         {
             Type = type;
             Position = Vector2.Zero;
@@ -75,7 +76,7 @@ public struct Event
 
     public Event(Vector2 position, Vector2 delta, EventType type) {
         // check is mouse drag or touch drag
-        if (type == EventType.MouseDrag || type == EventType.TouchDrag) {
+        if (type == EventType.MouseDrag | type == EventType.TouchDrag) {
             Type = type;
             Position = position;
             Position2 = Vector2.Zero;
@@ -227,7 +228,6 @@ public static class InputManager
                 }
             }
             
-
             // if touch is released
              if (touchCol[i].State == TouchLocationState.Released) {
                  // check touch state

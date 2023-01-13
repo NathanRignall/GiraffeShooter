@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 
 namespace GiraffeShooterClient.Entity
@@ -29,6 +30,13 @@ namespace GiraffeShooterClient.Entity
                     physics.Velocity.X = Speed;
                     break;
             }
+        }
+
+        public void Move(float angle, float speedFactor)
+        {
+            Physics physics = entity.GetComponent<Physics>();
+            physics.Velocity.X = (float)Math.Cos(angle) * Speed * speedFactor;
+            physics.Velocity.Y = (float)Math.Sin(angle) * Speed * speedFactor;
         }
 
         public override void Deregister()

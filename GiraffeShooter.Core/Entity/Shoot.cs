@@ -41,7 +41,7 @@ namespace GiraffeShooterClient.Entity
             {
                 switch (e.Type)
                 {
-                    case EventType.StickMove:
+                    case EventType.StickRightMove:
 
                         // use delta to calculate rotation
                         Vector2 delta = e.Delta;

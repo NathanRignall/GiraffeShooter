@@ -29,7 +29,7 @@ namespace GiraffeShooterClient.Entity
             AddComponent(collider);
 
             Control control = new Control();
-            control.Speed = 5;
+            control.Speed = 10;
             AddComponent(control);
 
             Sprite sprite = new Sprite(AssetManager.GiraffeSpriteTexture, new Vector2(0,-16));
@@ -51,9 +51,16 @@ namespace GiraffeShooterClient.Entity
             _shoot = new Shoot();
         }
 
-        public void Move(Control.Direction direction) {
+        public void Move(Control.Direction direction) 
+        {
             Control control = GetComponent<Control>();
             control.Move(direction);
+        }
+
+        public void Move(float angle, float speedFactor)
+        {
+            Control control = GetComponent<Control>();
+            control.Move(angle, speedFactor);
         }
 
         public Vector2 GetPosition() {
