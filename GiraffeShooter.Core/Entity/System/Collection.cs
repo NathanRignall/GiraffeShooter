@@ -16,11 +16,6 @@ namespace GiraffeShooterClient.Entity
             return entity.Id;
         }
 
-        public void RemoveEntity(Entity entity)
-        {
-            entitiesToRemove.Add(entity);
-        }
-
         public Entity GetEntity(Guid id)
         {
             foreach (Entity entity in entities)

@@ -7,6 +7,7 @@ namespace GiraffeShooterClient.Utility
         {
             SplashScreen,
             Menu,
+            Leaderboard,
             World
         }
 
@@ -15,6 +16,7 @@ namespace GiraffeShooterClient.Utility
 
         public static Container.SplashScreen.SplashScreenContext SplashScreenContext;
         public static Container.Menu.MenuContext MenuContext;
+        public static Container.Leaderboard.LeaderboardContext LeaderboardContext;
         public static Container.World.WorldContext WorldContext;
 
         public static void Initialize()
@@ -35,10 +37,11 @@ namespace GiraffeShooterClient.Utility
                 case State.Menu:
                     MenuContext = new Container.Menu.MenuContext();
                     break;
+                case State.Leaderboard:
+                    LeaderboardContext = new Container.Leaderboard.LeaderboardContext();
+                    break;
                 case State.World:
                     WorldContext = new Container.World.WorldContext();
-                    break;
-                default:
                     break;
             }
         }

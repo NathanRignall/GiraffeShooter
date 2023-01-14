@@ -55,8 +55,7 @@ namespace GiraffeShooterClient.Container.World
         public override void HandleEvents(List<Event> events)
         {
             _collection.HandleEvents(events);
-
-
+            
             foreach (Event e in events)
             {
                 switch (e.Type)
@@ -100,7 +99,6 @@ namespace GiraffeShooterClient.Container.World
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-
             // update the player position (convert from tile to pixel coordinates)
             Camera.FollowTarget = _player.GetPosition() * 1000f / 32f;
 
@@ -134,7 +132,6 @@ namespace GiraffeShooterClient.Container.World
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
-
             // draw entities
             TiledSystem.Draw(gameTime, spriteBatch);
             SpriteSystem.Draw(gameTime, spriteBatch);

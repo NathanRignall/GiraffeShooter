@@ -80,6 +80,13 @@ public class GiraffeShooter : Game
                 
                 Camera.Update(gameTime);
                 break;
+            
+            case ContextManager.State.Leaderboard:
+                ContextManager.LeaderboardContext.HandleEvents(events);
+                ContextManager.LeaderboardContext.Update(gameTime);
+                
+                Camera.Update(gameTime);
+                break;
 
             case ContextManager.State.World:
 
@@ -121,6 +128,13 @@ public class GiraffeShooter : Game
                 IsMouseVisible = true;
                 _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
                 ContextManager.MenuContext.Draw(gameTime, _spriteBatch);
+                _spriteBatch.End();
+                break;
+            
+            case ContextManager.State.Leaderboard:
+                IsMouseVisible = true;
+                _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
+                ContextManager.LeaderboardContext.Draw(gameTime, _spriteBatch);
                 _spriteBatch.End();
                 break;
 
