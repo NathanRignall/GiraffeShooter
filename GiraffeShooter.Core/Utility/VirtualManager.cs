@@ -18,7 +18,10 @@ namespace GiraffeShooterClient.Utility
         private static Vector2 _rightControlOffset;
         
         private static Rectangle _leftShootButton;
+        private static bool _leftShootButtonPressed;
+        
         private static Rectangle _rightShootButton;
+        private static bool _rightShootButtonPressed;
 
         public static void Initialize()
         {
@@ -60,12 +63,18 @@ namespace GiraffeShooterClient.Utility
             // create the left shoot button rectangle
             _leftShootButton = new Rectangle((int)leftShootButtonPosition.X, (int)leftShootButtonPosition.Y, (int)shootButtonSize.X, (int)shootButtonSize.Y);
             
+            // set left pressed state
+            _leftShootButtonPressed = false;
+            
             
             // shoot button position screen on right
             var rightShootButtonPosition = new Vector2(ScreenManager.Size.X - shootButtonSize.X * 6f, ScreenManager.Size.Y - shootButtonSize.Y * 2f);
             
             // create the right shoot button rectangle
-            _rightShootButton = new Rectangle((int)rightShootButtonPosition.X, (int)rightShootButtonPosition.Y, (int)shootButtonSize.X, (int)shootButtonSize.Y); 
+            _rightShootButton = new Rectangle((int)rightShootButtonPosition.X, (int)rightShootButtonPosition.Y, (int)shootButtonSize.X, (int)shootButtonSize.Y);
+            
+            // set right pressed state
+            _rightShootButtonPressed = false;
 
         }
 
@@ -86,11 +95,17 @@ namespace GiraffeShooterClient.Utility
                     case EventType.TouchPress:
                     case EventType.TouchHold:
 
-                        // if (_arrowUp.Contains(e.Position))
-                        // {
-                        //     eventsToAdd.Add(new Event(Keys.Up, EventType.KeyHold));
-                        //     eventsToRemove.Add(e);
-                        // }
+                        // check if the left shoot button is pressed
+                        if (_leftShootButton.Contains(e.Position))
+                        { 
+                            _leftShootButtonPressed = true;
+                        } 
+                        
+                        // check if the right shoot button is pressed
+                        if (_rightShootButton.Contains(e.Position))
+                        { 
+                            _rightShootButtonPressed = true;
+                        }
 
                         // check if the press on the left control stick
                         if (_leftControlStick.Contains(e.Position))
@@ -314,14 +329,23 @@ namespace GiraffeShooterClient.Utility
             spriteBatch.Draw(AssetManager.VirtualControlBallTexture, new Rectangle((int)newRightControlBallPosition.X, (int)newRightControlBallPosition.Y, _rightControlBall.Width, _rightControlBall.Height), controlBallSource, Color.White);
             
             
-            // source rectangle for shoot
-            var shootSource = new Rectangle(0, 0, 64, 64);
+            // default source rectangle for the buttons
+            var defaultShootSource = new Rectangle(0, 0, 64, 64);
             
-            // draw left shoot button
-            spriteBatch.Draw(AssetManager.VirtualControlShootTexture, _leftShootButton, shootSource, Color.White);
+            // red source rectangle for the buttons
+            var redShootSource = new Rectangle(64, 0, 64, 64);
             
-            // draw right shoot button
-            spriteBatch.Draw(AssetManager.VirtualControlShootTexture, _rightShootButton, shootSource, Color.White);
+            // set the source rectangle for the shoot buttons
+            var leftShootSource = _leftShootButtonPressed ? defaultShootSource : redShootSource;
+            var rightShootSource = _rightShootButtonPressed ? defaultShootSource : redShootSource;
+            
+            // draw shoot buttons
+            spriteBatch.Draw(AssetManager.VirtualControlShootTexture, _leftShootButton, leftShootSource, Color.White);
+            spriteBatch.Draw(AssetManager.VirtualControlShootTexture, _rightShootButton, rightShootSource, Color.White);
+            
+            // reset the shoot button pressed
+            _leftShootButtonPressed = false;
+            _rightShootButtonPressed = false;
         }
     }
 }

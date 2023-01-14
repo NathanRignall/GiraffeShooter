@@ -26,7 +26,7 @@ public class GiraffeShooter : Game
         _graphics.PreferredBackBufferHeight = (int)ScreenManager.Size.Y;
 
         Content.RootDirectory = "Content";
-        IsMouseVisible = true;
+        IsMouseVisible = false;
     }
 
     protected override void Initialize()
@@ -38,8 +38,6 @@ public class GiraffeShooter : Game
         SupabaseManager.Initialize();
         ContextManager.Initialize();
         VirtualManager.Initialize();
-
-        //Microsoft.Xna.Framework.Input.KeyboardInput.Show("en-US", "Giraffe Shooter", "Enter your name", false);
     }
 
     protected override void LoadContent()
@@ -84,8 +82,10 @@ public class GiraffeShooter : Game
                 break;
 
             case ContextManager.State.World:
-                VirtualManager.HandleEvents(events);
-                VirtualManager.Update(gameTime);
+
+                if (InputManager.TouchConnected)
+                    VirtualManager.HandleEvents(events);
+                    VirtualManager.Update(gameTime);
                 
                 Camera.HandleEvents(events);
                 Camera.Update(gameTime);
@@ -111,18 +111,21 @@ public class GiraffeShooter : Game
         switch (ContextManager.CurrentState)
         {
             case ContextManager.State.SplashScreen:
+                IsMouseVisible = false;
                 _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
                 ContextManager.SplashScreenContext.Draw(gameTime, _spriteBatch);
                 _spriteBatch.End();
                 break;
             
             case ContextManager.State.Menu:
+                IsMouseVisible = true;
                 _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
                 ContextManager.MenuContext.Draw(gameTime, _spriteBatch);
                 _spriteBatch.End();
                 break;
 
             case ContextManager.State.World:
+                IsMouseVisible = false;
                 _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
                 ContextManager.WorldContext.Draw(gameTime, _spriteBatch);
 
