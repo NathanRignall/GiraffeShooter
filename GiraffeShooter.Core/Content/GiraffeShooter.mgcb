@@ -13,19 +13,33 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Fonts/Normal.spritefont
+#begin Fonts/x1/Normal.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Fonts/Normal.spritefont
+/build:Fonts/x1/Normal.spritefont
 
-#begin Fonts/Title.spritefont
+#begin Fonts/x1/Title.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Fonts/Title.spritefont
+/build:Fonts/x1/Title.spritefont
+
+#begin Fonts/x2/Normal.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/x2/Normal.spritefont
+
+#begin Fonts/x2/Title.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/x2/Title.spritefont
 
 #begin giraffe_texture_test.jpeg
 /importer:TextureImporter

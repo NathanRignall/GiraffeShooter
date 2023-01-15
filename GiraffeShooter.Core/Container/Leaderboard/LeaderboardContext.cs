@@ -33,7 +33,7 @@ namespace GiraffeShooterClient.Container.Leaderboard
             Base.Clear();
             
             // register entities
-            _collection.AddEntity(new Button(new Vector3(0, -9.5f, 0), AssetManager.BackButtonTexture, () => ContextManager.SetState(ContextManager.State.Menu)));
+            _collection.AddEntity(new Button(new Vector3(0, -7.5f, 0), AssetManager.BackButtonTexture, () => ContextManager.SetState(ContextManager.State.Menu)));
             _collection.AddEntity(_loadingButton = new Button(new Vector3(0, 0, 0), AssetManager.BackButtonTexture, () => { }));
             
             // reset the camera
@@ -83,7 +83,7 @@ namespace GiraffeShooterClient.Container.Leaderboard
                 for (var i = 0; i < data.Models.Count; i++)
                 {
                     var entry = data.Models[i];
-                    _collection.AddEntity(new TextDisplay(new Vector3(0, -7.5f + (i * 2f), 0), $"{entry.UserId} - {entry.Wins}"));
+                    _collection.AddEntity(new TextDisplay(new Vector3(0, -5.5f + (i * 1.5f), 0), $"{entry.UserId} - {entry.Wins}"));
                 }
                 
                 // set the state to main
