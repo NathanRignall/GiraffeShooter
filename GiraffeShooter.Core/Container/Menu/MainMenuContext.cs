@@ -23,8 +23,14 @@ namespace GiraffeShooterClient.Container.Menu
             
             // register entities
             _collection.AddEntity(new Button(new Vector3(0, -2.5f, 0), AssetManager.PlayButtonTexture, () => ContextManager.SetState(ContextManager.State.World)));
-            _collection.AddEntity(new Button(new Vector3(0, 0, 0), AssetManager.SettingsButtonTexture, () => ContextManager.SetState(ContextManager.State.Leaderboard)));
+            _collection.AddEntity(new Button(new Vector3(0, 0, 0), AssetManager.LeaderboardButtonTexture, () => ContextManager.SetState(ContextManager.State.Leaderboard)));
             _collection.AddEntity(new Button(new Vector3(0, 2.5f, 0), AssetManager.SettingsButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Login)));
+            
+            // if the user is logged in show userid
+            if (SupabaseManager.Client.Auth.CurrentSession != null)
+            {
+                _collection.AddEntity(new TextDisplay(new Vector3(0, 7.5f, 0), "Logged in as: " + SupabaseManager.Client.Auth.CurrentUser.Id));
+            }
 
             // reset the camera
             Camera.Reset(ScreenManager.GetScaleFactor());
@@ -43,6 +49,7 @@ namespace GiraffeShooterClient.Container.Menu
             PhysicsSystem.Update(gameTime);
             SpriteSystem.Update(gameTime);
             TextSystem.Update(gameTime);
+            TextInputSystem.Update(gameTime);
             
             // update the entity collection
             _collection.Update(gameTime);

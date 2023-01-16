@@ -9,33 +9,23 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
-    class TextInput : Entity
+    class TextInput : Component
     {
         public string String { get; set; } = "";
+        public string Placeholder { get; set; } = "";
         public int MaxLength { get; set; } = 32;
         public int CursorPosition { get; set; } = 0;
         public bool IsSelected { get; set; } = false;
-        
+        public string PopupText { get; set; } = "";
+        public bool IsPassword { get; set; } = false;
+
         private bool _open = false;
 
-        public TextInput(Vector3 position)
+        public TextInput()
         {
-            Id = Guid.NewGuid();
-            Name = "TextInput";
-
-            Physics physics = new Physics();
-            physics.Position = position;
-            physics.IsStatic = true;
-            AddComponent(physics);
-
-            Sprite sprite = new Sprite(AssetManager.PlayerTexture);
-            AddComponent(sprite);
-
-            Text text = new Text();
-            text.String = String;
-            AddComponent(text);
+            TextInputSystem.Register(this);
         }
-
+        
         private void AddCharacter(char c)
         {
             if (String.Length < MaxLength)
@@ -53,14 +43,14 @@ namespace GiraffeShooterClient.Entity
                 CursorPosition--;
             }
         }
-
+        
         public void ResetString()
         {
             String = "";
             CursorPosition = 0;
         }
-
-        public override void HandleEvents(List<Event> events)
+        
+        public void HandleEvents(List<Event> events)
         {
             
             // get the keyboard state
@@ -74,7 +64,7 @@ namespace GiraffeShooterClient.Entity
                     
                     case EventType.TouchPress:
 
-                        if (GetComponent<Sprite>().Bounds.Contains(e.Position / ScreenManager.GetScaleFactor()))
+                        if (entity.GetComponent<Sprite>().Bounds.Contains(e.Position / ScreenManager.GetScaleFactor()))
                         {
 #if __IOS__
                             if (!_open)
@@ -86,7 +76,7 @@ namespace GiraffeShooterClient.Entity
                     
                     case EventType.MouseClick:
                         
-                        if (GetComponent<Sprite>().Bounds.Contains(e.Position / ScreenManager.GetScaleFactor()))
+                        if (entity.GetComponent<Sprite>().Bounds.Contains(e.Position / ScreenManager.GetScaleFactor()))
                         {
                             IsSelected = true;
                         }
@@ -194,9 +184,24 @@ namespace GiraffeShooterClient.Entity
             }
 
             // update the text
-            GetComponent<Text>().String = displayString;
+            entity.GetComponent<Text>().String = displayString;
+        }
+
+        public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
+        {
+            // if the string is empty and is not selected
+            if (String.Length == 0 & !IsSelected)
+            {
+                // set the texture
+                entity.GetComponent<Text>().String = Placeholder;
+            }
         }
         
+        public override void Deregister()
+        {
+            TextInputSystem.Deregister(this);
+        }
+
 #if __IOS__
         private async Task<int> KeyboardPopup()
         {
@@ -206,7 +211,7 @@ namespace GiraffeShooterClient.Entity
             try
             {
                 // get the result
-                var result = await Microsoft.Xna.Framework.Input.KeyboardInput.Show("Input", "Giraffe Shooter", "Enter your name", false);
+                var result = await Microsoft.Xna.Framework.Input.KeyboardInput.Show("Input", PopupText, "", IsPassword);
 
                 // prevent null
                 if (result == null)
@@ -233,3 +238,4 @@ namespace GiraffeShooterClient.Entity
         
     }
 }
+

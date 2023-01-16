@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+
 using Postgrest.Attributes;
 using Postgrest.Models;
 using Supabase.Realtime;
@@ -23,6 +24,9 @@ namespace GiraffeShooterClient.Utility
         private static async Task Setup()
         {
             await Client.InitializeAsync();
+            
+            // write to console when connected
+            Console.WriteLine("Connected to Supabase");
             
             // set up a channel
             channel = Client.Realtime.Channel("realtime", "public", "test");
@@ -69,6 +73,17 @@ namespace GiraffeShooterClient.Utility
 
             [Column("wins")]
             public int Wins { get; set; }
+        }
+        
+        // leaderboard model
+        [Table("main_leaderboard")]
+        public class MainLeaderboard : BaseModel
+        {
+            [Column("wins")]
+            public int Wins { get; set; }
+            
+            [Column("username")]
+            public string Username { get; set; }
         }
     }
     

@@ -60,6 +60,7 @@ namespace GiraffeShooterClient.Entity
     class AnimationSystem : BaseComponent<Animation> { }
     class SpriteSystem : BaseComponent<Sprite> { }
     class TextSystem : BaseComponent<Text> { }
+    class TextInputSystem : BaseComponent<TextInput> { }
     
     class Base
     {

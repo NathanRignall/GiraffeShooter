@@ -22,9 +22,11 @@ namespace GiraffeShooterClient.Utility
         public static Texture2D AmmunitionSpriteTexture { get; private set; }
         public static Texture2D ShootSpriteTexture { get; private set; }
         public static Texture2D PlayButtonTexture { get; private set; }
+        public static Texture2D LeaderboardButtonTexture { get; private set; }
         public static Texture2D LoginButtonTexture { get; private set; }
         public static Texture2D SettingsButtonTexture { get; private set; }
         public static Texture2D BackButtonTexture { get; private set; }
+        public static Texture2D InputTexture { get; private set; }
         
         public static Texture2D VirtualControlBallTexture { get; private set; }
         public static Texture2D VirtualControlStickTexture { get; private set; }
@@ -52,9 +54,11 @@ namespace GiraffeShooterClient.Utility
             AmmunitionSpriteTexture = content.Load<Texture2D>("Sprites/DemoAmmunition");
             ShootSpriteTexture = content.Load<Texture2D>("Sprites/Shoot");
             PlayButtonTexture = content.Load<Texture2D>("Sprites/PlayButton");
+            LeaderboardButtonTexture = content.Load<Texture2D>("Sprites/LeaderboardButton");
             LoginButtonTexture = content.Load<Texture2D>("Sprites/LoginButton");
             SettingsButtonTexture = content.Load<Texture2D>("Sprites/SettingsButton");
             BackButtonTexture = content.Load<Texture2D>("Sprites/BackButton");
+            InputTexture = content.Load<Texture2D>("Sprites/Input");
             
             VirtualControlBallTexture = content.Load<Texture2D>("Sprites/VirtualControlBall");
             VirtualControlStickTexture = content.Load<Texture2D>("Sprites/VirtualControlStick");

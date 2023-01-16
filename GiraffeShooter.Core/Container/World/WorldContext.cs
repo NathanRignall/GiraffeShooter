@@ -116,7 +116,7 @@ namespace GiraffeShooterClient.Container.World
                 }
             }
 
-            // update entities
+            // update components
             PhysicsSystem.Update(gameTime);
             ColliderSystem.Update(gameTime);
             ControlSystem.Update(gameTime);
@@ -124,6 +124,7 @@ namespace GiraffeShooterClient.Container.World
             AnimationSystem.Update(gameTime);
             SpriteSystem.Update(gameTime);
             TextSystem.Update(gameTime);
+            TextInputSystem.Update(gameTime);
             
             // update the entity collection
             _collection.Update(gameTime);

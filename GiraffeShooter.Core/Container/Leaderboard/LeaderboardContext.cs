@@ -19,7 +19,7 @@ namespace GiraffeShooterClient.Container.Leaderboard
         private State _currentState;
         private readonly Collection _collection;
         
-        private Button _loadingButton;
+        private TextDisplay _loadingText;
 
         public LeaderboardContext()
         {
@@ -34,7 +34,7 @@ namespace GiraffeShooterClient.Container.Leaderboard
             
             // register entities
             _collection.AddEntity(new Button(new Vector3(0, -7.5f, 0), AssetManager.BackButtonTexture, () => ContextManager.SetState(ContextManager.State.Menu)));
-            _collection.AddEntity(_loadingButton = new Button(new Vector3(0, 0, 0), AssetManager.BackButtonTexture, () => { }));
+            _collection.AddEntity(_loadingText = new TextDisplay(new Vector3(0, 0, 0), "Loading..."));
             
             // reset the camera
             Camera.Reset(ScreenManager.GetScaleFactor());
@@ -71,19 +71,19 @@ namespace GiraffeShooterClient.Container.Leaderboard
         {
             try
             {
-                var data = await SupabaseManager.Client.Postgrest.Table<DB.Leaderboard>().Get();
+                var data = await SupabaseManager.Client.Postgrest.Table<DB.MainLeaderboard>().Get();
                 
                 // log the data
                 Console.WriteLine(data);
                 
                 // delete the loading button
-                _loadingButton.Delete();
+                _loadingText.Delete();
                 
                 // create a set of text entities for each leaderboard entry
                 for (var i = 0; i < data.Models.Count; i++)
                 {
                     var entry = data.Models[i];
-                    _collection.AddEntity(new TextDisplay(new Vector3(0, -5.5f + (i * 1.5f), 0), $"{entry.UserId} - {entry.Wins}"));
+                    _collection.AddEntity(new TextDisplay(new Vector3(0, -5.5f + (i * 1.5f), 0), $"{entry.Username} - {entry.Wins}"));
                 }
                 
                 // set the state to main

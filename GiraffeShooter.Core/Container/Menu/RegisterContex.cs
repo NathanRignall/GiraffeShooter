@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
 using GiraffeShooterClient.Entity;
 using GiraffeShooterClient.Utility;
 
+using Supabase.Gotrue;
 
 namespace GiraffeShooterClient.Container.Menu
 {
     public class RegisterContext : Context
     {
         private readonly Collection _collection;
-        private readonly TextInput _emailInput;
-        private readonly TextInput _passwordInput;
+        private readonly TextBaseInput _emailInput;
+        private readonly TextBaseInput _passwordInput;
+        private readonly TextBaseInput _usernameInput;
 
         private bool _loading = false;
         
@@ -28,9 +29,11 @@ namespace GiraffeShooterClient.Container.Menu
             Base.Clear();
             
             // register entities
-            _collection.AddEntity(new Button(new Vector3(0, 0, 0), AssetManager.PlayButtonTexture, () => { }));
-            _collection.AddEntity(_emailInput = new TextInput(new Vector3(0, 1f, 0)));
-            _collection.AddEntity(_passwordInput = new TextInput(new Vector3(0, 2f, 0)));
+            _collection.AddEntity(new Button(new Vector3(0, -7.5f, 0), AssetManager.BackButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.MainMenu)));
+            _collection.AddEntity(_emailInput = new TextEmailInput(new Vector3(0, -3, 0)));
+            _collection.AddEntity(_passwordInput = new TextPasswordInput(new Vector3(0, 0, 0)));
+            _collection.AddEntity(_usernameInput = new TextUsernameInput(new Vector3(0, 3, 0)));
+            _collection.AddEntity(new Button(new Vector3(0, 7.5f, 0), AssetManager.LoginButtonTexture, () => { Register(); }));
 
             // reset the camera
             Camera.Reset(ScreenManager.GetScaleFactor());
@@ -45,41 +48,38 @@ namespace GiraffeShooterClient.Container.Menu
         
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            // send email
-            if (InputManager.IsKeyDown(Keys.Enter) && !_loading)
-            {
-                Login();
-            }
-
             // update entities
             PhysicsSystem.Update(gameTime);
             SpriteSystem.Update(gameTime);
             TextSystem.Update(gameTime);
-            
+            TextInputSystem.Update(gameTime);
+
             // update the entity collection
             _collection.Update(gameTime);
         }
         
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
-
             // draw entities
             SpriteSystem.Draw(gameTime, spriteBatch);
             TextSystem.Draw(gameTime, spriteBatch);
-
         }
         
-        private async Task<int> Login()
+        private async Task Register()
         {
             _loading = true;
 
             try
             {
-                await SupabaseManager.Client.Auth.SignUp(_emailInput.String, _passwordInput.String);
+                // create options dictionary
+                var options = new Dictionary<string, object>
+                {
+                    {"username", _usernameInput.GetString()},
+                };
 
-                // set the text input to uid
-                _emailInput.String = SupabaseManager.Client.Auth.CurrentUser.Id;
-                        
+                // with test username
+                await SupabaseManager.Client.Auth.SignUp(_emailInput.GetString(), _passwordInput.GetString(), new SignUpOptions { Data = options });
+
                 // stop loading
                 _loading = false;
                 
@@ -98,9 +98,9 @@ namespace GiraffeShooterClient.Container.Menu
                 // stop loading
                 _loading = false;
 
-            }
+                throw e;
 
-            return 1;
+            }
         }
         
     }
