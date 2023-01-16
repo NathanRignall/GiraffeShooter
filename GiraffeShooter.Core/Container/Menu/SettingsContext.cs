@@ -8,12 +8,12 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Container.Menu
 {
-    public class MainMenuContext : Context
+    public class SettingsContext : Context
     {
 
         private readonly Collection _collection;
 
-        public MainMenuContext()
+        public SettingsContext()
         {
             // create a new collection
             _collection = new Collection();
@@ -22,15 +22,9 @@ namespace GiraffeShooterClient.Container.Menu
             Base.Clear();
             
             // register entities
-            _collection.AddEntity(new Button(new Vector3(0, -2.5f, 0), AssetManager.PlayButtonTexture, () => ContextManager.SetState(ContextManager.State.World)));
-            _collection.AddEntity(new Button(new Vector3(0, 0, 0), AssetManager.LeaderboardButtonTexture, () => ContextManager.SetState(ContextManager.State.Leaderboard)));
-            _collection.AddEntity(new Button(new Vector3(0, 2.5f, 0), AssetManager.SettingsButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Settings)));
-            
-            // if the user is logged in show userid
-            if (SupabaseManager.Client.Auth.CurrentSession != null)
-            {
-                _collection.AddEntity(new TextDisplay(new Vector3(0, 7.5f, 0), "Logged in as: " + SupabaseManager.Client.Auth.CurrentUser.Id));
-            }
+            _collection.AddEntity(new Button(new Vector3(0, -7.5f, 0), AssetManager.BackButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.MainMenu)));
+            _collection.AddEntity(new Button(new Vector3(0, -1.25f, 0), AssetManager.LoginButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Login)));
+            _collection.AddEntity(new Button(new Vector3(0, 1.25f, 0), AssetManager.RegisterButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Register)));
 
             // reset the camera
             Camera.Reset(ScreenManager.GetScaleFactor());

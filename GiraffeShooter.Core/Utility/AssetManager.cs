@@ -24,6 +24,7 @@ namespace GiraffeShooterClient.Utility
         public static Texture2D PlayButtonTexture { get; private set; }
         public static Texture2D LeaderboardButtonTexture { get; private set; }
         public static Texture2D LoginButtonTexture { get; private set; }
+        public static Texture2D RegisterButtonTexture { get; private set; }
         public static Texture2D SettingsButtonTexture { get; private set; }
         public static Texture2D BackButtonTexture { get; private set; }
         public static Texture2D InputTexture { get; private set; }
@@ -56,6 +57,7 @@ namespace GiraffeShooterClient.Utility
             PlayButtonTexture = content.Load<Texture2D>("Sprites/PlayButton");
             LeaderboardButtonTexture = content.Load<Texture2D>("Sprites/LeaderboardButton");
             LoginButtonTexture = content.Load<Texture2D>("Sprites/LoginButton");
+            RegisterButtonTexture = content.Load<Texture2D>("Sprites/RegisterButton");
             SettingsButtonTexture = content.Load<Texture2D>("Sprites/SettingsButton");
             BackButtonTexture = content.Load<Texture2D>("Sprites/BackButton");
             InputTexture = content.Load<Texture2D>("Sprites/Input");

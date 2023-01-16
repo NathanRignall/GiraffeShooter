@@ -12,6 +12,7 @@ namespace GiraffeShooterClient.Container.Menu
         public enum State
         {
             MainMenu,
+            Settings,
             Login,
             Register,
             Game
@@ -43,6 +44,9 @@ namespace GiraffeShooterClient.Container.Menu
             {
                 case State.MainMenu:
                     _currentContext = new MainMenuContext();
+                    break;
+                case State.Settings:
+                    _currentContext = new SettingsContext();
                     break;
                 case State.Login:
                     _currentContext = new LoginContext();

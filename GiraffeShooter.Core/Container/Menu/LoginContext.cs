@@ -28,7 +28,7 @@ namespace GiraffeShooterClient.Container.Menu
             Base.Clear();
             
             // register entities
-            _collection.AddEntity(new Button(new Vector3(0, -7.5f, 0), AssetManager.BackButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.MainMenu)));
+            _collection.AddEntity(new Button(new Vector3(0, -7.5f, 0), AssetManager.BackButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Settings)));
             _collection.AddEntity(_emailInput = new TextEmailInput(new Vector3(0, -1.5f, 0)));
             _collection.AddEntity(_passwordInput = new TextPasswordInput(new Vector3(0, 1.5f, 0)));
             _collection.AddEntity(new Button(new Vector3(0, 7.5f, 0), AssetManager.LoginButtonTexture, () => { Login(); }));
