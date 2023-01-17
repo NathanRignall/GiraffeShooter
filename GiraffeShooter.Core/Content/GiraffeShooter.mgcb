@@ -137,6 +137,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Input.png
 
+#begin Sprites/InventoryBar.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/InventoryBar.png
+
 #begin Sprites/LeaderboardButton.png
 /importer:TextureImporter
 /processor:TextureProcessor

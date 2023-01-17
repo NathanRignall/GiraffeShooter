@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace GiraffeShooterClient.Entity
@@ -53,6 +52,7 @@ namespace GiraffeShooterClient.Entity
 
     }
 
+    class ScreenSystem : BaseComponent<Screen> { }
     class PhysicsSystem : BaseComponent<Physics> { }
     class ColliderSystem : BaseComponent<Collider> { }
     class ControlSystem : BaseComponent<Control> { }
@@ -66,6 +66,7 @@ namespace GiraffeShooterClient.Entity
     {
         public static void Clear()
         {
+            ScreenSystem.components.Clear();
             PhysicsSystem.components.Clear();
             ColliderSystem.components.Clear();
             ControlSystem.components.Clear();
@@ -73,6 +74,7 @@ namespace GiraffeShooterClient.Entity
             AnimationSystem.components.Clear();
             SpriteSystem.components.Clear();
             TextSystem.components.Clear();
+            TextInputSystem.components.Clear();
         }
     }
 }

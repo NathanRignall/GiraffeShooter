@@ -13,6 +13,7 @@ namespace GiraffeShooterClient.Container.World
     public class WorldContext : Context
     {
         Collection _collection;
+        InventoryBar _inventoryBar;
         Player _player;
 
         public WorldContext()
@@ -24,9 +25,9 @@ namespace GiraffeShooterClient.Container.World
             Base.Clear();
 
             // register entities
+            _collection.AddEntity(_inventoryBar = new InventoryBar());
             _collection.AddEntity(new MasterMap());
             _collection.AddEntity(_player = new Player());
-            //_collection.AddEntity(new Button(new Vector3(0, 5, 0), "Exit", new Action(() => { Base.SetContext(new MenuContext()); })));
 
             if (SupabaseManager.Client.Auth.CurrentUser != null)
                 _collection.AddEntity(new TextDisplay(new Vector3(0, 5, 0), SupabaseManager.Client.Auth.CurrentUser.Id));
@@ -43,6 +44,9 @@ namespace GiraffeShooterClient.Container.World
             {
                 _collection.AddEntity(new Ammunition(new Vector3(random.Next(-10, 10), random.Next(-5, 5), 0)));
             }
+            
+            // add screen button
+            _collection.AddEntity(new ScreenButton(new Vector2(3f, -2f),  AssetManager.BackButtonTexture, new Action(() => { ContextManager.SetState(ContextManager.State.Menu); }), ScreenManager.CenterType.TopRight));
 
             // reset the camera
             Camera.Reset();
@@ -117,6 +121,7 @@ namespace GiraffeShooterClient.Container.World
             }
 
             // update components
+            ScreenSystem.Update(gameTime);
             PhysicsSystem.Update(gameTime);
             ColliderSystem.Update(gameTime);
             ControlSystem.Update(gameTime);
@@ -137,7 +142,6 @@ namespace GiraffeShooterClient.Container.World
             TiledSystem.Draw(gameTime, spriteBatch);
             SpriteSystem.Draw(gameTime, spriteBatch);
             TextSystem.Draw(gameTime, spriteBatch);
-
         }
 
     }

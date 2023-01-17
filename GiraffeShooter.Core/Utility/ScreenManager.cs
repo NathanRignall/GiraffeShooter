@@ -24,6 +24,19 @@ namespace GiraffeShooterClient.Utility
             { "2560x1600", new Vector2(2560, 1600) },
             { "3840x2160", new Vector2(3840, 2160) },
         };
+        
+        public enum CenterType
+        {
+            TopLeft,
+            TopCenter,
+            TopRight,
+            MiddleLeft,
+            MiddleCenter,
+            MiddleRight,
+            BottomLeft,
+            BottomCenter,
+            BottomRight
+        }
             
         public static Vector2 Size;
         
@@ -39,6 +52,33 @@ namespace GiraffeShooterClient.Utility
                 return 1;
             else
                 return 2;
+        }
+        
+        public static Vector2 GetCenter(CenterType center)
+        {
+            switch (center)
+            {
+                case CenterType.TopLeft:
+                    return Vector2.Zero;
+                case CenterType.TopCenter:
+                    return new Vector2(Size.X / 2, 0);
+                case CenterType.TopRight:
+                    return new Vector2(Size.X, 0);
+                case CenterType.MiddleLeft:
+                    return new Vector2(0, Size.Y / 2);
+                case CenterType.MiddleCenter:
+                    return new Vector2(Size.X / 2, Size.Y / 2);
+                case CenterType.MiddleRight:
+                    return new Vector2(Size.X, Size.Y / 2);
+                case CenterType.BottomLeft:
+                    return new Vector2(0, Size.Y);
+                case CenterType.BottomCenter:
+                    return new Vector2(Size.X / 2, Size.Y);
+                case CenterType.BottomRight:
+                    return new Vector2(Size.X, Size.Y);
+                default:
+                    return Vector2.Zero;
+            }
         }
 
     }

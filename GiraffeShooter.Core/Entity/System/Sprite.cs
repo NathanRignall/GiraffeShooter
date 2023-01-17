@@ -10,7 +10,8 @@ namespace GiraffeShooterClient.Entity
     class Sprite : Component
     {
         public Texture2D Texture { get; private set; }
-        public Rectangle SourceRectangle;
+        public int Scale { get; set; } = 1;
+        public Rectangle SourceRectangle { get; set; }
         public Rectangle Bounds { get; private set; }
         public bool Centered { get; set; } = true;
         public float Rotation { get; set; }
@@ -35,22 +36,49 @@ namespace GiraffeShooterClient.Entity
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
-            // calculate the position of the sprite
-            var physics = entity.GetComponent<Physics>();
-            var cameraOffset = Camera.Offset;
-            var position = new Vector2(physics.Position.X, physics.Position.Y) * 32f  + cameraOffset + _offset - new Vector2(SourceRectangle.Width / 2, SourceRectangle.Height / 2);
+            var destinationRectangle = new Rectangle();
             
-            if (!Centered)
-                position = new Vector2(physics.Position.X, physics.Position.Y) * 32f + cameraOffset + _offset;
-
-            var destinationRectangle = new Rectangle((int)Math.Ceiling(position.X * Camera.Zoom), (int)Math.Ceiling(position.Y * Camera.Zoom), 
-                (int)Math.Ceiling(SourceRectangle.Width * Camera.Zoom), (int)Math.Ceiling(SourceRectangle.Height * Camera.Zoom));
+            // if has a physics component, use its position
+            if (entity.HasComponent<Physics>())
+            {
+                // calculate the position of the sprite
+                var physics = entity.GetComponent<Physics>();
+                var cameraOffset = Camera.Offset;
+                var position = new Vector2(physics.Position.X, physics.Position.Y) * 32f  + cameraOffset + _offset - new Vector2(SourceRectangle.Width / 2, SourceRectangle.Height / 2);
+                
+                if (!Centered)
+                    position = new Vector2(physics.Position.X, physics.Position.Y) * 32f + cameraOffset + _offset;
+                
+                // create the destination rectangle
+                destinationRectangle = new Rectangle((int)Math.Ceiling(position.X * Camera.Zoom), (int)Math.Ceiling(position.Y * Camera.Zoom), 
+                    (int)Math.Ceiling(SourceRectangle.Width * Camera.Zoom), (int)Math.Ceiling(SourceRectangle.Height * Camera.Zoom));
+                
+                // update bounds
+                Bounds = new Rectangle((int)position.X, (int)position.Y, SourceRectangle.Width, SourceRectangle.Height);
+            }
+            
+            // if has a screen component, use its position
+            if (entity.HasComponent<Screen>())
+            {
+                var screen = entity.GetComponent<Screen>();
+                var basePosition = ScreenManager.GetCenter(screen.Center) / ScreenManager.GetScaleFactor();
+                var position = basePosition - screen.Offset * 32f + _offset - new Vector2(SourceRectangle.Width / 2 * Scale, SourceRectangle.Height / 2 * Scale);
+                
+                if (!Centered)
+                    position = basePosition - screen.Offset * 32f + _offset;
+                
+                // create the destination rectangle
+                destinationRectangle = new Rectangle((int)Math.Ceiling(position.X * ScreenManager.GetScaleFactor()), (int)Math.Ceiling(position.Y * ScreenManager.GetScaleFactor()), 
+                    (int)Math.Ceiling(SourceRectangle.Width * (float)ScreenManager.GetScaleFactor() * Scale), (int)Math.Ceiling(SourceRectangle.Height * (float)ScreenManager.GetScaleFactor() * Scale));
+                
+                // update bounds
+                Bounds = new Rectangle((int)position.X, (int)position.Y, SourceRectangle.Width * Scale, SourceRectangle.Height * Scale);
+            }
 
             // draw the sprite
             spriteBatch.Draw(Texture, destinationRectangle, SourceRectangle, Color.White, Rotation, Vector2.Zero, SpriteEffects.None, 0f);
             
-            // update bounds
-            Bounds = new Rectangle((int)position.X, (int)position.Y, SourceRectangle.Width, SourceRectangle.Height);
+            
         }
 
         public override void Deregister()
