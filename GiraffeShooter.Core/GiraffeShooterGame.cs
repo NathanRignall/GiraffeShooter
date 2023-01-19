@@ -15,7 +15,7 @@ public class GiraffeShooter : Game
 
     public GiraffeShooter()
     {
-        ScreenManager.SetResolution("1920x1080");
+        ScreenManager.SetResolution("1280x720");
         
 #if __IOS__
         ScreenManager.Size = new Vector2(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);

@@ -1,20 +1,20 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0-ios</TargetFramework>
     <OutputType>Exe</OutputType>
-    <SupportedOSPlatformVersion>11.2</SupportedOSPlatformVersion>
-    <CodesignKey>iPhone Developer</CodesignKey>
-    <ProvisioningType>manual</ProvisioningType>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>true</ImplicitUsings>
+    <SupportedOSPlatformVersion>13.0</SupportedOSPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <CreatePackage>false</CreatePackage>
-    <CodesignProvision>iOS Team Provisioning Profile: app.nlr.GiraffeShooter.iOS</CodesignProvision>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <CreatePackage>false</CreatePackage>
     <DebugSymbols>true</DebugSymbols>
     <WarningLevel>4</WarningLevel>
-    <CodesignProvision>Automatic</CodesignProvision>
+    <MtouchLink>Full</MtouchLink>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\GiraffeShooter.Core\Container\**\*.cs" />
@@ -23,14 +23,13 @@
     <Compile Include="..\GiraffeShooter.Core\GiraffeShooterGame.cs" Link="GiraffeShooterGame.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="supabase-csharp" Version="0.6.2" />
+    <PackageReference Include="supabase-csharp" Version="0.7.1" />
     <PackageReference Include="TiledCS" Version="3.3.3" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.2-develop" />
     <PackageReference Include="MonoGame.Framework.iOS" Version="3.8.1.2-develop" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />
-    <Folder Include="Game\" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="..\GiraffeShooter.Core\Content\GiraffeShooter.mgcb" Link="Content\GiraffeShooter.mgcb" />
@@ -38,6 +37,55 @@
   <ItemGroup>
     <None Remove="MonoGame.Framework.iOS" />
     <None Remove="MonoGame.Content.Builder.Task" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\Icon167.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\Icon167.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\Icon29.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\Icon29.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\Icon1024.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\Icon1024.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\Icon60.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\Icon60.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\Icon76.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\Icon76.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\Icon58.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\Icon58.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\Icon40.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\Icon40.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\Icon80.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\Icon80.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\Contents.json">
+      <Link>Assets.xcassets\AppIcon.appiconset\Contents.json</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\Icon87.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\Icon87.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\Icon120.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\Icon120.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\Icon152.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\Icon152.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\Icon20.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\Icon20.png</Link>
+    </ImageAsset>
+    <ImageAsset Update="Assets.xcassets\AppIcon.appiconset\Icon180.png">
+      <Link>Assets.xcassets\AppIcon.appiconset\Icon180.png</Link>
+    </ImageAsset>
+  </ItemGroup>
+  <ItemGroup>
+    <InterfaceDefinition Update="Resources\LaunchScreen.xib">
+      <Link>Resources\LaunchScreen.xib</Link>
+    </InterfaceDefinition>
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />
