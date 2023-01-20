@@ -32,8 +32,9 @@ public struct Event
     public Vector2 Delta;
     public Vector2 Delta2;
     public int ScrollDelta;
+    public TimeSpan Time;
 
-    public Event(Keys EventKey, EventType type) {
+    public Event(Keys EventKey, EventType type, TimeSpan time) {
         if (type == EventType.KeyPress | type == EventType.KeyRelease | type == EventType.KeyHold) {
             Key = EventKey;
             Type = type;
@@ -42,12 +43,13 @@ public struct Event
             Delta = Vector2.Zero;
             Delta2 = Vector2.Zero;
             ScrollDelta = 0;
+            Time = time;
         } else {
             throw new Exception("Invalid event type for key event");
         }
     }
 
-    public Event(Vector2 position, EventType type) {
+    public Event(Vector2 position, EventType type, TimeSpan time) {
         // check is click or press
         if (type == EventType.MouseClick | type == EventType.TouchPress | type == EventType.TouchHold)
         {
@@ -58,6 +60,7 @@ public struct Event
             Delta2 = Vector2.Zero;
             ScrollDelta = 0;
             Key = Keys.None;
+            Time = time;
         }
         // stick move
         else if (type == EventType.StickLeftMove | type == EventType.StickRightMove)
@@ -69,12 +72,13 @@ public struct Event
             Delta2 = Vector2.Zero;
             ScrollDelta = 0;
             Key = Keys.None;
+            Time = time;
         } else {
             throw new Exception("Invalid event type");
         }
     }
 
-    public Event(Vector2 position, Vector2 delta, EventType type) {
+    public Event(Vector2 position, Vector2 delta, EventType type, TimeSpan time) {
         // check is mouse drag or touch drag
         if (type == EventType.MouseDrag | type == EventType.TouchDrag) {
             Type = type;
@@ -84,12 +88,13 @@ public struct Event
             Delta2 = Vector2.Zero;
             ScrollDelta = 0;
             Key = Keys.None;
+            Time = time;
         } else {
             throw new Exception("Invalid event type");
         }
     }
 
-    public Event(int scrollDelta, EventType type) {
+    public Event(int scrollDelta, EventType type, TimeSpan time) {
         // check is mouse scroll
         if (type == EventType.MouseScroll) {
             Type = type;
@@ -99,12 +104,13 @@ public struct Event
             Delta2 = Vector2.Zero;
             ScrollDelta = scrollDelta;
             Key = Keys.None;
+            Time = time;
         } else {
             throw new Exception("Invalid event type");
         }
     }
     
-    public Event(Vector2 position, Vector2 position2, Vector2 delta, Vector2 delta2, EventType type) {
+    public Event(Vector2 position, Vector2 position2, Vector2 delta, Vector2 delta2, EventType type, TimeSpan time) {
         // check is touch pinch
         if (type == EventType.TouchPinch) {
             Type = type;
@@ -114,6 +120,7 @@ public struct Event
             Delta2 = delta2;
             ScrollDelta = 0;
             Key = Keys.None;
+            Time = time;
         } else {
             throw new Exception("Invalid event type");
         }
@@ -168,21 +175,21 @@ public static class InputManager
 
     }
 
-    public static List<Event> GenerateEvents()
+    public static List<Event> GenerateEvents(GameTime gameTime)
     {
         var events = new List<Event>();
 
         // for each key add event if key is pressed and was not pressed before
         foreach (Keys key in CurrentKeyboardState.GetPressedKeys()) {
             if (PreviousKeyboardState.IsKeyUp(key)) {
-                events.Add(new Event(key, EventType.KeyPress));
+                events.Add(new Event(key, EventType.KeyPress, gameTime.TotalGameTime));
             }
         }
         
         // for each key add event if key is being held
         foreach (Keys key in CurrentKeyboardState.GetPressedKeys()) {
             if (PreviousKeyboardState.IsKeyDown(key)) {
-                events.Add(new Event(key, EventType.KeyHold));
+                events.Add(new Event(key, EventType.KeyHold, gameTime.TotalGameTime));
             }
         }
 
@@ -190,7 +197,7 @@ public static class InputManager
         if (PreviousMouseState.LeftButton == ButtonState.Pressed & CurrentMouseState.LeftButton == ButtonState.Pressed) {
             // only add mouse drag event if mouse was moved
             if (PreviousMouseState.Position != CurrentMouseState.Position) {
-                events.Add(new Event(new Vector2(CurrentMouseState.X, CurrentMouseState.Y), new Vector2(CurrentMouseState.X, CurrentMouseState.Y) - new Vector2(PreviousMouseState.X, PreviousMouseState.Y), EventType.MouseDrag));
+                events.Add(new Event(new Vector2(CurrentMouseState.X, CurrentMouseState.Y), new Vector2(CurrentMouseState.X, CurrentMouseState.Y) - new Vector2(PreviousMouseState.X, PreviousMouseState.Y), EventType.MouseDrag, gameTime.TotalGameTime));
                 _mouseDragged = true;
             }
         } 
@@ -200,11 +207,11 @@ public static class InputManager
         }
 
         if (PreviousMouseState.LeftButton == ButtonState.Pressed & CurrentMouseState.LeftButton == ButtonState.Released & _mouseDragged == false) {
-            events.Add(new Event(new Vector2(CurrentMouseState.X, CurrentMouseState.Y), EventType.MouseClick));
+            events.Add(new Event(new Vector2(CurrentMouseState.X, CurrentMouseState.Y), EventType.MouseClick, gameTime.TotalGameTime));
         }
 
         if (PreviousMouseState.ScrollWheelValue != CurrentMouseState.ScrollWheelValue) {
-            events.Add(new Event(CurrentMouseState.ScrollWheelValue - PreviousMouseState.ScrollWheelValue, EventType.MouseScroll));
+            events.Add(new Event(CurrentMouseState.ScrollWheelValue - PreviousMouseState.ScrollWheelValue, EventType.MouseScroll, gameTime.TotalGameTime));
         }
         
         // touch logic
@@ -232,7 +239,7 @@ public static class InputManager
              if (touchCol[i].State == TouchLocationState.Released) {
                  // check touch state
                  if (TouchState[i].Count <= 15)
-                     events.Add(new Event(TouchState[i].Position, EventType.TouchPress));
+                     events.Add(new Event(TouchState[i].Position, EventType.TouchPress, gameTime.TotalGameTime));
                  
                  // reset touch state
                  TouchState[i].Count = 0;
@@ -256,13 +263,13 @@ public static class InputManager
             
             // drag
             if (gesture.GestureType == GestureType.FreeDrag) {
-                events.Add(new Event(gesture.Position, gesture.Delta, EventType.TouchDrag));
+                events.Add(new Event(gesture.Position, gesture.Delta, EventType.TouchDrag, gameTime.TotalGameTime));
                 _touchGesture = true;
             }
             
             // zoom
             if (gesture.GestureType == GestureType.Pinch) {
-                events.Add(new Event(gesture.Position, gesture.Position2, gesture.Delta, gesture.Delta2, EventType.TouchPinch));
+                events.Add(new Event(gesture.Position, gesture.Position2, gesture.Delta, gesture.Delta2, EventType.TouchPinch, gameTime.TotalGameTime));
                 _touchGesture = true;
             }
         }
@@ -272,7 +279,7 @@ public static class InputManager
             for (int i = 0; i < TouchState.Length; i++) {
                 if (TouchState[i].Count > 15) {
                     // send hold event
-                    events.Add(new Event(TouchState[i].Position, EventType.TouchHold));
+                    events.Add(new Event(TouchState[i].Position, EventType.TouchHold, gameTime.TotalGameTime));
                 }
             }
         }

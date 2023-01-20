@@ -13,11 +13,11 @@ namespace GiraffeShooterClient.Entity
 
             Screen screen = new Screen();
             screen.Center = ScreenManager.CenterType.BottomCenter;
-            screen.Offset = new Vector2(0f, 3.5f);
+            screen.Offset = new Vector2(0f, 3.0f);
             AddComponent(screen);
 
-            Sprite sprite = new Sprite(AssetManager.InventoryBarTexture, new Rectangle(0, 0, 242, 64));
-            sprite.Scale = 2;
+            Sprite sprite = new Sprite(AssetManager.InventoryBarTexture, new Rectangle(0, 0, 338, 70));
+            sprite.Scale = 1;
             AddComponent(sprite);
         }
     }

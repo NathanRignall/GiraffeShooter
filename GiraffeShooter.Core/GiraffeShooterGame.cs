@@ -64,7 +64,7 @@ public class GiraffeShooter : Game
 
         // generate events
         if (IsActive) {
-            events = InputManager.GenerateEvents();
+            events = InputManager.GenerateEvents(gameTime);
         }
 
         // update the contexts (this is for animations etc)
@@ -91,7 +91,7 @@ public class GiraffeShooter : Game
             case ContextManager.State.World:
 
                 if (InputManager.TouchConnected)
-                    VirtualManager.HandleEvents(events);
+                    VirtualManager.HandleEvents(events, gameTime);
                     VirtualManager.Update(gameTime);
                 
                 Camera.HandleEvents(events);

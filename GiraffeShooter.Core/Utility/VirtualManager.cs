@@ -19,9 +19,11 @@ namespace GiraffeShooterClient.Utility
         
         private static Rectangle _leftShootButton;
         private static bool _leftShootButtonPressed;
+        private static TimeSpan _leftShootButtonPressedTime;
         
         private static Rectangle _rightShootButton;
         private static bool _rightShootButtonPressed;
+        private static TimeSpan _rightShootButtonPressedTime;
 
         public static void Initialize()
         {
@@ -78,11 +80,11 @@ namespace GiraffeShooterClient.Utility
 
         }
 
-        public static void Update(Microsoft.Xna.Framework.GameTime gameTime)
+        public static void Update(GameTime gameTime)
         {
         }
 
-        public static void HandleEvents(List<Event> events)
+        public static void HandleEvents(List<Event> events, GameTime gameTime)
         {
             var eventsToRemove = new List<Event>();
             var eventsToAdd = new List<Event>();
@@ -99,12 +101,14 @@ namespace GiraffeShooterClient.Utility
                         if (_leftShootButton.Contains(e.Position))
                         { 
                             _leftShootButtonPressed = true;
+                            _leftShootButtonPressedTime = e.Time;
                         } 
                         
                         // check if the right shoot button is pressed
                         if (_rightShootButton.Contains(e.Position))
                         { 
                             _rightShootButtonPressed = true;
+                            _rightShootButtonPressedTime = e.Time;
                         }
 
                         // check if the press on the left control stick
@@ -277,11 +281,11 @@ namespace GiraffeShooterClient.Utility
 
             // if the left control offset is not zero, add the event
             if (_leftControlOffset != Vector2.Zero)
-                eventsToAdd.Add(new Event(_leftControlOffset / 256, EventType.StickLeftMove));
+                eventsToAdd.Add(new Event(_leftControlOffset / 256, EventType.StickLeftMove, gameTime.TotalGameTime));
 
             // if the right control offset is not zero, add the event
             if (_rightControlOffset != Vector2.Zero)
-                eventsToAdd.Add(new Event(_rightControlOffset / 256, EventType.StickRightMove));
+                eventsToAdd.Add(new Event(_rightControlOffset / 256, EventType.StickRightMove, gameTime.TotalGameTime));
 
                 // remove the events that we handled
             foreach (var e in eventsToRemove)
@@ -299,8 +303,8 @@ namespace GiraffeShooterClient.Utility
         public static void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
             // source rectangle for the control sticks
-            var controlStickSource = new Rectangle(0, 0, 128, 128);
-            var controlBallSource = new Rectangle(0, 0, 32, 32);
+            var controlStickSource = new Rectangle(0, 0, 256, 256);
+            var controlBallSource = new Rectangle(0, 0, 64, 64);
             
             
             // new left control ball position with offset
@@ -312,7 +316,7 @@ namespace GiraffeShooterClient.Utility
                 _leftControlOffset = Vector2.Zero;
 
             // draw the left control stick at center of the rectangle
-            spriteBatch.Draw(AssetManager.VirtualControlStickTexture, _leftControlStick, controlStickSource, Color.White);
+            spriteBatch.Draw(AssetManager.VirtualControlStickTexture, _leftControlStick, controlStickSource, new Color(Color.White, 0.1f));
             spriteBatch.Draw(AssetManager.VirtualControlBallTexture, new Rectangle((int)newLeftControlBallPosition.X, (int)newLeftControlBallPosition.Y, _leftControlBall.Width, _leftControlBall.Height), controlBallSource, Color.White);
             
             
@@ -325,27 +329,30 @@ namespace GiraffeShooterClient.Utility
                 _rightControlOffset = Vector2.Zero;
             
             // draw the right control stick at center of the rectangle
-            spriteBatch.Draw(AssetManager.VirtualControlStickTexture, _rightControlStick, controlStickSource, Color.White);
+            spriteBatch.Draw(AssetManager.VirtualControlStickTexture, _rightControlStick, controlStickSource, new Color(Color.White, 0.1f));
             spriteBatch.Draw(AssetManager.VirtualControlBallTexture, new Rectangle((int)newRightControlBallPosition.X, (int)newRightControlBallPosition.Y, _rightControlBall.Width, _rightControlBall.Height), controlBallSource, Color.White);
             
             
             // default source rectangle for the buttons
-            var defaultShootSource = new Rectangle(0, 0, 64, 64);
+            var defaultShootSource = new Rectangle(0, 0, 128, 128);
             
             // red source rectangle for the buttons
-            var redShootSource = new Rectangle(64, 0, 64, 64);
+            var redShootSource = new Rectangle(128, 0, 128, 128);
             
             // set the source rectangle for the shoot buttons
-            var leftShootSource = _leftShootButtonPressed ? defaultShootSource : redShootSource;
-            var rightShootSource = _rightShootButtonPressed ? defaultShootSource : redShootSource;
+            var leftShootSource = _leftShootButtonPressed ? redShootSource : defaultShootSource;
+            var rightShootSource = _rightShootButtonPressed ? redShootSource : defaultShootSource;
             
             // draw shoot buttons
             spriteBatch.Draw(AssetManager.VirtualControlShootTexture, _leftShootButton, leftShootSource, Color.White);
             spriteBatch.Draw(AssetManager.VirtualControlShootTexture, _rightShootButton, rightShootSource, Color.White);
             
-            // reset the shoot button pressed
-            _leftShootButtonPressed = false;
-            _rightShootButtonPressed = false;
+            // reset the shoot button pressed if time is up
+            if (gameTime.TotalGameTime - _leftShootButtonPressedTime > TimeSpan.FromMilliseconds(500))
+                _leftShootButtonPressed = false;
+            
+            if (gameTime.TotalGameTime - _rightShootButtonPressedTime > TimeSpan.FromMilliseconds(500))
+                _rightShootButtonPressed = false;
         }
     }
 }
