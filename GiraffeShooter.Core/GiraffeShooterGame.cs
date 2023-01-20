@@ -91,9 +91,11 @@ public class GiraffeShooter : Game
             case ContextManager.State.World:
 
                 if (InputManager.TouchConnected)
+                {
                     VirtualManager.HandleEvents(events, gameTime);
                     VirtualManager.Update(gameTime);
-                
+                }
+
                 Camera.HandleEvents(events);
                 Camera.Update(gameTime);
 
@@ -139,7 +141,7 @@ public class GiraffeShooter : Game
                 break;
 
             case ContextManager.State.World:
-                IsMouseVisible = false;
+                IsMouseVisible = true;
                 _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
                 ContextManager.WorldContext.Draw(gameTime, _spriteBatch);
 
