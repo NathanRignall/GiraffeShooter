@@ -6,24 +6,20 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
-    class MetaAmmunition : Meta
+    class MetaPistol : Meta
     {
-        // use base constructor
-        public MetaAmmunition(int quantity)
-        {
-            Quantity = quantity;
-        }
+
     }
 
-    class Ammunition : Entity
+    class Pistol : Entity
     {
-        MetaAmmunition meta;
+        MetaPistol meta;
         
-        public Ammunition(Vector3 position)
+        public Pistol(Vector3 position)
         {
             Id = Guid.NewGuid();
-            Name = "Ammunition";
-            meta = new MetaAmmunition(10);
+            Name = "Pistol";
+            meta = new MetaPistol();
             
             Physics physics = new Physics();
             physics.Position = position;
@@ -32,13 +28,13 @@ namespace GiraffeShooterClient.Entity
             Collider collider = new Collider();
             Action<Entity> pickupAction = (Entity subject) =>
             {
-                subject.GetComponent<Inventory>().AddItem(meta);
-                Delete();
+                if (subject.GetComponent<Inventory>().AddItem(meta))
+                    Delete();
             };
             collider.AddResponse<Player>(pickupAction);
             AddComponent(collider);
 
-            Sprite sprite = new Sprite(AssetManager.AmmunitionTexture);
+            Sprite sprite = new Sprite(AssetManager.PistolTexture);
             AddComponent(sprite);
         }
     }

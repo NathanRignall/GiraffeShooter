@@ -25,7 +25,6 @@ namespace GiraffeShooterClient.Container.World
             Base.Clear();
 
             // register entities
-            _collection.AddEntity(_inventoryBar = new InventoryBar());
             _collection.AddEntity(new MasterMap());
             _collection.AddEntity(_player = new Player());
 
@@ -42,11 +41,21 @@ namespace GiraffeShooterClient.Container.World
             // add 10 ammunition at random positions
             for (int i = 0; i < 10; i++)
             {
-                _collection.AddEntity(new Ammunition(new Vector3(random.Next(-10, 10), random.Next(-5, 5), 0)));
+                _collection.AddEntity(new Ammunition(new Vector3(random.Next(-10, -2), random.Next(-5, -2), 0)));
+                _collection.AddEntity(new Ammunition(new Vector3(random.Next(2, 10), random.Next(2, 5), 0)));
+            }
+            
+            // add 4 pistol at random positions
+            for (int i = 0; i < 4; i++)
+            {
+                _collection.AddEntity(new Pistol(new Vector3(random.Next(-10, -2), random.Next(2, 5), 0)));
+                _collection.AddEntity(new Pistol(new Vector3(random.Next(2, 10), random.Next(-5, -2), 0)));
             }
             
             // add screen button
-            _collection.AddEntity(new ScreenButton(new Vector2(3f, -2f),  AssetManager.BackButtonTexture, new Action(() => { ContextManager.SetState(ContextManager.State.Menu); }), ScreenManager.CenterType.TopRight));
+            _collection.AddEntity(new ScreenButton(new Vector2(-2f, -1f),  AssetManager.InventoryButtonTexture, new Action(() => { ContextManager.SetState(ContextManager.State.Menu); }), ScreenManager.CenterType.TopCenter));
+            _collection.AddEntity(new ScreenButton(new Vector2(0f, -1f),  AssetManager.PauseButtonTexture, new Action(() => { ContextManager.SetState(ContextManager.State.Menu); }), ScreenManager.CenterType.TopCenter));
+            _collection.AddEntity(new ScreenButton(new Vector2(2f, -1f),  AssetManager.CameraButtonTexture, new Action(() => { ContextManager.SetState(ContextManager.State.Menu); }), ScreenManager.CenterType.TopCenter));
 
             // reset the camera
             Camera.Reset();
@@ -130,6 +139,7 @@ namespace GiraffeShooterClient.Container.World
             SpriteSystem.Update(gameTime);
             TextSystem.Update(gameTime);
             TextInputSystem.Update(gameTime);
+            InventorySystem.Update(gameTime);
             
             // update the entity collection
             _collection.Update(gameTime);

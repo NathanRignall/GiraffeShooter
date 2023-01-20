@@ -8,16 +8,23 @@ namespace GiraffeShooterClient.Entity
 {
     class Player : Entity
     {
-        
+
         Animation.Frame[] standFrames = new Animation.Frame[1];
         Animation.Frame[] walkingFrames = new Animation.Frame[4];
 
         private Shoot _shoot;
+        private InventoryBar _inventoryBar;
         
         public Player()
         {
             Id = Guid.NewGuid();
             Name = "Player";
+            
+            // shoot component
+            _shoot = new Shoot();
+            
+            // inventory bar component
+            _inventoryBar = new InventoryBar();
             
             Physics physics = new Physics();
             physics.Position = new Vector3(0.5f, 0.5f, 0);
@@ -32,7 +39,8 @@ namespace GiraffeShooterClient.Entity
             control.Speed = 10;
             AddComponent(control);
 
-            Sprite sprite = new Sprite(AssetManager.GiraffeSpriteTexture, new Vector2(0,-16));
+            Sprite sprite = new Sprite(AssetManager.GiraffeSpriteTexture, new Vector2(0,-24));
+            sprite.zOrder = 7;
             AddComponent(sprite);
             
             // stand animation frames
@@ -46,9 +54,11 @@ namespace GiraffeShooterClient.Entity
 
             Animation animation = new Animation(standFrames);
             AddComponent(animation);
+
+            Inventory inventory = new Inventory(_inventoryBar);
+            AddComponent(inventory);
             
-            // shoot component
-            _shoot = new Shoot();
+            _inventoryBar.Inventory = inventory;
         }
 
         public void Move(Control.Direction direction) 
@@ -83,13 +93,17 @@ namespace GiraffeShooterClient.Entity
             }
             
             // set shoot position to player position
-            _shoot.SetPosition(physics.Position);
+            _shoot.SetPosition(physics.Position + new Vector3(0,-0.35f,0));
+            
+            // update shoot
+            _shoot.Update(gameTime);
             
         }
 
         public override void HandleEvents(List<Event> events)
         {
             _shoot.HandleEvents(events);
+            _inventoryBar.HandleEvents(events);
         }
     }
 }

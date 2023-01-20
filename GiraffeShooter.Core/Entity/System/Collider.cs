@@ -9,14 +9,14 @@ namespace GiraffeShooterClient.Entity
     {
         
         // dictionary of component types and their respective collision responses
-        private Dictionary<Type, Action> _responses = new Dictionary<Type, Action>();
+        private Dictionary<Type, Action<Entity>> _responses = new Dictionary<Type, Action<Entity>>();
 
         public Collider()
         {
             ColliderSystem.Register(this);
         }
         
-        public void AddResponse<T>(Action response) where T : Entity
+        public void AddResponse<T>(Action<Entity> response) where T : Entity
         {
             _responses.Add(typeof(T), response);
         }
@@ -49,8 +49,7 @@ namespace GiraffeShooterClient.Entity
                         // call the collision response
                         if (_responses.ContainsKey(collider.entity.GetType()))
                         {
-                            Console.WriteLine("Collision detected between " + entity.Name + " and " + collider.entity.Name);
-                            _responses[collider.entity.GetType()]();
+                            _responses[collider.entity.GetType()](collider.entity);
                         }
 
                         // no physics on kinematic objects

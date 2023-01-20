@@ -9,20 +9,21 @@ namespace GiraffeShooterClient.Entity
 {
     class Sprite : Component
     {
-        public Texture2D Texture { get; private set; }
+        public Texture2D Texture { get; set; }
         public int Scale { get; set; } = 1;
         public Rectangle SourceRectangle { get; set; }
         public Rectangle Bounds { get; private set; }
         public bool Centered { get; set; } = true;
         public float Rotation { get; set; }
+        public bool Visible { get; set; } = true;
         
-        private Vector2 _offset;
+        public Vector2 Offset;
 
         public Sprite(Texture2D texture, Vector2 offset = default(Vector2))
         {
             Texture = texture;
             SourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
-            _offset = offset;
+            Offset = offset;
             SpriteSystem.Register(this);
         }
         
@@ -30,12 +31,14 @@ namespace GiraffeShooterClient.Entity
         {
             Texture = texture;
             SourceRectangle = sourceRectangle;
-            _offset = offset;
+            Offset = offset;
             SpriteSystem.Register(this);
         }
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
+            if (!Visible) return;
+            
             var destinationRectangle = new Rectangle();
             
             // if has a physics component, use its position
@@ -44,10 +47,10 @@ namespace GiraffeShooterClient.Entity
                 // calculate the position of the sprite
                 var physics = entity.GetComponent<Physics>();
                 var cameraOffset = Camera.Offset;
-                var position = new Vector2(physics.Position.X, physics.Position.Y) * 32f  + cameraOffset + _offset - new Vector2(SourceRectangle.Width / 2, SourceRectangle.Height / 2);
+                var position = new Vector2(physics.Position.X, physics.Position.Y) * 32f  + cameraOffset + Offset - new Vector2(SourceRectangle.Width / 2, SourceRectangle.Height / 2);
                 
                 if (!Centered)
-                    position = new Vector2(physics.Position.X, physics.Position.Y) * 32f + cameraOffset + _offset;
+                    position = new Vector2(physics.Position.X, physics.Position.Y) * 32f + cameraOffset + Offset;
                 
                 // create the destination rectangle
                 destinationRectangle = new Rectangle((int)Math.Ceiling(position.X * Camera.Zoom), (int)Math.Ceiling(position.Y * Camera.Zoom), 
@@ -62,10 +65,10 @@ namespace GiraffeShooterClient.Entity
             {
                 var screen = entity.GetComponent<Screen>();
                 var basePosition = ScreenManager.GetCenter(screen.Center) / ScreenManager.GetScaleFactor();
-                var position = basePosition - screen.Offset * 32f + _offset - new Vector2(SourceRectangle.Width / 2 * Scale, SourceRectangle.Height / 2 * Scale);
+                var position = basePosition - screen.Offset * 32f + Offset - new Vector2(SourceRectangle.Width / 2 * Scale, SourceRectangle.Height / 2 * Scale);
                 
                 if (!Centered)
-                    position = basePosition - screen.Offset * 32f + _offset;
+                    position = basePosition - screen.Offset * 32f + Offset;
                 
                 // create the destination rectangle
                 destinationRectangle = new Rectangle((int)Math.Ceiling(position.X * ScreenManager.GetScaleFactor()), (int)Math.Ceiling(position.Y * ScreenManager.GetScaleFactor()), 

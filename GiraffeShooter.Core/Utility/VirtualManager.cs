@@ -348,10 +348,10 @@ namespace GiraffeShooterClient.Utility
             spriteBatch.Draw(AssetManager.VirtualControlShootTexture, _rightShootButton, rightShootSource, Color.White);
             
             // reset the shoot button pressed if time is up
-            if (gameTime.TotalGameTime - _leftShootButtonPressedTime > TimeSpan.FromMilliseconds(500))
+            if (gameTime.TotalGameTime - _leftShootButtonPressedTime > TimeSpan.FromMilliseconds(100))
                 _leftShootButtonPressed = false;
             
-            if (gameTime.TotalGameTime - _rightShootButtonPressedTime > TimeSpan.FromMilliseconds(500))
+            if (gameTime.TotalGameTime - _rightShootButtonPressedTime > TimeSpan.FromMilliseconds(100))
                 _rightShootButtonPressed = false;
         }
     }

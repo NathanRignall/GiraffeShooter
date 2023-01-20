@@ -19,12 +19,11 @@ namespace GiraffeShooterClient.Entity
             
             _action = action;
 
-            Screen screen = new Screen();
-            screen.Offset = offset;
-            screen.Center = center;
+            Screen screen = new Screen(offset, center);
             AddComponent(screen);
 
             Sprite sprite = new Sprite(texture);
+            sprite.zOrder = 9;
             AddComponent(sprite);
 
         }

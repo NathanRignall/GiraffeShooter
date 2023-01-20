@@ -6,11 +6,13 @@ namespace GiraffeShooterClient.Entity
     class Screen : Component
     {
 
-        public Vector2 Offset = Vector2.Zero; 
-        public ScreenManager.CenterType Center = ScreenManager.CenterType.TopLeft;
+        public Vector2 Offset;
+        public ScreenManager.CenterType Center;
 
-        public Screen()
+        public Screen(Vector2 offset, ScreenManager.CenterType center = ScreenManager.CenterType.TopLeft)
         {
+            Offset = offset;
+            Center = center;
             ScreenSystem.Register(this);
         }
 

@@ -32,9 +32,16 @@ namespace GiraffeShooterClient.Entity
         {
             CleanUp();
             
-            foreach (var component in components)
+            // loop through -10 to 10
+            for (int i = -10; i <= 10; i++)
             {
-                component.Draw(gameTime, spriteBatch);
+                foreach (var component in components)
+                {
+                    if (component.zOrder == i)
+                    {
+                        component.Draw(gameTime, spriteBatch);
+                    }
+                }
             }
         }
         
@@ -61,6 +68,7 @@ namespace GiraffeShooterClient.Entity
     class SpriteSystem : BaseComponent<Sprite> { }
     class TextSystem : BaseComponent<Text> { }
     class TextInputSystem : BaseComponent<TextInput> { }
+    class InventorySystem : BaseComponent<Inventory> { }
     
     class Base
     {
@@ -75,6 +83,7 @@ namespace GiraffeShooterClient.Entity
             SpriteSystem.components.Clear();
             TextSystem.components.Clear();
             TextInputSystem.components.Clear();
+            InventorySystem.components.Clear();
         }
     }
 }

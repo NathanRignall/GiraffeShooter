@@ -19,17 +19,26 @@ namespace GiraffeShooterClient.Utility
         public static Texture2D GiraffeTextureTest { get; private set; }
         
         public static Texture2D GiraffeSpriteTexture { get; private set; }
+        public static Texture2D AmmunitionTexture { get; private set; }
+        public static Texture2D AmmunitionInventoryTexture { get; private set; }
+        public static Texture2D PistolTexture { get; private set; }
+        public static Texture2D PistolInventoryTexture { get; private set; }
         public static Texture2D AmmunitionSpriteTexture { get; private set; }
         public static Texture2D ShootSpriteTexture { get; private set; }
+        
         public static Texture2D PlayButtonTexture { get; private set; }
         public static Texture2D LeaderboardButtonTexture { get; private set; }
         public static Texture2D LoginButtonTexture { get; private set; }
         public static Texture2D RegisterButtonTexture { get; private set; }
         public static Texture2D SettingsButtonTexture { get; private set; }
         public static Texture2D BackButtonTexture { get; private set; }
+        public static Texture2D PauseButtonTexture { get; private set; }
+        public static Texture2D CameraButtonTexture { get; private set; }
+        public static Texture2D InventoryButtonTexture { get; private set; }
         public static Texture2D InputTexture { get; private set; }
         
         public static Texture2D InventoryBarTexture { get; private set; }
+        public static Texture2D InventoryItemTexture { get; private set; }
         
         public static Texture2D VirtualControlBallTexture { get; private set; }
         public static Texture2D VirtualControlStickTexture { get; private set; }
@@ -54,18 +63,28 @@ namespace GiraffeShooterClient.Utility
             GiraffeTextureTest = content.Load<Texture2D>("giraffe_texture_test");
             
             GiraffeSpriteTexture = content.Load<Texture2D>("Sprites/Giraffe");
+            AmmunitionTexture = content.Load<Texture2D>("Sprites/Ammunition");
+            AmmunitionInventoryTexture = content.Load<Texture2D>("Sprites/AmmunitionInventory");
+            PistolTexture = content.Load<Texture2D>("Sprites/Pistol");
+            PistolInventoryTexture = content.Load<Texture2D>("Sprites/PistolInventory");
             AmmunitionSpriteTexture = content.Load<Texture2D>("Sprites/DemoAmmunition");
             ShootSpriteTexture = content.Load<Texture2D>("Sprites/Shoot");
+            
             PlayButtonTexture = content.Load<Texture2D>("Sprites/PlayButton");
             LeaderboardButtonTexture = content.Load<Texture2D>("Sprites/LeaderboardButton");
             LoginButtonTexture = content.Load<Texture2D>("Sprites/LoginButton");
             RegisterButtonTexture = content.Load<Texture2D>("Sprites/RegisterButton");
             SettingsButtonTexture = content.Load<Texture2D>("Sprites/SettingsButton");
+            PauseButtonTexture = content.Load<Texture2D>("Sprites/PauseButton");
+            CameraButtonTexture = content.Load<Texture2D>("Sprites/CameraButton");
+            InventoryButtonTexture = content.Load<Texture2D>("Sprites/InventoryButton");
             BackButtonTexture = content.Load<Texture2D>("Sprites/BackButton");
+            
             InputTexture = content.Load<Texture2D>("Sprites/Input");
             
             InventoryBarTexture = content.Load<Texture2D>("Sprites/InventoryBar");
-            
+            InventoryItemTexture = content.Load<Texture2D>("Sprites/InventoryItem");
+
             VirtualControlBallTexture = content.Load<Texture2D>("Sprites/VirtualControlBall");
             VirtualControlStickTexture = content.Load<Texture2D>("Sprites/VirtualControlStick");
             VirtualControlShootTexture = content.Load<Texture2D>("Sprites/VirtualControlShoot");

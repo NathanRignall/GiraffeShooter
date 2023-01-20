@@ -7,6 +7,8 @@ namespace GiraffeShooterClient.Entity
 {
     class Shoot : Entity
     {
+        private static TimeSpan _pressedTime;
+        
         public Shoot()
         {
             Id = Guid.NewGuid();
@@ -20,6 +22,7 @@ namespace GiraffeShooterClient.Entity
             
             Sprite sprite = new Sprite(AssetManager.ShootSpriteTexture);
             sprite.Centered = false;
+            sprite.Visible = false;
             AddComponent(sprite);
         }
 
@@ -34,6 +37,17 @@ namespace GiraffeShooterClient.Entity
             Sprite sprite = GetComponent<Sprite>();
             sprite.Rotation = rotation;
         }
+        
+        public void Update(GameTime gameTime)
+        {
+            // hide shoot button after 1 second
+            if (gameTime.TotalGameTime - _pressedTime > TimeSpan.FromSeconds(1))
+            {
+                Sprite sprite = GetComponent<Sprite>();
+                sprite.Visible = false;
+                sprite.zOrder = 6;
+            }
+        }
 
         public override void HandleEvents(List<Event> events)
         {
@@ -42,12 +56,19 @@ namespace GiraffeShooterClient.Entity
                 switch (e.Type)
                 {
                     case EventType.StickRightMove:
+                        
+                        // update pressed time
+                        _pressedTime = e.Time;
 
                         // use delta to calculate rotation
                         Vector2 delta = e.Delta;
                         
                         // set rotation
                         SetRotation((float)Math.Atan2(delta.Y, delta.X));
+                        
+                        // set visibility
+                        Sprite sprite = GetComponent<Sprite>();
+                        sprite.Visible = true;
 
                         break;
                 }
