@@ -24,7 +24,7 @@ namespace GiraffeShooterClient.Entity
             Screen screen = new Screen(new Vector2(0f, 3.0f), ScreenManager.CenterType.BottomCenter);
             AddComponent(screen);
 
-            Sprite sprite = new Sprite(AssetManager.InventoryBarTexture, new Rectangle(0, 0, 338, 70));
+            Sprite sprite = new Sprite(AssetManager.InventoryBarTexture, new Rectangle(338 * 5, 0, 338, 70));
             sprite.zOrder = 10;
             AddComponent(sprite);
             
@@ -88,6 +88,26 @@ namespace GiraffeShooterClient.Entity
                         if (!_items[i + 1].IsEmpty)
                         {
                             _selectedItem = _items[i + 1];
+                            return;
+                        }
+                    }
+                    
+                    // select previous slot if not empty
+                    if (i > 0)
+                    {
+                        if (!_items[i - 1].IsEmpty)
+                        {
+                            _selectedItem = _items[i - 1];
+                            return;
+                        }
+                    }
+                    
+                    // select any slot if not empty
+                    for (int j = 0; j < _items.Length; j++)
+                    {
+                        if (!_items[j].IsEmpty)
+                        {
+                            _selectedItem = _items[j];
                             return;
                         }
                     }

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using Microsoft.Xna.Framework;
+
 namespace GiraffeShooterClient.Entity
 {
 
@@ -20,5 +22,7 @@ namespace GiraffeShooterClient.Entity
         {
             Id = Guid.NewGuid();
         }
+
+        public virtual void Create(Vector3 position, Vector3 velocity) { }
     }
 }

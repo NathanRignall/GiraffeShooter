@@ -37,7 +37,7 @@ namespace GiraffeShooterClient.Entity
             AddComponent(sprite);
 
             Text text = new Text();
-            text.String = "0";
+            text.String = "";
             text.Offset = new Vector2(0, 64);
             AddComponent(text);
         }

@@ -41,15 +41,15 @@ namespace GiraffeShooterClient.Container.World
             // add 10 ammunition at random positions
             for (int i = 0; i < 10; i++)
             {
-                _collection.AddEntity(new Ammunition(new Vector3(random.Next(-10, -2), random.Next(-5, -2), 0)));
-                _collection.AddEntity(new Ammunition(new Vector3(random.Next(2, 10), random.Next(2, 5), 0)));
+                _collection.AddEntity(new Ammunition(new Vector3(random.Next(-10, -2), random.Next(-5, -2),0), Vector3.Zero));
+                _collection.AddEntity(new Ammunition(new Vector3(random.Next(2, 10), random.Next(2, 5), 0), Vector3.Zero));
             }
             
             // add 4 pistol at random positions
             for (int i = 0; i < 4; i++)
             {
-                _collection.AddEntity(new Pistol(new Vector3(random.Next(-10, -2), random.Next(2, 5), 0)));
-                _collection.AddEntity(new Pistol(new Vector3(random.Next(2, 10), random.Next(-5, -2), 0)));
+                _collection.AddEntity(new Pistol(new Vector3(random.Next(-10, -2), random.Next(2, 5), 0), Vector3.Zero));
+                _collection.AddEntity(new Pistol(new Vector3(random.Next(2, 10), random.Next(-5, -2), 0), Vector3.Zero));
             }
             
             // add screen button

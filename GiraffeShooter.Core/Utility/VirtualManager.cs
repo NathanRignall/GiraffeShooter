@@ -24,6 +24,10 @@ namespace GiraffeShooterClient.Utility
         private static Rectangle _rightShootButton;
         private static bool _rightShootButtonPressed;
         private static TimeSpan _rightShootButtonPressedTime;
+        
+        private static Rectangle _dropButton;
+        private static bool _dropButtonPressed;
+        private static TimeSpan _dropButtonPressedTime;
 
         public static void Initialize()
         {
@@ -60,7 +64,7 @@ namespace GiraffeShooterClient.Utility
             
             
             // shoot button position screen on left
-            var leftShootButtonPosition = new Vector2(shootButtonSize.X * 5f, ScreenManager.Size.Y  - shootButtonSize.Y * 2f);
+            var leftShootButtonPosition = new Vector2(shootButtonSize.X * 5f, ScreenManager.Size.Y - shootButtonSize.Y * 2f);
             
             // create the left shoot button rectangle
             _leftShootButton = new Rectangle((int)leftShootButtonPosition.X, (int)leftShootButtonPosition.Y, (int)shootButtonSize.X, (int)shootButtonSize.Y);
@@ -77,6 +81,20 @@ namespace GiraffeShooterClient.Utility
             
             // set right pressed state
             _rightShootButtonPressed = false;
+            
+            
+            // drop button size
+            var dropButtonSize = new Vector2(64, 64) * screenScale;
+            
+            
+            // drop button position screen on left
+            var dropButtonPosition = new Vector2(dropButtonSize.X * 1.5f, ScreenManager.Size.Y - dropButtonSize.Y * 6.5f);
+            
+            // create the drop button rectangle
+            _dropButton = new Rectangle((int)dropButtonPosition.X, (int)dropButtonPosition.Y, (int)dropButtonSize.X, (int)dropButtonSize.Y);
+            
+            // set drop pressed state
+            _dropButtonPressed = false;
 
         }
 
@@ -109,6 +127,13 @@ namespace GiraffeShooterClient.Utility
                         { 
                             _rightShootButtonPressed = true;
                             _rightShootButtonPressedTime = e.Time;
+                        }
+                        
+                        // check if the drop button is pressed
+                        if (_dropButton.Contains(e.Position))
+                        { 
+                            _dropButtonPressed = true;
+                            _dropButtonPressedTime = e.Time;
                         }
 
                         // check if the press on the left control stick
@@ -286,8 +311,12 @@ namespace GiraffeShooterClient.Utility
             // if the right control offset is not zero, add the event
             if (_rightControlOffset != Vector2.Zero)
                 eventsToAdd.Add(new Event(_rightControlOffset / 256, EventType.StickRightMove, gameTime.TotalGameTime));
+            
+            // if drop button is pressed, add the event
+            if (_dropButtonPressed)
+                eventsToAdd.Add(new Event(Keys.Q, EventType.KeyPress, gameTime.TotalGameTime));
 
-                // remove the events that we handled
+            // remove the events that we handled
             foreach (var e in eventsToRemove)
             {
                 events.Remove(e);
@@ -335,7 +364,7 @@ namespace GiraffeShooterClient.Utility
             
             // default source rectangle for the buttons
             var defaultShootSource = new Rectangle(0, 0, 128, 128);
-            
+
             // red source rectangle for the buttons
             var redShootSource = new Rectangle(128, 0, 128, 128);
             
@@ -353,6 +382,24 @@ namespace GiraffeShooterClient.Utility
             
             if (gameTime.TotalGameTime - _rightShootButtonPressedTime > TimeSpan.FromMilliseconds(100))
                 _rightShootButtonPressed = false;
+            
+            
+            // default source rectangle for the buttons
+            var defaultDropButtonSource = new Rectangle(0, 0, 128, 128);
+            
+            // pressed source rectangle for the buttons
+            var pressedDropButtonSource = new Rectangle(0, 0, 128, 128);
+            
+            // set the source rectangle for the buttons
+            var dropButtonSource = _dropButtonPressed ? defaultDropButtonSource : pressedDropButtonSource;
+            
+            // draw the drop button
+            spriteBatch.Draw(AssetManager.VirtualControlDropTexture, _dropButton, dropButtonSource, Color.White);
+            
+            // reset the drop button pressed if time is up
+            if (gameTime.TotalGameTime - _dropButtonPressedTime > TimeSpan.FromMilliseconds(100))
+                _dropButtonPressed = false;
+            
         }
     }
 }

@@ -11,8 +11,7 @@ namespace GiraffeShooterClient.Entity
         public List<Meta> items = new List<Meta>();
         public List<Meta> itemsInUse = new List<Meta>();
         public Meta selectedItem;
-        public int MaxItems = 3;
-        
+
         public Inventory(InventoryBar inventoryBar = null)
         {
             _inventoryBar = inventoryBar;
@@ -52,7 +51,7 @@ namespace GiraffeShooterClient.Entity
             }
             
             // check if full
-            if (items.Count >= MaxItems)
+            if (_inventoryBar.IsFull())
                 return false;
             
             // then add item
@@ -75,8 +74,19 @@ namespace GiraffeShooterClient.Entity
         
         public void RemoveItem(Meta item)
         {
-            // write meta item data to console
-            Console.WriteLine("Item: " + item.GetType() + " " + item.Id + " " + item.Quantity);
+            // get the player physics component
+            var physics = entity.GetComponent<Physics>();
+            
+            // place the item at a random position around the player (outside of size)
+            var position = new Vector3(physics.Position.X + (float) (new Random().NextDouble() * 2 - 1) * physics.Size.X, physics.Position.Y + (float) (new Random().NextDouble() * 2 - 1) * physics.Size.Y, 0);
+            
+            // give a velocity along the vector from the player to the item
+            var velocity = (position - physics.Position) * 10;
+            
+            // create the item entity and add it to the world
+            item.Create(position, velocity);
+            
+            // remove item from inventory
             items.Remove(item);
         }
 

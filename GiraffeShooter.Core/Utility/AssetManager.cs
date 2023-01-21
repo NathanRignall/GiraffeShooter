@@ -43,6 +43,7 @@ namespace GiraffeShooterClient.Utility
         public static Texture2D VirtualControlBallTexture { get; private set; }
         public static Texture2D VirtualControlStickTexture { get; private set; }
         public static Texture2D VirtualControlShootTexture { get; private set; }
+        public static Texture2D VirtualControlDropTexture { get; private set; }
         
         public static SpriteFont Fontx1Normal { get; private set; }
         public static SpriteFont Fontx1Title { get; private set; }
@@ -88,6 +89,7 @@ namespace GiraffeShooterClient.Utility
             VirtualControlBallTexture = content.Load<Texture2D>("Sprites/VirtualControlBall");
             VirtualControlStickTexture = content.Load<Texture2D>("Sprites/VirtualControlStick");
             VirtualControlShootTexture = content.Load<Texture2D>("Sprites/VirtualControlShoot");
+            VirtualControlDropTexture = content.Load<Texture2D>("Sprites/VirtualControlDrop");
             
             Fontx1Normal = content.Load<SpriteFont>("Fonts/x1/Normal");
             Fontx1Title = content.Load<SpriteFont>("Fonts/x1/Title");
