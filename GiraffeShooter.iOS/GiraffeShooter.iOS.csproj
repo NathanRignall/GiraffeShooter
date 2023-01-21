@@ -27,7 +27,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="supabase-csharp" Version="0.7.1" />
-    <PackageReference Include="TiledCS" Version="3.3.3" />
+    <PackageReference Include="TiledCS" Version="4.0.4" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.2-develop" />
     <PackageReference Include="MonoGame.Framework.iOS" Version="3.8.1.2-develop" />
   </ItemGroup>

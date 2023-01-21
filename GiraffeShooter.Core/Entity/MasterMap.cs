@@ -18,7 +18,7 @@ namespace GiraffeShooterClient.Entity
             physics.Size = new Vector3 (float.PositiveInfinity, float.PositiveInfinity, 0.1f);
             AddComponent(physics);
 
-            Tiled tiled = new Tiled(AssetManager.MapMaster, AssetManager.MapTilesets, AssetManager.MapTilesetTextureMain, new Vector2(-15,-10));
+            Tiled tiled = new Tiled(AssetManager.MapMaster, AssetManager.MapTilesets, AssetManager.MapTilesetTextureMain, new Vector2(-50,-50));
             AddComponent(tiled);
         }
     }

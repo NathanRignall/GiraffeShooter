@@ -35,21 +35,19 @@ namespace GiraffeShooterClient.Container.World
             Random random = new Random();
             for (int i = 0; i < 10; i++)
             {
-                _collection.AddEntity(new Giraffe(new Vector3(random.Next(-10, 10), random.Next(-5, 5), 0), new Vector3(random.Next(-3, 3), random.Next(-2, 2), 0)));
+                _collection.AddEntity(new Giraffe(new Vector3(random.Next(-45, 45), random.Next(-45, 45), 0), new Vector3(random.Next(-5, 5), random.Next(-5, 5), 0)));
             }
             
-            // add 10 ammunition at random positions
-            for (int i = 0; i < 10; i++)
+            // add 50 ammunition at random positions
+            for (int i = 0; i < 20; i++)
             {
-                _collection.AddEntity(new Ammunition(new Vector3(random.Next(-10, -2), random.Next(-5, -2),0), Vector3.Zero));
-                _collection.AddEntity(new Ammunition(new Vector3(random.Next(2, 10), random.Next(2, 5), 0), Vector3.Zero));
+                _collection.AddEntity(new Ammunition(new Vector3(random.Next(-45, 45), random.Next(-45, 45),0), Vector3.Zero));
             }
             
-            // add 4 pistol at random positions
-            for (int i = 0; i < 4; i++)
+            // add 20 pistol at random positions
+            for (int i = 0; i < 20; i++)
             {
-                _collection.AddEntity(new Pistol(new Vector3(random.Next(-10, -2), random.Next(2, 5), 0), Vector3.Zero));
-                _collection.AddEntity(new Pistol(new Vector3(random.Next(2, 10), random.Next(-5, -2), 0), Vector3.Zero));
+                _collection.AddEntity(new Pistol(new Vector3(random.Next(-45, 45), random.Next(-45, 45), 0), Vector3.Zero));
             }
             
             // add screen button
