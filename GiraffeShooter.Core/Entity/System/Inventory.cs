@@ -11,6 +11,7 @@ namespace GiraffeShooterClient.Entity
         public List<Meta> items = new List<Meta>();
         public List<Meta> itemsInUse = new List<Meta>();
         public Meta selectedItem;
+        public int MaxItems = 5;
 
         public Inventory(InventoryBar inventoryBar = null)
         {
@@ -51,7 +52,7 @@ namespace GiraffeShooterClient.Entity
             }
             
             // check if full
-            if (_inventoryBar.IsFull())
+            if (items.Count >= MaxItems)
                 return false;
             
             // then add item
@@ -97,7 +98,8 @@ namespace GiraffeShooterClient.Entity
 
         public override void Update(GameTime gameTime)
         {
-            _inventoryBar.Update(gameTime);
+            if (_inventoryBar != null)
+                _inventoryBar.Update(gameTime);
         }
 
         public override void Deregister()

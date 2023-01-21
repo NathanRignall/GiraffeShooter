@@ -30,7 +30,7 @@ namespace GiraffeShooterClient.Entity
             Control control = new Control();
             AddComponent(control);
             
-            Sprite sprite = new Sprite(AssetManager.GiraffeSpriteTexture);
+            Sprite sprite = new Sprite(AssetManager.GiraffeSpriteTexture, new Vector2(0,-24));
             AddComponent(sprite);
             
             // stand animation frames
@@ -44,7 +44,9 @@ namespace GiraffeShooterClient.Entity
 
             Animation animation = new Animation(walkingFrames);
             AddComponent(animation);
-
+            
+            Inventory inventory = new Inventory();
+            AddComponent(inventory);
         }
 
         public void Move(Control.Direction direction) {

@@ -163,7 +163,6 @@ namespace GiraffeShooterClient.Entity
                         switch (e.Key)
                         {
                             case Keys.Q:
-                                Console.WriteLine("Q");
                                 EmptySlot();
                                 break;
                         }

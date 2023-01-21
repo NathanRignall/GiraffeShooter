@@ -41,6 +41,7 @@ namespace GiraffeShooterClient.Entity
                     Delete();
             };
             collider.AddResponse<Player>(pickupAction);
+            collider.AddResponse<Giraffe>(pickupAction);
             AddComponent(collider);
 
             Sprite sprite = new Sprite(AssetManager.PistolTexture);
