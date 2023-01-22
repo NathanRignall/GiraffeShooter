@@ -15,15 +15,14 @@ public class GiraffeShooter : Game
 
     public GiraffeShooter()
     {
-        ScreenManager.SetResolution("1280x720");
-        
-#if __IOS__
-        ScreenManager.Size = new Vector2(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
-#endif
         
         _graphics = new GraphicsDeviceManager(this);
+        
+#if !__ANDROID__ && !__IOS__
+        ScreenManager.SetResolution("1280x720");
         _graphics.PreferredBackBufferWidth = (int)ScreenManager.Size.X;
         _graphics.PreferredBackBufferHeight = (int)ScreenManager.Size.Y;
+#endif
 
         Content.RootDirectory = "Content";
         IsMouseVisible = false;
@@ -42,6 +41,14 @@ public class GiraffeShooter : Game
 
     protected override void LoadContent()
     {
+        
+#if __IOS__ || __ANDROID__
+        _graphics.IsFullScreen = true;
+        _graphics.ApplyChanges();
+        //ScreenManager.Size = new Vector2(GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight);
+        ScreenManager.Size = new Vector2(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
+#endif
+        
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
         AssetManager.LoadContent(Content);
@@ -51,7 +58,7 @@ public class GiraffeShooter : Game
     {
         ContextManager.SwitchState();
 
-#if !__IOS__
+#if !__IOS__ && !__ANDROID__
          if (Keyboard.GetState().IsKeyDown(Keys.Escape))
              Exit();
 #endif

@@ -33,7 +33,7 @@ namespace GiraffeShooterClient.Container.Leaderboard
             Base.Clear();
             
             // register entities
-            _collection.AddEntity(new Button(new Vector3(0, -7.5f, 0), AssetManager.BackButtonTexture, () => ContextManager.SetState(ContextManager.State.Menu)));
+            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector3(0, -7.5f, 0), AssetManager.BackButtonTexture, () => ContextManager.SetState(ContextManager.State.Menu)));
             _collection.AddEntity(_loadingText = new TextDisplay(new Vector3(0, 0, 0), "Loading..."));
             
             // reset the camera

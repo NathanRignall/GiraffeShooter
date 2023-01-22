@@ -22,9 +22,9 @@ namespace GiraffeShooterClient.Container.Menu
             Base.Clear();
             
             // register entities
-            _collection.AddEntity(new Button(new Vector3(0, -7.5f, 0), AssetManager.BackButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.MainMenu)));
-            _collection.AddEntity(new Button(new Vector3(0, -1.25f, 0), AssetManager.LoginButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Login)));
-            _collection.AddEntity(new Button(new Vector3(0, 1.25f, 0), AssetManager.RegisterButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Register)));
+            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector3(0, -7.5f, 0), AssetManager.BackButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.MainMenu)));
+            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector3(0, -1.25f, 0), AssetManager.LoginButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Login)));
+            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector3(0, 1.25f, 0), AssetManager.RegisterButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Register)));
 
             // reset the camera
             Camera.Reset(ScreenManager.GetScaleFactor());

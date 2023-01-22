@@ -66,7 +66,7 @@ namespace GiraffeShooterClient.Entity
 
                         if (entity.GetComponent<Sprite>().Bounds.Contains(e.Position / ScreenManager.GetScaleFactor()))
                         {
-#if __IOS__
+#if __IOS__ || __ANDROID__
                             if (!_open)
                                 KeyboardPopup();
 #endif
@@ -202,7 +202,7 @@ namespace GiraffeShooterClient.Entity
             TextInputSystem.Deregister(this);
         }
 
-#if __IOS__
+#if __IOS__ || __ANDROID__
         private async Task<int> KeyboardPopup()
         {
             // prevent multiple popups
