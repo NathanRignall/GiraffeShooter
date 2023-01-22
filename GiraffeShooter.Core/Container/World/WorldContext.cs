@@ -87,7 +87,17 @@ namespace GiraffeShooterClient.Container.World
                             case Keys.Right:
                                 _player.Move(Control.Direction.right);
                                 break;
-                                
+                        }
+                        
+                        break;
+                    
+                    case EventType.KeyPress:
+                        
+                        switch (e.Key)
+                        {
+                            case Keys.Space:
+                                _player.Shoot();
+                                break;
                         }
                         
                         break;

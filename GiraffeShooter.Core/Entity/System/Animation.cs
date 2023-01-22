@@ -13,55 +13,68 @@ namespace GiraffeShooterClient.Entity
             public int Width;
             public int Height;
             public int Duration;
+            public bool End;
             
-            public Frame(int x, int y, int width, int height, int duration)
+            public Frame(int x, int y, int width, int height, int duration, bool end = false)
             {
                 X = x;
                 Y = y;
                 Width = width;
                 Height = height;
                 Duration = duration;
+                End = end;
             }
         }
         
-        private Frame[] _frames;
+        public Frame[] Frames { get; private set; }
         private int _currentFrame;
         private double _lastFrameTime;
+        public bool Finished { get; private set; }
 
         public Animation(Frame[] frames)
         {
-            _frames = frames;
+            Frames = frames;
             _currentFrame = 0;
             _lastFrameTime = 0;
+            Finished = false;
             AnimationSystem.Register(this);
         }
         
         public void SetFrames(Frame[] frames)
         {
             // check if the new frames are the same as the old ones
-            if (_frames != frames)
+            if (Frames != frames)
             {
-                _frames = frames;
+                Frames = frames;
                 _currentFrame = 0;
                 _lastFrameTime = 0;
+                Finished = false;
             }
         }
         
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             // only update if we have more than one frame
-            if (_frames.Length > 1)
+            if (Frames.Length > 1 && !Finished)
             {
                 // if we have passed the duration of the current frame
-                if (gameTime.TotalGameTime.TotalMilliseconds - _lastFrameTime > _frames[_currentFrame].Duration)
+                if (gameTime.TotalGameTime.TotalMilliseconds - _lastFrameTime > Frames[_currentFrame].Duration)
                 {
                     // move to the next frame
                     _currentFrame++;
+
                     // if we have reached the end of the animation, loop back to the start
-                    if (_currentFrame >= _frames.Length)
+                    if (_currentFrame >= Frames.Length)
                     {
                         _currentFrame = 0;
                     }
+                    
+                    // if the animation is not set to loop, set the finished flag
+                    if (Frames[_currentFrame].End)
+                    {
+                        Finished = true;
+                    }
+                    
                     // update the last frame time
                     _lastFrameTime = gameTime.TotalGameTime.TotalMilliseconds;
                 }
@@ -69,7 +82,7 @@ namespace GiraffeShooterClient.Entity
 
             // update sprite
             var sprite = entity.GetComponent<Sprite>();
-            sprite.SourceRectangle = new Rectangle(_frames[_currentFrame].X, _frames[_currentFrame].Y, _frames[_currentFrame].Width, _frames[_currentFrame].Height);
+            sprite.SourceRectangle = new Rectangle(Frames[_currentFrame].X, Frames[_currentFrame].Y, Frames[_currentFrame].Width, Frames[_currentFrame].Height);
         }
         
         public override void Deregister()

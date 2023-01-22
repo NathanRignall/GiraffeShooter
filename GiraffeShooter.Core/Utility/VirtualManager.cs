@@ -312,6 +312,10 @@ namespace GiraffeShooterClient.Utility
             if (_rightControlOffset != Vector2.Zero)
                 eventsToAdd.Add(new Event(_rightControlOffset / 256, EventType.StickRightMove, gameTime.TotalGameTime));
             
+            // if either the left or right shoot button is pressed, add the event
+            if (_leftShootButtonPressed || _rightShootButtonPressed)
+                eventsToAdd.Add(new Event(Keys.Space, EventType.KeyPress, gameTime.TotalGameTime));
+            
             // if drop button is pressed, add the event
             if (_dropButtonPressed)
                 eventsToAdd.Add(new Event(Keys.Q, EventType.KeyPress, gameTime.TotalGameTime));

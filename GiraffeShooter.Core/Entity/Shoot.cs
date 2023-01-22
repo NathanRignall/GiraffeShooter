@@ -7,8 +7,8 @@ namespace GiraffeShooterClient.Entity
 {
     class Shoot : Entity
     {
-        private static TimeSpan _pressedTime;
-        
+        private TimeSpan _pressedTime;
+
         public Shoot()
         {
             Id = Guid.NewGuid();
@@ -36,6 +36,12 @@ namespace GiraffeShooterClient.Entity
         {
             Sprite sprite = GetComponent<Sprite>();
             sprite.Rotation = rotation;
+        }
+        
+        public float GetRotation()
+        {
+            Sprite sprite = GetComponent<Sprite>();
+            return sprite.Rotation;
         }
         
         public void Update(GameTime gameTime)
