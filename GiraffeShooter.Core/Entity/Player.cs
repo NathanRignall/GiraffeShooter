@@ -8,6 +8,15 @@ namespace GiraffeShooterClient.Entity
 {
     class Player : Entity
     {
+        
+        enum State
+        {
+            Idle,
+            Walking,
+            Shooting
+        }
+
+        private State _state;
 
         Animation.Frame[] standLeftFrames = new Animation.Frame[1];
         Animation.Frame[] standRightFrames = new Animation.Frame[1];
@@ -24,6 +33,9 @@ namespace GiraffeShooterClient.Entity
             Id = Guid.NewGuid();
             Name = "Player";
 
+            // state
+            _state = State.Idle;
+            
             // shoot component
             _shoot = new Shoot();
             
@@ -62,13 +74,13 @@ namespace GiraffeShooterClient.Entity
             walkingRightFrames[3] = new Animation.Frame(160, 0, 32, 64, 100);
 
             // shoot animation frames
-            shootLeftFrames[0] = new Animation.Frame(192, 0, 32, 64, 200);
-            shootLeftFrames[1] = new Animation.Frame(224, 0, 32, 64, 1000);
-            shootLeftFrames[2] = new Animation.Frame(192, 0, 32, 64, 200);
+            shootLeftFrames[0] = new Animation.Frame(192, 0, 32, 64, 100);
+            shootLeftFrames[1] = new Animation.Frame(224, 0, 32, 64, 100);
+            shootLeftFrames[2] = new Animation.Frame(192, 0, 32, 64, 100);
             shootLeftFrames[3] = new Animation.Frame(0, 0, 32, 64, 100, true);
-            shootRightFrames[0] = new Animation.Frame(256, 0, 32, 64, 200);
-            shootRightFrames[1] = new Animation.Frame(288, 0, 32, 64, 300);
-            shootRightFrames[2] = new Animation.Frame(256, 0, 32, 64, 200);
+            shootRightFrames[0] = new Animation.Frame(256, 0, 32, 64, 100);
+            shootRightFrames[1] = new Animation.Frame(288, 0, 32, 64, 100);
+            shootRightFrames[2] = new Animation.Frame(256, 0, 32, 64, 100);
             shootRightFrames[3] = new Animation.Frame(96, 0, 32, 64, 100, true);
 
             Animation animation = new Animation(standLeftFrames);
@@ -104,6 +116,7 @@ namespace GiraffeShooterClient.Entity
             } else {
                 animation.SetFrames(shootLeftFrames);
             }
+            _state = State.Shooting;
         }
 
         public Vector2 GetPosition() {
@@ -121,30 +134,50 @@ namespace GiraffeShooterClient.Entity
             // calculate angle of velocity in pi radians
             double velocityAngle = Math.Atan2(physics.Velocity.Y, physics.Velocity.X);
             
-            // if velocity is greater than 0.1, set animation to walking animation
-            if (velocityMagnitude > 0.1 && animation.Frames != shootLeftFrames && animation.Frames != shootRightFrames) {
-                if ((velocityAngle > 0 && velocityAngle < Math.PI * 0.5) || (velocityAngle < 0 && velocityAngle > -Math.PI * 0.5)) {
-                    animation.SetFrames(walkingRightFrames);
-                } else {
-                    animation.SetFrames(walkingLeftFrames);
-                }
-            } else if (velocityMagnitude <= 0.1){
-                // get the current shoot direction
-                var rotation = _shoot.GetRotation();
-            
-                // set the animation to the correct direction if left or right based on rotation
-                if ((rotation > 0 && rotation < Math.PI * 0.5) || (rotation < 0 && rotation > -Math.PI * 0.5)) {
-                    animation.SetFrames(standRightFrames);
-                } else {
-                    animation.SetFrames(standLeftFrames);
-                }
-            }
-
-            // once shoot animation is done, set animation to stand animation
-            if (animation.Finished && animation.Frames == shootLeftFrames) {
-                animation.SetFrames(standLeftFrames);
-            } else if (animation.Finished && animation.Frames == shootRightFrames) {
-                animation.SetFrames(standRightFrames);
+            // switch case for state
+            switch (_state) {
+                case State.Idle:
+                    // if velocity is greater than 0.1, set animation to walking animation
+                    if (velocityMagnitude > 0.1) {
+                        if ((velocityAngle > 0 && velocityAngle < Math.PI * 0.5) || (velocityAngle < 0 && velocityAngle > -Math.PI * 0.5)) {
+                            animation.SetFrames(walkingRightFrames);
+                        } else {
+                            animation.SetFrames(walkingLeftFrames);
+                        }
+                        _state = State.Walking;
+                    }
+                    break;
+                case State.Walking:
+                    // if velocity is greater than 0.1, set animation to walking animation
+                    if (velocityMagnitude > 0.1) {
+                        if ((velocityAngle > 0 && velocityAngle < Math.PI * 0.5) || (velocityAngle < 0 && velocityAngle > -Math.PI * 0.5)) {
+                            animation.SetFrames(walkingRightFrames);
+                        } else {
+                            animation.SetFrames(walkingLeftFrames);
+                        }
+                        _state = State.Walking;
+                    }
+                    else
+                    {
+                        if ((velocityAngle > 0 && velocityAngle < Math.PI * 0.5) || (velocityAngle < 0 && velocityAngle > -Math.PI * 0.5)) {
+                            animation.SetFrames(standRightFrames);
+                        } else {
+                            animation.SetFrames(standLeftFrames);
+                        }
+                        _state = State.Idle;
+                    }
+                    break;
+                case State.Shooting:
+                    // if animation is finished, set animation to idle animation
+                    if (animation.Finished) {
+                        if ((velocityAngle > 0 && velocityAngle < Math.PI * 0.5) || (velocityAngle < 0 && velocityAngle > -Math.PI * 0.5)) {
+                            animation.SetFrames(standRightFrames);
+                        } else {
+                            animation.SetFrames(standLeftFrames);
+                        }
+                        _state = State.Idle;
+                    }
+                    break;
             }
 
             // set shoot position to player position
