@@ -111,7 +111,7 @@ namespace GiraffeShooterClient.Utility
             {
                 switch (e.Type)
                 {
-                    case EventType.MouseClick:
+                    case EventType.MouseRelease:
                     case EventType.TouchPress:
                     case EventType.TouchHold:
 

@@ -44,13 +44,25 @@ namespace GiraffeShooterClient.Entity
             return sprite.Rotation;
         }
         
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
+            
+            // if no touch screen
+            if (!InputManager.TouchConnected)
+            {
+                // get the mouse position
+                Vector2 mousePosition = InputManager.CurrentMouseState.Position.ToVector2();
+            
+                // use the mouse position to calculate the rotation from 0,0
+                Vector2 delta = mousePosition - ScreenManager.Size / 2;
+                SetRotation((float)Math.Atan2(delta.Y, delta.X));
+            }
+
             // hide shoot button after 1 second
             if (gameTime.TotalGameTime - _pressedTime > TimeSpan.FromSeconds(1))
             {
                 Sprite sprite = GetComponent<Sprite>();
-                sprite.Visible = false;
+                sprite.Visible = true;
                 sprite.zOrder = 6;
             }
         }

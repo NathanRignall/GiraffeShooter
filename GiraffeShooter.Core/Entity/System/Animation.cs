@@ -40,18 +40,17 @@ namespace GiraffeShooterClient.Entity
             AnimationSystem.Register(this);
         }
         
-        public void SetFrames(Frame[] frames)
+        public void SetFrames(Frame[] frames, bool Reset = true)
         {
-            // check if the new frames are the same as the old ones
-            if (Frames != frames)
+            if (Frames != frames | !Reset)
             {
-                Frames = frames;
                 _currentFrame = 0;
                 _lastFrameTime = 0;
                 Finished = false;
             }
+            Frames = frames;
         }
-        
+
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             // only update if we have more than one frame

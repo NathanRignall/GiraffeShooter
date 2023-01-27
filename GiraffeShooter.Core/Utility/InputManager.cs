@@ -10,13 +10,16 @@ namespace GiraffeShooterClient.Utility;
 public enum EventType
 {
     MouseDrag,
-    MouseClick,
+    MousePress,
+    MouseRelease,
+    MouseHold,
     MouseScroll,
     KeyPress,
     KeyRelease,
     KeyHold,
     TouchDrag,
     TouchPress,
+    TouchRelease,
     TouchHold,
     TouchPinch,
     StickLeftMove,
@@ -51,7 +54,7 @@ public struct Event
 
     public Event(Vector2 position, EventType type, TimeSpan time) {
         // check is click or press
-        if (type == EventType.MouseClick | type == EventType.TouchPress | type == EventType.TouchHold)
+        if (type == EventType.MousePress | type == EventType.MouseRelease | type == EventType.MouseHold | type == EventType.TouchPress | type == EventType.TouchHold)
         {
             Type = type;
             Position = position;
@@ -205,9 +208,17 @@ public static class InputManager
         {
             _mouseDragged = false;
         }
+        
+        if (PreviousMouseState.LeftButton == ButtonState.Released & CurrentMouseState.LeftButton == ButtonState.Pressed & _mouseDragged == false) {
+            events.Add(new Event(new Vector2(CurrentMouseState.X, CurrentMouseState.Y), EventType.MousePress, gameTime.TotalGameTime));
+        }
 
         if (PreviousMouseState.LeftButton == ButtonState.Pressed & CurrentMouseState.LeftButton == ButtonState.Released & _mouseDragged == false) {
-            events.Add(new Event(new Vector2(CurrentMouseState.X, CurrentMouseState.Y), EventType.MouseClick, gameTime.TotalGameTime));
+            events.Add(new Event(new Vector2(CurrentMouseState.X, CurrentMouseState.Y), EventType.MouseRelease, gameTime.TotalGameTime));
+        }
+        
+        if (PreviousMouseState.LeftButton == ButtonState.Pressed & CurrentMouseState.LeftButton == ButtonState.Pressed) {
+            events.Add(new Event(new Vector2(CurrentMouseState.X, CurrentMouseState.Y), EventType.MouseHold, gameTime.TotalGameTime));
         }
 
         if (PreviousMouseState.ScrollWheelValue != CurrentMouseState.ScrollWheelValue) {

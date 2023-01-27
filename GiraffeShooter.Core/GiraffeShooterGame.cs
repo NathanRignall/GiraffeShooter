@@ -17,12 +17,12 @@ public class GiraffeShooter : Game
     {
         
         _graphics = new GraphicsDeviceManager(this);
-        
-#if !__ANDROID__ && !__IOS__
-        ScreenManager.SetResolution("1280x720");
-        _graphics.PreferredBackBufferWidth = (int)ScreenManager.Size.X;
-        _graphics.PreferredBackBufferHeight = (int)ScreenManager.Size.Y;
-#endif
+
+// #if !__ANDROID__ && !__IOS__
+//         ScreenManager.SetResolution("1280x720");
+//         _graphics.PreferredBackBufferWidth = (int)ScreenManager.Size.X;
+//         _graphics.PreferredBackBufferHeight = (int)ScreenManager.Size.Y;
+// #endif
 
         Content.RootDirectory = "Content";
         IsMouseVisible = false;
@@ -42,12 +42,13 @@ public class GiraffeShooter : Game
     protected override void LoadContent()
     {
         
-#if __IOS__ || __ANDROID__
+// #if __IOS__ || __ANDROID__
         _graphics.IsFullScreen = true;
+        _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+        _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
         _graphics.ApplyChanges();
-        //ScreenManager.Size = new Vector2(GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight);
         ScreenManager.Size = new Vector2(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
-#endif
+// #endif
         
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -56,12 +57,8 @@ public class GiraffeShooter : Game
 
     protected override void Update(GameTime gameTime)
     {
+        // switch the game state at the start of the update
         ContextManager.SwitchState();
-
-#if !__IOS__ && !__ANDROID__
-         if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-             Exit();
-#endif
 
         // update the game state (for keys)
         InputManager.UpdateState(Keyboard.GetState(), Mouse.GetState());
@@ -148,7 +145,7 @@ public class GiraffeShooter : Game
                 break;
 
             case ContextManager.State.World:
-                IsMouseVisible = true;
+                IsMouseVisible = false;
                 _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
                 ContextManager.WorldContext.Draw(gameTime, _spriteBatch);
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
@@ -78,6 +79,27 @@ namespace GiraffeShooterClient.Utility
             _velocity = new Vector2(0, 0);
             _acceleration = new Vector2(0, 0);
         }
+        
+        public static void Snap()
+        {
+            _followOffset = FollowTarget;
+        }
+        
+        public static void ToggleState()
+        {
+            switch (CurrentState)
+            {
+                case State.Follow:
+                    CurrentState = State.Free;
+                    break;
+                case State.Free:
+                    CurrentState = State.Follow;
+                    break;
+            }
+            
+            // log state change
+            Console.WriteLine("Camera state changed to " + CurrentState + ".");
+        }
 
         public static void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
@@ -85,6 +107,7 @@ namespace GiraffeShooterClient.Utility
             switch (CurrentState)
             {
                 case State.Follow:
+                case State.Free:
                     // update camera position
                     var dt = gameTime.ElapsedGameTime;
                     _velocity += _acceleration * (float)dt.TotalSeconds;
@@ -116,19 +139,10 @@ namespace GiraffeShooterClient.Utility
                     Offset = _position - _followOffset;
                     break;
                 
-                case State.Free:
-                    Offset = _position;
-                    break;
-                
                 case State.Frozen:
                     Offset = _position;
                     break;
             }
-        }
-
-        public static void Snap()
-        {
-            _followOffset = FollowTarget;
         }
 
         public static void HandleEvents(List<Event> events)
@@ -138,11 +152,21 @@ namespace GiraffeShooterClient.Utility
                 switch (e.Type)
                 {
                     case EventType.MouseDrag:
-                        _velocity += e.Delta * 15 * 1 / Zoom;
+                        switch (CurrentState)
+                        {
+                            case State.Free:
+                                _velocity += e.Delta * 15 * 1 / Zoom;
+                                break;
+                        }
                         break;
                     
                     case EventType.TouchDrag:
-                        _velocity += e.Delta * 13 * 1 / Zoom;
+                        switch (CurrentState)
+                        {
+                            case State.Free:
+                                _velocity += e.Delta * 13 * 1 / Zoom;
+                                break;
+                        }
                         break;
 
                     case EventType.MouseScroll:
@@ -150,6 +174,7 @@ namespace GiraffeShooterClient.Utility
                         switch (CurrentState)
                         {
                             case State.Follow:
+                            case State.Free:
                                 // calculate zoom
                                 Zoom += Zoom * e.ScrollDelta / 10000;
                                 Zoom = MathHelper.Clamp(Zoom, MinZoom, MaxZoom);
@@ -167,7 +192,7 @@ namespace GiraffeShooterClient.Utility
                         
                         switch (CurrentState)
                         {
-                            case State.Follow:
+                            case State.Free:
                                 // calculate distances
                                 var dist = Vector2.Distance(e.Position, e.Position2);
                                 var distOld = Vector2.Distance(e.Position - e.Delta, e.Position2 - e.Delta2);

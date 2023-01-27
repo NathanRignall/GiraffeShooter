@@ -51,7 +51,7 @@ namespace GiraffeShooterClient.Container.World
             }
             
             // add screen button
-            _collection.AddEntity(new ScreenButton(new Vector2(-2f, -1f),  AssetManager.InventoryButtonTexture, new Action(() => { ContextManager.SetState(ContextManager.State.Menu); }), ScreenManager.CenterType.TopCenter));
+            _collection.AddEntity(new ScreenButton(new Vector2(-2f, -1f),  AssetManager.InventoryButtonTexture, Camera.ToggleState, ScreenManager.CenterType.TopCenter));
             _collection.AddEntity(new ScreenButton(new Vector2(0f, -1f),  AssetManager.PauseButtonTexture, new Action(() => { ContextManager.SetState(ContextManager.State.Menu); }), ScreenManager.CenterType.TopCenter));
             _collection.AddEntity(new ScreenButton(new Vector2(2f, -1f),  AssetManager.CameraButtonTexture, new Action(() => { ContextManager.SetState(ContextManager.State.Menu); }), ScreenManager.CenterType.TopCenter));
 
@@ -75,16 +75,16 @@ namespace GiraffeShooterClient.Container.World
 
                         switch (e.Key)
                         {
-                            case Keys.Up:
+                            case Keys.W:
                                 _player.Move(Control.Direction.up);
                                 break;
-                            case Keys.Down:
+                            case Keys.S:
                                 _player.Move(Control.Direction.down);
                                 break;
-                            case Keys.Left:
+                            case Keys.A:
                                 _player.Move(Control.Direction.left);
                                 break;
-                            case Keys.Right:
+                            case Keys.D:
                                 _player.Move(Control.Direction.right);
                                 break;
                         }
@@ -100,6 +100,13 @@ namespace GiraffeShooterClient.Container.World
                                 break;
                         }
                         
+                        break;
+                    
+                    
+                    case EventType.MousePress:
+                    case EventType.MouseDrag:
+                    case EventType.MouseHold:
+                        _player.Shoot();
                         break;
                     
                     case EventType.StickLeftMove:

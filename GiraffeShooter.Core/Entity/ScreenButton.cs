@@ -34,7 +34,7 @@ namespace GiraffeShooterClient.Entity
             {
                 switch (e.Type)
                 {
-                    case EventType.MouseClick:
+                    case EventType.MouseRelease:
                     case EventType.TouchPress:
 
                         if (GetComponent<Sprite>().Bounds.Contains(e.Position / ScreenManager.GetScaleFactor()))
@@ -44,8 +44,6 @@ namespace GiraffeShooterClient.Entity
                         break;
                 }
             }
-            
-            
         }
     }
 }

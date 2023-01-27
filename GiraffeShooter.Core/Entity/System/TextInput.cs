@@ -74,7 +74,7 @@ namespace GiraffeShooterClient.Entity
                         
                         break;
                     
-                    case EventType.MouseClick:
+                    case EventType.MouseRelease:
                         
                         if (entity.GetComponent<Sprite>().Bounds.Contains(e.Position / ScreenManager.GetScaleFactor()))
                         {
