@@ -6,15 +6,20 @@ using Microsoft.Xna.Framework;
 namespace GiraffeShooterClient.Entity
 {
 
-    class Meta
+    public class Meta
     {
-        private static Dictionary<Type, Type> _typeMap = new Dictionary<Type, Type>
+        private static readonly Dictionary<Type, Type> _typeMap = new Dictionary<Type, Type>
         {
             {typeof(MetaAmmunition), typeof(Ammunition)},
             {typeof(MetaPistol), typeof(Pistol)},
         };
+        
+        public static Meta GetEntity(String name)
+        {
+            return (Meta)Activator.CreateInstance(_typeMap[Type.GetType(name)]);
+        }
 
-        public Guid Id { get; protected set; }
+        protected Guid Id { get; set; }
         public int Quantity { get; set; } = 0;
         public int MaxQuantity { get; set; } = 69;
         

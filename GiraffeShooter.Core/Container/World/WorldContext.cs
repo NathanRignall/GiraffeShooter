@@ -15,6 +15,9 @@ namespace GiraffeShooterClient.Container.World
         Collection _collection;
         InventoryBar _inventoryBar;
         Player _player;
+        
+        private const float _delay = 0.1f; // seconds
+        private float _remainingDelay = _delay;
 
         public WorldContext()
         {
@@ -62,6 +65,51 @@ namespace GiraffeShooterClient.Container.World
             Camera.Snap();
 
         }
+        
+        // handle broadcasted player positions
+        // public void HandleBroadcastedEntity(List<DB.Entity> entities)
+        // {
+        //
+        //     // loop through the entities
+        //     foreach (DB.Entity entity in entities)
+        //     {
+        //         // if the entity is a player
+        //         if (entity.Type == "Player")
+        //         {
+        //             // if the player is not the current player
+        //             if (entity.Id != _player.Id.ToString())
+        //             {
+        //
+        //                 var Guid = new Guid(entity.Id);
+        //         
+        //                 // get the player
+        //                 Giraffe giraffe = _collection.GetEntity(Guid) as Giraffe;
+        //
+        //                 // if the player does not exist
+        //                 if (giraffe == null)
+        //                 {
+        //                     // create the player
+        //                     giraffe = new Giraffe(new Vector3(entity.Position.X, entity.Position.Y, entity.Position.Z), 
+        //                         new Vector3(entity.Velocity.X, entity.Velocity.Y, entity.Velocity.Z), Guid);
+        //                     
+        //                     _collection.AddEntity(giraffe);
+        //
+        //                     // cosnole log the player
+        //                     Console.WriteLine("Player " + Guid + " joined the game ");
+        //                 }
+        //                 else
+        //                 {
+        //                     // console log the player
+        //                     Console.WriteLine("Player " + Guid + " moved ");
+        //                 }
+        //
+        //                 // set the player position
+        //                 giraffe.SetPosition(new Vector3(entity.Position.X, entity.Position.Y, entity.Position.Z));
+        //                 giraffe.SetVelocity(new Vector3(entity.Velocity.X, entity.Velocity.Y, entity.Velocity.Z));
+        //             }
+        //         }
+        //     }
+        // }
 
         public override void HandleEvents(List<Event> events)
         {
@@ -158,6 +206,17 @@ namespace GiraffeShooterClient.Container.World
             
             // update the entity collection
             _collection.Update(gameTime);
+            
+            // timer update
+            var timer = (float) gameTime.ElapsedGameTime.TotalSeconds;
+            _remainingDelay -= timer;
+
+            // only execute when ready
+            if(_remainingDelay <= 0)
+            {
+                // reset the delay
+                _remainingDelay = _delay;
+            }
 
         }
 

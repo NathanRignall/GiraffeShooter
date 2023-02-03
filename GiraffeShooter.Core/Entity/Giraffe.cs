@@ -7,8 +7,18 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
+    class MetaGiraffe : Meta
+    {
+        public override void Create(Vector3 position, Vector3 velocity)
+        {
+            new Giraffe(position, velocity, Id,this);
+        }
+    }
+    
     class Giraffe : Entity
     {
+        
+        public MetaGiraffe Meta { get; private set; }
         
         enum State
         {
@@ -26,10 +36,11 @@ namespace GiraffeShooterClient.Entity
         Animation.Frame[] shootLeftFrames = new Animation.Frame[4];
         Animation.Frame[] shootRightFrames = new Animation.Frame[4];
 
-        public Giraffe(Vector3 position, Vector3 velocity)
+        public Giraffe(Vector3 position = default, Vector3 velocity = default, Guid id = default, Meta meta = null)
         {
-            Id = Guid.NewGuid();
+            Id = (id == default) ? Guid.NewGuid() : id;
             Name = "Giraffe";
+            Meta = (meta == null) ? new MetaGiraffe() : (MetaGiraffe)meta;
             
             Physics physics = new Physics();
             physics.Position = position;
@@ -75,6 +86,30 @@ namespace GiraffeShooterClient.Entity
             
             Inventory inventory = new Inventory();
             AddComponent(inventory);
+        }
+        
+        public void SetPosition(Vector3 position)
+        {
+            Physics physics = GetComponent<Physics>();
+            physics.Position = new Vector3(position.X, position.Y, physics.Position.Z);
+        }
+        
+        public void SetVelocity(Vector3 velocity)
+        {
+            Physics physics = GetComponent<Physics>();
+            physics.Velocity = velocity;
+        }
+        
+        public Vector3 GetPosition()
+        {
+            Physics physics = GetComponent<Physics>();
+            return physics.Position;
+        }
+
+        public Vector3 GetVelocity()
+        {
+            Physics physics = GetComponent<Physics>();
+            return physics.Velocity;
         }
 
         public override void Update(GameTime gameTime) {
