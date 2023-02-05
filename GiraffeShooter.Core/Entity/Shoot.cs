@@ -48,7 +48,7 @@ namespace GiraffeShooterClient.Entity
         {
             
             // if no touch screen
-            if (!InputManager.TouchConnected)
+            if (!InputManager.TouchConnected && !ContextManager.Paused)
             {
                 // get the mouse position
                 Vector2 mousePosition = InputManager.CurrentMouseState.Position.ToVector2();
@@ -69,6 +69,9 @@ namespace GiraffeShooterClient.Entity
 
         public override void HandleEvents(List<Event> events)
         {
+            if (ContextManager.Paused)
+                return;
+            
             foreach (Event e in events)
             {
                 switch (e.Type)

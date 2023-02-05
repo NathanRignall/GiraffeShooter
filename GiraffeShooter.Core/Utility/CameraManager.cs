@@ -147,6 +147,9 @@ namespace GiraffeShooterClient.Utility
 
         public static void HandleEvents(List<Event> events)
         {
+            var eventsToRemove = new List<Event>();
+            var eventsToAdd = new List<Event>();
+            
             foreach (Event e in events)
             {
                 switch (e.Type)
@@ -156,6 +159,9 @@ namespace GiraffeShooterClient.Utility
                         {
                             case State.Free:
                                 _velocity += e.Delta * 15 * 1 / Zoom;
+                                
+                                // remove the event
+                                eventsToRemove.Add(e);
                                 break;
                         }
                         break;
@@ -165,6 +171,9 @@ namespace GiraffeShooterClient.Utility
                         {
                             case State.Free:
                                 _velocity += e.Delta * 13 * 1 / Zoom;
+                                
+                                // remove the event
+                                eventsToRemove.Add(e);
                                 break;
                         }
                         break;
@@ -173,7 +182,6 @@ namespace GiraffeShooterClient.Utility
 
                         switch (CurrentState)
                         {
-                            case State.Follow:
                             case State.Free:
                                 // calculate zoom
                                 Zoom += Zoom * e.ScrollDelta / 10000;
@@ -183,6 +191,9 @@ namespace GiraffeShooterClient.Utility
                                 var newHomePosition = ScreenManager.Size / 2 / Zoom;
                                 _position = _position - _homePosition + newHomePosition;
                                 _homePosition = newHomePosition;
+                                
+                                // remove the event
+                                eventsToRemove.Add(e);
                                 break;
                         }
 
@@ -205,11 +216,26 @@ namespace GiraffeShooterClient.Utility
                                 var newHomePosition = ScreenManager.Size / 2 / Zoom;
                                 _position = _position - _homePosition + newHomePosition;
                                 _homePosition = newHomePosition;
+                                
+                                // remove the event
+                                eventsToRemove.Add(e);
                                 break;
                         }
                         
                         break;
                 }
+            }
+            
+            // remove the events that we handled
+            foreach (var e in eventsToRemove)
+            {
+                events.Remove(e);
+            }
+            
+            // add the new events
+            foreach (var e in eventsToAdd)
+            {
+                events.Add(e);
             }
         }
     }

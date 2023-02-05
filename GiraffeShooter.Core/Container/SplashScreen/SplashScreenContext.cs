@@ -30,7 +30,6 @@ namespace GiraffeShooterClient.Container.SplashScreen
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
-
             // set font
             var font = ScreenManager.GetScaleFactor() == 1 ? AssetManager.Fontx1Title : AssetManager.Fontx2Title;
 
@@ -53,7 +52,6 @@ namespace GiraffeShooterClient.Container.SplashScreen
             // draw the text to the left of the giraffe
             spriteBatch.DrawString(font, textLine1, new Microsoft.Xna.Framework.Vector2(destination.X - textLine1Size.X - 10, destination.Y + (destination.Height / 2f) - (textLine1Size.Y / 2f)), Microsoft.Xna.Framework.Color.White);
             spriteBatch.DrawString(font, textLine2, new Microsoft.Xna.Framework.Vector2(destination.X - textLine2Size.X - 10, destination.Y + (destination.Height / 2f) - (textLine2Size.Y / 2f) + textLine1Size.Y), Microsoft.Xna.Framework.Color.White);
-            
 
         }
     }

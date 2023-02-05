@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 
+using GiraffeShooterClient.Utility;
+
 namespace GiraffeShooterClient.Entity
 {
     class Animation : Component
@@ -53,6 +55,9 @@ namespace GiraffeShooterClient.Entity
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
+            if (ContextManager.Paused)
+                return;
+            
             // only update if we have more than one frame
             if (Frames.Length > 1 && !Finished)
             {

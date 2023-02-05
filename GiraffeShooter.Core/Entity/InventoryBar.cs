@@ -25,7 +25,7 @@ namespace GiraffeShooterClient.Entity
             AddComponent(screen);
 
             Sprite sprite = new Sprite(AssetManager.InventoryBarTexture, new Rectangle(338 * 5, 0, 338, 70));
-            sprite.zOrder = 10;
+            sprite.zOrder = 7;
             AddComponent(sprite);
             
             // add inventory items
@@ -140,6 +140,9 @@ namespace GiraffeShooterClient.Entity
 
         public override void HandleEvents(List<Event> events)
         {
+            if (ContextManager.Paused)
+                return;
+            
             // pass all events to inventory items
             foreach (InventoryItem item in _items)
             {

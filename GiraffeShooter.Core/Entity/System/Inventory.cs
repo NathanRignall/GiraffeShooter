@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+
 using Microsoft.Xna.Framework;
+
+using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
@@ -98,6 +101,9 @@ namespace GiraffeShooterClient.Entity
 
         public override void Update(GameTime gameTime)
         {
+            if (ContextManager.Paused)
+                return;
+            
             if (_inventoryBar != null)
                 _inventoryBar.Update(gameTime);
         }

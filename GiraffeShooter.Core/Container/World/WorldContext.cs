@@ -16,7 +16,9 @@ namespace GiraffeShooterClient.Container.World
         InventoryBar _inventoryBar;
         Player _player;
         
-        private const float _delay = 0.1f; // seconds
+        List<Entity.Entity> _pauseEntities = new List<Entity.Entity>();
+
+        private const float _delay = 0.1f;
         private float _remainingDelay = _delay;
 
         public WorldContext()
@@ -52,18 +54,30 @@ namespace GiraffeShooterClient.Container.World
             {
                 _collection.AddEntity(new Pistol(new Vector3(random.Next(-45, 45), random.Next(-45, 45), 0), Vector3.Zero));
             }
+
+            // add exit button to pause entities and collection then hide it
+            var exitButton = new ScreenButton(new Vector2(0f, -1.25f),  AssetManager.ExitButtonTexture, () => { ContextManager.SetState(ContextManager.State.Menu); });
+            _pauseEntities.Add(exitButton);
+            _collection.AddEntity(exitButton);
+            exitButton.GetComponent<Sprite>().Visible = false;
             
-            // add screen button
-            _collection.AddEntity(new ScreenButton(new Vector2(-2f, -1f),  AssetManager.InventoryButtonTexture, Camera.ToggleState, ScreenManager.CenterType.TopCenter));
-            _collection.AddEntity(new ScreenButton(new Vector2(0f, -1f),  AssetManager.PauseButtonTexture, new Action(() => { ContextManager.SetState(ContextManager.State.Menu); }), ScreenManager.CenterType.TopCenter));
-            _collection.AddEntity(new ScreenButton(new Vector2(2f, -1f),  AssetManager.CameraButtonTexture, new Action(() => { ContextManager.SetState(ContextManager.State.Menu); }), ScreenManager.CenterType.TopCenter));
+            // add resume button to pause entities and collection then hide it
+            var resumeButton = new ScreenButton(new Vector2(0f, 1.25f),  AssetManager.ResumeButtonTexture, ContextManager.TogglePause);
+            _pauseEntities.Add(resumeButton);
+            _collection.AddEntity(resumeButton);
+            resumeButton.GetComponent<Sprite>().Visible = false;
+            
+            // add paused cover to pause entities and collection then hide it
+            var pausedCover = new PausedCover(Vector2.Zero);
+            _pauseEntities.Add(pausedCover);
+            _collection.AddEntity(pausedCover);
+            pausedCover.GetComponent<Sprite>().Visible = false;
 
             // reset the camera
             Camera.Reset();
             Camera.CurrentState = Camera.State.Follow;
             Camera.FollowTarget = _player.GetPosition() * 1000f / 32f;
             Camera.Snap();
-
         }
         
         // handle broadcasted player positions
@@ -119,57 +133,16 @@ namespace GiraffeShooterClient.Container.World
             {
                 switch (e.Type)
                 {
-                    case EventType.KeyHold:
-
-                        switch (e.Key)
-                        {
-                            case Keys.W:
-                                _player.Move(Control.Direction.up);
-                                break;
-                            case Keys.S:
-                                _player.Move(Control.Direction.down);
-                                break;
-                            case Keys.A:
-                                _player.Move(Control.Direction.left);
-                                break;
-                            case Keys.D:
-                                _player.Move(Control.Direction.right);
-                                break;
-                        }
-                        
-                        break;
-                    
                     case EventType.KeyPress:
-                        
                         switch (e.Key)
                         {
-                            case Keys.Space:
-                                _player.Shoot();
+                            case Keys.Escape:
+                                ContextManager.TogglePause();
                                 break;
                         }
                         
-                        break;
-                    
-                    
-                    case EventType.MousePress:
-                    case EventType.MouseDrag:
-                    case EventType.MouseHold:
-                        _player.Shoot();
-                        break;
-                    
-                    case EventType.StickLeftMove:
-
-                        // use delta to calculate rotation
-                        Vector2 delta = e.Delta;
-                        
-                        // set rotation
-                        var direction = (float)Math.Atan2(delta.Y, delta.X);
-                        
-                        _player.Move(direction, delta.Length());
-
                         break;
                 }
-
             }
         }
 
@@ -217,7 +190,22 @@ namespace GiraffeShooterClient.Container.World
                 // reset the delay
                 _remainingDelay = _delay;
             }
-
+            
+            // if paused then hide the pause entities
+            if (ContextManager.Paused)
+            {
+                foreach (Entity.Entity entity in _pauseEntities)
+                {
+                    entity.GetComponent<Sprite>().Visible = true;
+                }
+            }
+            else
+            {
+                foreach (Entity.Entity entity in _pauseEntities)
+                {
+                    entity.GetComponent<Sprite>().Visible = false;
+                }
+            }
         }
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
@@ -227,7 +215,5 @@ namespace GiraffeShooterClient.Container.World
             SpriteSystem.Draw(gameTime, spriteBatch);
             TextSystem.Draw(gameTime, spriteBatch);
         }
-
     }
-
 }

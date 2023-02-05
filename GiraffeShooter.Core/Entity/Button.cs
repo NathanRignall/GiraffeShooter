@@ -37,11 +37,17 @@ namespace GiraffeShooterClient.Entity
                 {
                     case EventType.MouseRelease:
                     case EventType.TouchPress:
+                        
+                        var sprite = GetComponent<Sprite>();
+                        
+                        // if not visible, don't handle event
+                        if (sprite == null || !sprite.Visible)
+                            break;
 
-                        if (GetComponent<Sprite>().Bounds.Contains(e.Position / ScreenManager.GetScaleFactor()))
-                        {
+                        // check if button was pressed
+                        if (sprite.Bounds.Contains(e.Position / ScreenManager.GetScaleFactor()))
                             _action();
-                        }
+
                         break;
                 }
             }

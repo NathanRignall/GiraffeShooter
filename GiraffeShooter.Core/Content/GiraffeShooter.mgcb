@@ -149,6 +149,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/DemoAmmunition.png
 
+#begin Sprites/ExitButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/ExitButton.png
+
 #begin Sprites/Giraffe.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -245,6 +257,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/PauseButton.png
 
+#begin Sprites/PausedCover.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/PausedCover.png
+
 #begin Sprites/Pistol.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -292,6 +316,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/RegisterButton.png
+
+#begin Sprites/ResumeButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/ResumeButton.png
 
 #begin Sprites/SettingsButton.png
 /importer:TextureImporter

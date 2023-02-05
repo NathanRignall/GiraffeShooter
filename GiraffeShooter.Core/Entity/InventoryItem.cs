@@ -33,7 +33,7 @@ namespace GiraffeShooterClient.Entity
             AddComponent(screen);
 
             Sprite sprite = new Sprite(AssetManager.InventoryItemTexture);
-            sprite.zOrder = 9;
+            sprite.zOrder = 7;
             AddComponent(sprite);
 
             Text text = new Text();
@@ -73,6 +73,9 @@ namespace GiraffeShooterClient.Entity
         
         public override void HandleEvents(List<Event> events)
         {
+            if (ContextManager.Paused)
+                return;
+            
             foreach (Event e in events)
             {
                 switch (e.Type)

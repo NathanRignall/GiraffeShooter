@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 
+using GiraffeShooterClient.Utility;
+
 namespace GiraffeShooterClient.Entity
 {
     class Physics : Component
@@ -30,7 +32,9 @@ namespace GiraffeShooterClient.Entity
 
         public override void Update(GameTime gameTime)
         {
-
+            if (ContextManager.Paused)
+                return;
+            
             if (IsStatic) return;
             
             var dt = gameTime.ElapsedGameTime;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 using GiraffeShooterClient.Utility;
+using Microsoft.Xna.Framework.Input;
 
 namespace GiraffeShooterClient.Entity
 {
@@ -230,6 +231,64 @@ namespace GiraffeShooterClient.Entity
 
         public override void HandleEvents(List<Event> events)
         {
+            if (ContextManager.Paused)
+                return;
+            
+            foreach (Event e in events)
+            {
+                switch (e.Type)
+                {
+                    case EventType.KeyHold:
+
+                        switch (e.Key)
+                        {
+                            case Keys.W:
+                                Move(Control.Direction.up);
+                                break;
+                            case Keys.S:
+                                Move(Control.Direction.down);
+                                break;
+                            case Keys.A:
+                                Move(Control.Direction.left);
+                                break;
+                            case Keys.D:
+                                Move(Control.Direction.right);
+                                break;
+                        }
+                        
+                        break;
+                    
+                    case EventType.KeyPress:
+                        
+                        switch (e.Key)
+                        {
+                            case Keys.Space:
+                                Shoot();
+                                break;
+                        }
+                        break;
+
+                    case EventType.MousePress:
+                    case EventType.MouseDrag:
+                    case EventType.MouseHold:
+                        Shoot();
+                        break;
+                    
+                    case EventType.StickLeftMove:
+
+                        // use delta to calculate rotation
+                        Vector2 delta = e.Delta;
+                        
+                        // set rotation
+                        var direction = (float)Math.Atan2(delta.Y, delta.X);
+                        
+                        Move(direction, delta.Length());
+
+                        break;
+                }
+
+            }
+            
             _shoot.HandleEvents(events);
             _inventoryBar.HandleEvents(events);
         }

@@ -32,10 +32,16 @@ namespace GiraffeShooterClient.Utility
         public static Texture2D RegisterButtonTexture { get; private set; }
         public static Texture2D SettingsButtonTexture { get; private set; }
         public static Texture2D BackButtonTexture { get; private set; }
+        public static Texture2D ExitButtonTexture { get; private set; }
+        public static Texture2D ResumeButtonTexture { get; private set; }
         public static Texture2D PauseButtonTexture { get; private set; }
         public static Texture2D CameraButtonTexture { get; private set; }
         public static Texture2D InventoryButtonTexture { get; private set; }
+        
         public static Texture2D InputTexture { get; private set; }
+        
+        
+        public static Texture2D PausedCoverTexture { get; private set; }
         
         public static Texture2D InventoryBarTexture { get; private set; }
         public static Texture2D InventoryItemTexture { get; private set; }
@@ -76,12 +82,16 @@ namespace GiraffeShooterClient.Utility
             LoginButtonTexture = content.Load<Texture2D>("Sprites/LoginButton");
             RegisterButtonTexture = content.Load<Texture2D>("Sprites/RegisterButton");
             SettingsButtonTexture = content.Load<Texture2D>("Sprites/SettingsButton");
+            BackButtonTexture = content.Load<Texture2D>("Sprites/BackButton");
+            ExitButtonTexture = content.Load<Texture2D>("Sprites/ExitButton");
+            ResumeButtonTexture = content.Load<Texture2D>("Sprites/ResumeButton");
             PauseButtonTexture = content.Load<Texture2D>("Sprites/PauseButton");
             CameraButtonTexture = content.Load<Texture2D>("Sprites/CameraButton");
             InventoryButtonTexture = content.Load<Texture2D>("Sprites/InventoryButton");
-            BackButtonTexture = content.Load<Texture2D>("Sprites/BackButton");
-            
+
             InputTexture = content.Load<Texture2D>("Sprites/Input");
+            
+            PausedCoverTexture = content.Load<Texture2D>("Sprites/PausedCover");
             
             InventoryBarTexture = content.Load<Texture2D>("Sprites/InventoryBar");
             InventoryItemTexture = content.Load<Texture2D>("Sprites/InventoryItem");

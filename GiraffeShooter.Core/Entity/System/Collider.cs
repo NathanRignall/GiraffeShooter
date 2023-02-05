@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
 
+using GiraffeShooterClient.Utility;
+
 namespace GiraffeShooterClient.Entity
 {
     class Collider : Component
@@ -28,6 +30,8 @@ namespace GiraffeShooterClient.Entity
 
         public override void Update(GameTime gameTime)
         {
+            if (ContextManager.Paused)
+                return;
 
             foreach (Collider collider in ColliderSystem.components)
             {
