@@ -31,7 +31,6 @@ namespace GiraffeShooterClient.Utility
         
         private static Rectangle _pauseButton;
         private static bool _pauseButtonPressed;
-        private static bool _previousPauseButtonPressed;
         private static TimeSpan _pauseButtonPressedTime;
 
         public static void Initialize()
@@ -114,7 +113,6 @@ namespace GiraffeShooterClient.Utility
             
             // set pause pressed state
             _pauseButtonPressed = false;
-            _previousPauseButtonPressed = false;
 
         }
 
@@ -166,11 +164,13 @@ namespace GiraffeShooterClient.Utility
                         }
                         
                         // check if the pause button is pressed
-                        if (_pauseButton.Contains(e.Position))
-                        { 
-                            _previousPauseButtonPressed = _pauseButtonPressed;
+                        if (_pauseButton.Contains(e.Position) && !_pauseButtonPressed)
+                        {
                             _pauseButtonPressed = true;
                             _pauseButtonPressedTime = e.Time;
+                            
+                            // add the event
+                            eventsToAdd.Add(new Event(Keys.Escape, EventType.KeyPress, gameTime.TotalGameTime));
                             
                             // remove the event
                             eventsToRemove.Add(e);
@@ -359,10 +359,6 @@ namespace GiraffeShooterClient.Utility
             // if drop button is pressed, add the event
             if (_dropButtonPressed)
                 eventsToAdd.Add(new Event(Keys.Q, EventType.KeyPress, gameTime.TotalGameTime));
-            
-            // if pause button is pressed, add the event
-            if (_pauseButtonPressed && !_previousPauseButtonPressed)
-                eventsToAdd.Add(new Event(Keys.Escape, EventType.KeyPress, gameTime.TotalGameTime));
 
             // remove the events that we handled
             foreach (var e in eventsToRemove)
@@ -439,9 +435,9 @@ namespace GiraffeShooterClient.Utility
             spriteBatch.Draw(AssetManager.PauseButtonTexture, _pauseButton, pauseButtonSource, Color.White);
             
             // reset the pause button pressed if time is up
-            if (gameTime.TotalGameTime - _pauseButtonPressedTime > TimeSpan.FromMilliseconds(100))
+            if (gameTime.TotalGameTime - _pauseButtonPressedTime > TimeSpan.FromMilliseconds(1000))
                 _pauseButtonPressed = false;
-            
+
             // default source rectangle for the buttons
             var defaultDropButtonSource = new Rectangle(0, 0, 128, 128);
             
