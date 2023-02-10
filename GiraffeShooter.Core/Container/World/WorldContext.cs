@@ -44,13 +44,13 @@ namespace GiraffeShooterClient.Container.World
             }
             
             // add 50 ammunition at random positions
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 4000; i++)
             {
                 _collection.AddEntity(new Ammunition(new Vector3(random.Next(-45, 45), random.Next(-45, 45),0), Vector3.Zero));
             }
             
             // add 20 pistol at random positions
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 100; i++)
             {
                 _collection.AddEntity(new Pistol(new Vector3(random.Next(-45, 45), random.Next(-45, 45), 0), Vector3.Zero));
             }

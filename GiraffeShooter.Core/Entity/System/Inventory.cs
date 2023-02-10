@@ -12,7 +12,6 @@ namespace GiraffeShooterClient.Entity
         private InventoryBar _inventoryBar;
         
         public List<Meta> items = new List<Meta>();
-        public List<Meta> itemsInUse = new List<Meta>();
         public Meta selectedItem;
         public int MaxItems = 5;
 
@@ -92,6 +91,14 @@ namespace GiraffeShooterClient.Entity
             
             // remove item from inventory
             items.Remove(item);
+        }
+        
+        public void Action()
+        {
+            if (selectedItem != null)
+            {
+                selectedItem.Action();
+            }
         }
 
         public void SelectItem(Meta item)

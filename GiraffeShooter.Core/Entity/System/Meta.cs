@@ -21,7 +21,7 @@ namespace GiraffeShooterClient.Entity
 
         protected Guid Id { get; set; }
         public int Quantity { get; set; } = 0;
-        public int MaxQuantity { get; set; } = 69;
+        public int MaxQuantity { get; set; } = 256;
         
         public Meta()
         {
@@ -29,5 +29,7 @@ namespace GiraffeShooterClient.Entity
         }
 
         public virtual void Create(Vector3 position, Vector3 velocity) { }
+        
+        public virtual void Action() { }
     }
 }

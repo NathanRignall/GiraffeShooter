@@ -32,6 +32,10 @@ namespace GiraffeShooterClient.Entity
         {
             if (ContextManager.Paused)
                 return;
+            
+            // temporary code to only check for collisions with a moving entity
+            if (entity.GetComponent<Physics>().Velocity == Vector3.Zero)
+                return;
 
             foreach (Collider collider in ColliderSystem.components)
             {
@@ -51,9 +55,15 @@ namespace GiraffeShooterClient.Entity
                         // System.Console.WriteLine("Entity 2: " + collider.entity.GetComponent<Physics>().BoundingBox.ToString());
                         
                         // call the collision response
-                        if (_responses.ContainsKey(collider.entity.GetType()))
+                        // if (_responses.ContainsKey(entity.GetType()))
+                        // {
+                        //     _responses[collider.entity.GetType()](collider.entity);
+                        // }
+                        
+                        // call the collision response from the other entity
+                        if (collider._responses.ContainsKey(entity.GetType()))
                         {
-                            _responses[collider.entity.GetType()](collider.entity);
+                            collider._responses[entity.GetType()](entity);
                         }
 
                         // no physics on kinematic objects

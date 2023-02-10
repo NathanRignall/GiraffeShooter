@@ -132,6 +132,10 @@ namespace GiraffeShooterClient.Entity
                 animation.SetFrames(shootLeftFrames, false);
             }
             _state = State.Shooting;
+            
+            // action the inventory item
+            Inventory inventory = GetComponent<Inventory>();
+            inventory.Action();
         }
 
         public Vector2 GetPosition() {

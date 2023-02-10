@@ -12,6 +12,11 @@ namespace GiraffeShooterClient.Entity
         {
             new Pistol(position, velocity, this);
         }
+
+        public override void Action()
+        {
+            Console.WriteLine("Pew pew");
+        }
     }
 
     class Pistol : Entity

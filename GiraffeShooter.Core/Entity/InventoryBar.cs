@@ -136,6 +136,9 @@ namespace GiraffeShooterClient.Entity
                 if (item != null)
                     item.Update(gameTime);
             }
+            
+            if (_selectedItem != null)
+                Inventory.SelectItem(_selectedItem.Meta);
         }
 
         public override void HandleEvents(List<Event> events)
