@@ -117,6 +117,53 @@ namespace GiraffeShooterClient.Entity
             }
         }
         
+        public void RemoveItem(Meta meta)
+        {
+            // find selected slot
+            for (int i = 0; i < _items.Length; i++)
+            {
+                if (_items[i].Meta == meta)
+                {
+                    _items[i].EmptySlot();
+
+                    if (_items[i] == _selectedItem)
+                    {
+                        // select next slot if not empty
+                        if (i < _items.Length - 1)
+                        {
+                            if (!_items[i + 1].IsEmpty)
+                            {
+                                _selectedItem = _items[i + 1];
+                                return;
+                            }
+                        }
+
+                        // select previous slot if not empty
+                        if (i > 0)
+                        {
+                            if (!_items[i - 1].IsEmpty)
+                            {
+                                _selectedItem = _items[i - 1];
+                                return;
+                            }
+                        }
+
+                        // select any slot if not empty
+                        for (int j = 0; j < _items.Length; j++)
+                        {
+                            if (!_items[j].IsEmpty)
+                            {
+                                _selectedItem = _items[j];
+                                return;
+                            }
+                        }
+
+                        _selectedItem = null;
+                    }
+                }
+            }
+        }
+
         public bool IsFull()
         {
             foreach (InventoryItem item in _items)

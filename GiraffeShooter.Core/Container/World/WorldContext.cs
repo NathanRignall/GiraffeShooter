@@ -52,7 +52,7 @@ namespace GiraffeShooterClient.Container.World
             // add 20 pistol at random positions
             for (int i = 0; i < 100; i++)
             {
-                _collection.AddEntity(new Pistol(new Vector3(random.Next(-45, 45), random.Next(-45, 45), 0), Vector3.Zero));
+                _collection.AddEntity(new Gun(new Vector3(random.Next(-45, 45), random.Next(-45, 45), 0), Vector3.Zero));
             }
 
             // add exit button to pause entities and collection then hide it

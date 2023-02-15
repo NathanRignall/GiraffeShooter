@@ -22,6 +22,11 @@ namespace GiraffeShooterClient.Entity
             InventorySystem.Register(this);
         }
         
+        public void SelectItem(Meta item)
+        {
+            selectedItem = item;
+        }
+        
         public bool AddItem(Meta item)
         {
 
@@ -93,24 +98,68 @@ namespace GiraffeShooterClient.Entity
             items.Remove(item);
         }
         
-        public void Action()
+        public bool HasItem(Type type)
+        {
+            foreach (var item in items)
+            {
+                if (item.GetType() == type)
+                    return true;
+            }
+            
+            return false;
+        }
+        
+        public bool ReduceItem(Type type, int quantity)
+        {
+            foreach (var item in items)
+            {
+                if (item.GetType() == type)
+                {
+                    if (item.Quantity >= quantity)
+                    {
+                        item.Quantity -= quantity;
+
+                        if (item.Quantity == 0)
+                        {
+                            if (_inventoryBar != null)
+                                _inventoryBar.RemoveItem(item);
+                        
+                            items.Remove(item);
+                        }
+                        
+                        return true;
+                    }
+                }
+            }
+            
+            return false;
+        }
+        
+        public bool Action()
         {
             if (selectedItem != null)
             {
-                selectedItem.Action();
+                return selectedItem.Action(entity);
             }
+            
+            return false;
         }
-
-        public void SelectItem(Meta item)
-        {
-            selectedItem = item;
-        }
-
+        
         public override void Update(GameTime gameTime)
         {
             if (ContextManager.Paused)
                 return;
             
+            // clear the inventory of items with 0 quantity
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (items[i].Quantity == 0 && items[i].MaxQuantity != 0)
+                {
+                    items.RemoveAt(i);
+                    i--;
+                }
+            }
+
             if (_inventoryBar != null)
                 _inventoryBar.Update(gameTime);
         }

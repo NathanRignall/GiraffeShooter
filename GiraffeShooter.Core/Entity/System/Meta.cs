@@ -6,12 +6,12 @@ using Microsoft.Xna.Framework;
 namespace GiraffeShooterClient.Entity
 {
 
-    public class Meta
+    class Meta
     {
         private static readonly Dictionary<Type, Type> _typeMap = new Dictionary<Type, Type>
         {
             {typeof(MetaAmmunition), typeof(Ammunition)},
-            {typeof(MetaPistol), typeof(Pistol)},
+            {typeof(MetaGun), typeof(Gun)},
         };
         
         public static Meta GetEntity(String name)
@@ -20,9 +20,13 @@ namespace GiraffeShooterClient.Entity
         }
 
         protected Guid Id { get; set; }
+        
         public int Quantity { get; set; } = 0;
         public int MaxQuantity { get; set; } = 256;
         
+        public int Health { get; set; } = 100;
+        public int MaxHealth { get; set; } = 100;
+
         public Meta()
         {
             Id = Guid.NewGuid();
@@ -30,6 +34,6 @@ namespace GiraffeShooterClient.Entity
 
         public virtual void Create(Vector3 position, Vector3 velocity) { }
         
-        public virtual void Action() { }
+        public virtual bool Action(Entity entity) { return false; }
     }
 }

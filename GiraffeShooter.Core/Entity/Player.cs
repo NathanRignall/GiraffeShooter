@@ -225,8 +225,11 @@ namespace GiraffeShooterClient.Entity
                     break;
             }
 
-            // set shoot position to player position
-            _shoot.SetPosition(physics.Position + new Vector3(0, -0.35f, 0));
+            // set shoot position to player position depending if shooting or not
+            if (_state == State.Shooting)
+                _shoot.SetPosition(physics.Position + new Vector3(0, -0.7f, 0));
+            else
+                _shoot.SetPosition(physics.Position + new Vector3(0, -0.35f, 0));
 
             // update shoot
             _shoot.Update(gameTime);

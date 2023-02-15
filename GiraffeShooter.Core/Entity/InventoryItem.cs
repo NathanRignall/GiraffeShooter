@@ -14,7 +14,7 @@ namespace GiraffeShooterClient.Entity
         private static Dictionary<Type, Texture2D> _textures = new Dictionary<Type, Texture2D>
         {
             { typeof(MetaAmmunition), AssetManager.AmmunitionInventoryTexture },
-            { typeof(MetaPistol), AssetManager.PistolInventoryTexture}
+            { typeof(MetaGun), AssetManager.PistolInventoryTexture}
         };
 
         public bool IsEmpty { get; set; } = true;
