@@ -33,11 +33,14 @@ namespace GiraffeShooterClient.Entity
                 // remove the ammo from the inventory
                 inventory.ReduceItem(RequiredAmmo, RequiredQuanity);
                 
+                // create a position using subject position
+                var position = subject.GetComponent<Physics>().Position + new Vector3(0, -0.7f, 0);
+                
                 // create a velocity vector using the rotation
                 var velocity = new Vector3((float)Math.Cos(rotation), (float)Math.Sin(rotation), 0) * 50;
 
                 // create a bullet
-                new Bullet(subject.GetComponent<Physics>().Position, velocity);
+                new Bullet(position, velocity);
 
                 // return true
                 return true;

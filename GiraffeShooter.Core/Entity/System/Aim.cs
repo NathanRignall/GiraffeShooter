@@ -43,7 +43,21 @@ namespace GiraffeShooterClient.Entity
             // calculate the position of the sprite
             var physics = entity.GetComponent<Physics>();
             var cameraOffset = Camera.Offset;
-            var position = new Vector2(physics.Position.X, physics.Position.Y) * 32f + cameraOffset;
+            var aimOffset = new Vector2(0, -0.35f);
+            
+            // check what state the player is in
+            var player = entity as Player;
+            if (player != null)
+            {
+                // if the player is dead, move the aim up a bit
+                if (player.PlayerState == Player.State.Shooting)
+                {
+                    aimOffset = new Vector2(0, -0.7f);
+                }
+            }
+            
+            // calculate the position
+            var position = (new Vector2(physics.Position.X, physics.Position.Y) + aimOffset) * 32f + cameraOffset;
 
             // create the destination rectangle
             var destinationRectangle = new Rectangle((int)Math.Ceiling(position.X * Camera.Zoom), (int)Math.Ceiling(position.Y * Camera.Zoom), 

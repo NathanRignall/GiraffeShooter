@@ -10,7 +10,7 @@ namespace GiraffeShooterClient.Entity
     class Player : Entity
     {
         
-        enum State
+        public enum State
         {
             Idle,
             Walking,
@@ -18,7 +18,7 @@ namespace GiraffeShooterClient.Entity
             WalkingShooting
         }
 
-        private State _state;
+        public State PlayerState { get; private set; }
 
         Animation.Frame[] standLeftFrames = new Animation.Frame[1];
         Animation.Frame[] standRightFrames = new Animation.Frame[1];
@@ -37,7 +37,7 @@ namespace GiraffeShooterClient.Entity
             Name = "Player";
 
             // state
-            _state = State.Idle;
+            PlayerState = State.Idle;
 
             // inventory bar component
             _inventoryBar = new InventoryBar();
@@ -129,7 +129,7 @@ namespace GiraffeShooterClient.Entity
             } else {
                 animation.SetFrames(shootLeftFrames, false);
             }
-            _state = State.Shooting;
+            PlayerState = State.Shooting;
             
             // action the inventory item
             Inventory inventory = GetComponent<Inventory>();
@@ -154,7 +154,7 @@ namespace GiraffeShooterClient.Entity
             double velocityAngle = Math.Atan2(physics.Velocity.Y, physics.Velocity.X);
 
             // switch case for state
-            switch (_state)
+            switch (PlayerState)
             {
                 case State.Idle:
                     // if velocity is greater than 0.1, set animation to walking animation
@@ -170,7 +170,7 @@ namespace GiraffeShooterClient.Entity
                             animation.SetFrames(walkingLeftFrames);
                         }
 
-                        _state = State.Walking;
+                        PlayerState = State.Walking;
                     }
                     break;
                 case State.Walking:
@@ -187,7 +187,7 @@ namespace GiraffeShooterClient.Entity
                             animation.SetFrames(walkingLeftFrames);
                         }
 
-                        _state = State.Walking;
+                        PlayerState = State.Walking;
                     }
                     else
                     {
@@ -201,7 +201,7 @@ namespace GiraffeShooterClient.Entity
                             animation.SetFrames(standLeftFrames);
                         }
 
-                        _state = State.Idle;
+                        PlayerState = State.Idle;
                     }
                     break;
                 case State.Shooting:
@@ -218,7 +218,7 @@ namespace GiraffeShooterClient.Entity
                             animation.SetFrames(standLeftFrames);
                         }
 
-                        _state = State.Idle;
+                        PlayerState = State.Idle;
                     }
                     break;
             }
