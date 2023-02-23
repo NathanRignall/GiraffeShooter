@@ -12,9 +12,9 @@ namespace GiraffeShooterClient.Entity
     {
         private Action _action;
         
-        public Button(Vector2 offset, Texture2D texture, Action action, ScreenManager.CenterType center = ScreenManager.CenterType.MiddleCenter)
+        public Button(Vector2 offset, Texture2D texture, Action action, ScreenManager.CenterType center = ScreenManager.CenterType.MiddleCenter, Guid id = default)
         {
-            Id = Guid.NewGuid();
+            Id = (id == default) ? Guid.NewGuid() : id;
             Name = "ScreenButton";
             
             _action = action;
