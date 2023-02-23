@@ -44,7 +44,7 @@ namespace GiraffeShooterClient.Container.World
             }
             
             // add 50 ammunition at random positions
-            for (int i = 0; i < 4000; i++)
+            for (int i = 0; i < 400; i++)
             {
                 _collection.AddEntity(new Ammunition(new Vector3(random.Next(-45, 45), random.Next(-45, 45),0), Vector3.Zero));
             }
@@ -176,6 +176,8 @@ namespace GiraffeShooterClient.Container.World
             TextSystem.Update(gameTime);
             TextInputSystem.Update(gameTime);
             InventorySystem.Update(gameTime);
+            AimSystem.Update(gameTime);
+            CleanerSystem.Update(gameTime);
             
             // update the entity collection
             _collection.Update(gameTime);
@@ -214,6 +216,7 @@ namespace GiraffeShooterClient.Container.World
             TiledSystem.Draw(gameTime, spriteBatch);
             SpriteSystem.Draw(gameTime, spriteBatch);
             TextSystem.Draw(gameTime, spriteBatch);
+            AimSystem.Draw(gameTime, spriteBatch);
         }
     }
 }

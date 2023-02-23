@@ -21,9 +21,9 @@ namespace GiraffeShooterClient.Utility
         public static Texture2D GiraffeSpriteTexture { get; private set; }
         public static Texture2D AmmunitionTexture { get; private set; }
         public static Texture2D AmmunitionInventoryTexture { get; private set; }
+        public static Texture2D AmmunitionFireTexture { get; private set; }
         public static Texture2D PistolTexture { get; private set; }
         public static Texture2D PistolInventoryTexture { get; private set; }
-        public static Texture2D AmmunitionSpriteTexture { get; private set; }
         public static Texture2D ShootSpriteTexture { get; private set; }
         
         public static Texture2D PlayButtonTexture { get; private set; }
@@ -62,9 +62,9 @@ namespace GiraffeShooterClient.Utility
         public static void LoadContent(ContentManager content)
         {
 
-            MapMaster = new TiledMap("Content/map_master.tmx");
-            MapTilesets = MapMaster.GetTiledTilesets("Content/");
-            MapTilesetTextureMain = content.Load<Texture2D>("master_tileset");
+            MapMaster = new TiledMap("Content/Tiles/map_master.tmx");
+            MapTilesets = MapMaster.GetTiledTilesets("Content/Tiles/");
+            MapTilesetTextureMain = content.Load<Texture2D>("Tiles/master_tileset");
             
             PlayerTexture = content.Load<Texture2D>("player_texture");
             GiraffeTextureTest = content.Load<Texture2D>("giraffe_texture_test");
@@ -72,9 +72,9 @@ namespace GiraffeShooterClient.Utility
             GiraffeSpriteTexture = content.Load<Texture2D>("Sprites/Giraffe");
             AmmunitionTexture = content.Load<Texture2D>("Sprites/Ammunition");
             AmmunitionInventoryTexture = content.Load<Texture2D>("Sprites/AmmunitionInventory");
+            AmmunitionFireTexture = content.Load<Texture2D>("Sprites/AmmunitionFire");
             PistolTexture = content.Load<Texture2D>("Sprites/Pistol");
             PistolInventoryTexture = content.Load<Texture2D>("Sprites/PistolInventory");
-            AmmunitionSpriteTexture = content.Load<Texture2D>("Sprites/DemoAmmunition");
             ShootSpriteTexture = content.Load<Texture2D>("Sprites/Shoot");
             
             PlayButtonTexture = content.Load<Texture2D>("Sprites/PlayButton");

@@ -69,6 +69,8 @@ namespace GiraffeShooterClient.Entity
     class TextSystem : BaseComponent<Text> { }
     class TextInputSystem : BaseComponent<TextInput> { }
     class InventorySystem : BaseComponent<Inventory> { }
+    class AimSystem : BaseComponent<Aim> { }
+    class CleanerSystem : BaseComponent<Cleaner> { }
     
     class Base
     {
@@ -84,6 +86,7 @@ namespace GiraffeShooterClient.Entity
             TextSystem.components.Clear();
             TextInputSystem.components.Clear();
             InventorySystem.components.Clear();
+            CleanerSystem.components.Clear();
         }
     }
 }

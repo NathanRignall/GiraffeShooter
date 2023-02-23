@@ -10,6 +10,7 @@ namespace GiraffeShooterClient.Entity
         public Guid Id { get; protected set; }
         public string Name { get; protected set; }
         public bool IsDeleted { get; protected set; }
+        public Meta Meta { get; protected set; }
 
         List<Component> _components = new List<Component>();
 

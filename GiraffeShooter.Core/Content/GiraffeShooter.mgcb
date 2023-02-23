@@ -53,24 +53,6 @@
 /processorParam:TextureFormat=Color
 /build:giraffe_texture_test.jpeg
 
-#begin map_master.tmx
-/copy:map_master.tmx
-
-#begin master_tileset.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:master_tileset.png
-
-#begin master_tileset.tsx
-/copy:master_tileset.tsx
-
 #begin Music/Song.mp3
 /importer:Mp3Importer
 /processor:SoundEffectProcessor
@@ -100,6 +82,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Ammunition.png
+
+#begin Sprites/AmmunitionFire.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/AmmunitionFire.png
 
 #begin Sprites/AmmunitionInventory.png
 /importer:TextureImporter
@@ -400,4 +394,22 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/VirtualControlStick.png
+
+#begin Tiles/map_master.tmx
+/copy:Tiles/map_master.tmx
+
+#begin Tiles/master_tileset.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tiles/master_tileset.png
+
+#begin Tiles/master_tileset.tsx
+/copy:Tiles/master_tileset.tsx
 

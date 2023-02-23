@@ -28,8 +28,7 @@ namespace GiraffeShooterClient.Entity
         Animation.Frame[] shootRightFrames = new Animation.Frame[4];
         Animation.Frame[] walkShootLeftFrames = new Animation.Frame[4];
         Animation.Frame[] walkShootRightFrames = new Animation.Frame[4];
-
-        private Shoot _shoot;
+        
         private InventoryBar _inventoryBar;
         
         public Player()
@@ -39,10 +38,7 @@ namespace GiraffeShooterClient.Entity
 
             // state
             _state = State.Idle;
-            
-            // shoot component
-            _shoot = new Shoot();
-            
+
             // inventory bar component
             _inventoryBar = new InventoryBar();
             
@@ -62,6 +58,9 @@ namespace GiraffeShooterClient.Entity
             Sprite sprite = new Sprite(AssetManager.GiraffeSpriteTexture, new Vector2(0,-24));
             sprite.zOrder = 7;
             AddComponent(sprite);
+            
+            Aim aim = new Aim();
+            AddComponent(aim);
             
             // stand animation frames
             standLeftFrames[0] = new Animation.Frame(0, 0, 32, 64, 100, true);
@@ -96,7 +95,6 @@ namespace GiraffeShooterClient.Entity
             walkShootRightFrames[1] = new Animation.Frame(384, 0, 32, 64, 100);
             walkShootRightFrames[2] = new Animation.Frame(352, 0, 32, 64, 100);
             walkShootRightFrames[3] = new Animation.Frame(416, 0, 32, 64, 100, true);
-            
 
             Animation animation = new Animation(standLeftFrames);
             AddComponent(animation);
@@ -122,7 +120,7 @@ namespace GiraffeShooterClient.Entity
         public void Shoot()
         {
             // get the current shoot direction
-            var rotation = _shoot.GetRotation();
+            var rotation = GetComponent<Aim>().Rotation;
             
             // set the animation to the correct direction if left or right based on rotation
             Animation animation = GetComponent<Animation>();
@@ -225,21 +223,19 @@ namespace GiraffeShooterClient.Entity
                     break;
             }
 
-            // set shoot position to player position depending if shooting or not
-            if (_state == State.Shooting)
-                _shoot.SetPosition(physics.Position + new Vector3(0, -0.7f, 0));
-            else
-                _shoot.SetPosition(physics.Position + new Vector3(0, -0.35f, 0));
-
-            // update shoot
-            _shoot.Update(gameTime);
-
+            // // set shoot position to player position depending if shooting or not
+            // if (_state == State.Shooting)
+            //     _shoot.SetPosition(physics.Position + new Vector3(0, -0.7f, 0));
+            // else
+            //     _shoot.SetPosition(physics.Position + new Vector3(0, -0.35f, 0));
         }
 
         public override void HandleEvents(List<Event> events)
         {
             if (ContextManager.Paused)
                 return;
+            
+            GetComponent<Aim>().HandleEvents(events);
             
             foreach (Event e in events)
             {
@@ -296,7 +292,6 @@ namespace GiraffeShooterClient.Entity
 
             }
             
-            _shoot.HandleEvents(events);
             _inventoryBar.HandleEvents(events);
         }
     }

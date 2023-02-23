@@ -21,14 +21,23 @@ namespace GiraffeShooterClient.Entity
             // get the inventory
             Inventory inventory = subject.GetComponent<Inventory>();
             
+            // get the aim direction
+            Aim aim = subject.GetComponent<Aim>();
+            
+            // get the rotation
+            var rotation = aim.Rotation;
+            
             // check if the inventory has the required ammo
             if (inventory.HasItem(RequiredAmmo))
             {
                 // remove the ammo from the inventory
                 inventory.ReduceItem(RequiredAmmo, RequiredQuanity);
                 
+                // create a velocity vector using the rotation
+                var velocity = new Vector3((float)Math.Cos(rotation), (float)Math.Sin(rotation), 0) * 50;
+
                 // create a bullet
-                //new Bullet(subject.GetComponent<Physics>().Position, subject.GetComponent<Physics>().Velocity);
+                new Bullet(subject.GetComponent<Physics>().Position, velocity);
 
                 // return true
                 return true;

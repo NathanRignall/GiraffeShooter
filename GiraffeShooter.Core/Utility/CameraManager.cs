@@ -37,7 +37,7 @@ namespace GiraffeShooterClient.Utility
 
             var screenScale = ScreenManager.Size.Y/ 720f;
 
-            Zoom = DefaultZoom = 3f * screenScale;
+            Zoom = DefaultZoom = 2f * screenScale;
             MaxZoom = 4f * screenScale;
             MinZoom = 0.5f;
 
