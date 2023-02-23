@@ -9,7 +9,7 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
-    class TextInput : Component
+    class Input : Component
     {
         public string String { get; set; } = "";
         public string Placeholder { get; set; } = "";
@@ -21,9 +21,9 @@ namespace GiraffeShooterClient.Entity
 
         private bool _open = false;
 
-        public TextInput()
+        public Input()
         {
-            TextInputSystem.Register(this);
+            InputSystem.Register(this);
         }
         
         private void AddCharacter(char c)
@@ -199,7 +199,7 @@ namespace GiraffeShooterClient.Entity
         
         public override void Deregister()
         {
-            TextInputSystem.Deregister(this);
+            InputSystem.Deregister(this);
         }
 
 #if __IOS__ || __ANDROID__

@@ -14,8 +14,8 @@ namespace GiraffeShooterClient.Container.Menu
     public class LoginContext : Context
     {
         private readonly Collection _collection;
-        private readonly TextBaseInput _emailInput;
-        private readonly TextBaseInput _passwordInput;
+        private readonly TextInput _emailInput;
+        private readonly TextInput _passwordInput;
 
         private bool _loading = false;
         
@@ -28,10 +28,10 @@ namespace GiraffeShooterClient.Container.Menu
             Base.Clear();
             
             // register entities
-            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector3(0, -7.5f, 0), AssetManager.BackButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Settings)));
-            _collection.AddEntity(_emailInput = new TextEmailInput(new Vector3(0, -1.5f, 0)));
-            _collection.AddEntity(_passwordInput = new TextPasswordInput(new Vector3(0, 1.5f, 0)));
-            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector3(0, 7.5f, 0), AssetManager.LoginButtonTexture, () => { Login(); }));
+            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector2(0, 7.5f), AssetManager.BackButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Settings)));
+            _collection.AddEntity(_emailInput = new TextInput(new Vector2(0, 1.5f), "Password", "Enter Password", true));
+            _collection.AddEntity(_passwordInput = new TextInput(new Vector2(0, -1.5f), "Email", "Enter Email"));
+            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector2(0, -7.5f), AssetManager.LoginButtonTexture, () => { Login(); }));
 
             // reset the camera
             Camera.Reset(ScreenManager.GetScaleFactor());
@@ -68,7 +68,7 @@ namespace GiraffeShooterClient.Container.Menu
             PhysicsSystem.Update(gameTime);
             SpriteSystem.Update(gameTime);
             TextSystem.Update(gameTime);
-            TextInputSystem.Update(gameTime);
+            InputSystem.Update(gameTime);
             
             // update the entity collection
             _collection.Update(gameTime);

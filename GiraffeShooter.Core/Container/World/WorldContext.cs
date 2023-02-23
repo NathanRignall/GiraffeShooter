@@ -34,7 +34,7 @@ namespace GiraffeShooterClient.Container.World
             _collection.AddEntity(_player = new Player());
 
             if (SupabaseManager.Client.Auth.CurrentUser != null)
-                _collection.AddEntity(new TextDisplay(new Vector3(0, 5, 0), SupabaseManager.Client.Auth.CurrentUser.Id));
+                _collection.AddEntity(new TextDisplay(new Vector2(0, 0), SupabaseManager.Client.Auth.CurrentUser.Id));
 
             // add 10 giraffes at random positions
             Random random = new Random();
@@ -56,13 +56,13 @@ namespace GiraffeShooterClient.Container.World
             }
 
             // add exit button to pause entities and collection then hide it
-            var exitButton = new ScreenButton(new Vector2(0f, -1.25f),  AssetManager.ExitButtonTexture, () => { ContextManager.SetState(ContextManager.State.Menu); });
+            var exitButton = new Button(new Vector2(0f, -1.25f),  AssetManager.ExitButtonTexture, () => { ContextManager.SetState(ContextManager.State.Menu); });
             _pauseEntities.Add(exitButton);
             _collection.AddEntity(exitButton);
             exitButton.GetComponent<Sprite>().Visible = false;
             
             // add resume button to pause entities and collection then hide it
-            var resumeButton = new ScreenButton(new Vector2(0f, 1.25f),  AssetManager.ResumeButtonTexture, ContextManager.TogglePause);
+            var resumeButton = new Button(new Vector2(0f, 1.25f),  AssetManager.ResumeButtonTexture, ContextManager.TogglePause);
             _pauseEntities.Add(resumeButton);
             _collection.AddEntity(resumeButton);
             resumeButton.GetComponent<Sprite>().Visible = false;
@@ -127,7 +127,8 @@ namespace GiraffeShooterClient.Container.World
 
         public override void HandleEvents(List<Event> events)
         {
-            _collection.HandleEvents(events);
+            if (Camera.CurrentState == Camera.State.Follow)
+                _collection.HandleEvents(events);
             
             foreach (Event e in events)
             {
@@ -136,6 +137,13 @@ namespace GiraffeShooterClient.Container.World
                     case EventType.KeyPress:
                         switch (e.Key)
                         {
+                            case Keys.C:
+                                if (Camera.CurrentState == Camera.State.Follow && !ContextManager.Paused)
+                                    Camera.CurrentState = Camera.State.Free;
+                                else
+                                    Camera.CurrentState = Camera.State.Follow;
+                                break;
+                            
                             case Keys.Escape:
                                 ContextManager.TogglePause();
                                 break;
@@ -174,7 +182,7 @@ namespace GiraffeShooterClient.Container.World
             AnimationSystem.Update(gameTime);
             SpriteSystem.Update(gameTime);
             TextSystem.Update(gameTime);
-            TextInputSystem.Update(gameTime);
+            InputSystem.Update(gameTime);
             InventorySystem.Update(gameTime);
             AimSystem.Update(gameTime);
             CleanerSystem.Update(gameTime);

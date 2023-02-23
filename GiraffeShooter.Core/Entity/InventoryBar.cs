@@ -218,6 +218,21 @@ namespace GiraffeShooterClient.Entity
                             case Keys.Q:
                                 EmptySlot();
                                 break;
+                            case Keys.D1:
+                                SetSelected(_items[0]);
+                                break;
+                            case Keys.D2:
+                                SetSelected(_items[1]);
+                                break;
+                            case Keys.D3:
+                                SetSelected(_items[2]);
+                                break;
+                            case Keys.D4:
+                                SetSelected(_items[3]);
+                                break;
+                            case Keys.D5:
+                                SetSelected(_items[4]);
+                                break;
                         }
 
                         break;

@@ -2,20 +2,20 @@ using System;
 
 using Microsoft.Xna.Framework;
 
+using GiraffeShooterClient.Utility;
+
 namespace GiraffeShooterClient.Entity
 {
     class TextDisplay : Entity
     {
 
-        public TextDisplay(Vector3 position, string message)
+        public TextDisplay(Vector2 offset, string message, ScreenManager.CenterType center = ScreenManager.CenterType.MiddleCenter)
         {
             Id = Guid.NewGuid();
             Name = "Text";
 
-            Physics physics = new Physics();
-            physics.Position = position;
-            physics.IsStatic = true;
-            AddComponent(physics);
+            Screen screen = new Screen(offset, center);
+            AddComponent(screen);
             
             Text text = new Text();
             text.String = message;

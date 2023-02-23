@@ -22,14 +22,14 @@ namespace GiraffeShooterClient.Container.Menu
             Base.Clear();
             
             // register entities
-            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector3(0, -2.5f, 0), AssetManager.PlayButtonTexture, () => ContextManager.SetState(ContextManager.State.World)));
-            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector3(0, 0, 0), AssetManager.LeaderboardButtonTexture, () => ContextManager.SetState(ContextManager.State.Leaderboard)));
-            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector3(0, 2.5f, 0), AssetManager.SettingsButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Settings)));
+            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector2(0, 2.5f), AssetManager.PlayButtonTexture, () => ContextManager.SetState(ContextManager.State.World)));
+            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector2(0, 0), AssetManager.LeaderboardButtonTexture, () => ContextManager.SetState(ContextManager.State.Leaderboard)));
+            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector2(0, -2.5f), AssetManager.SettingsButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Settings)));
             
             // if the user is logged in show userid
             if (SupabaseManager.Client.Auth.CurrentSession != null)
             {
-                _collection.AddEntity(new TextDisplay(new Vector3(0, 7.5f, 0), "Logged in as: " + SupabaseManager.Client.Auth.CurrentUser.Id));
+                _collection.AddEntity(new TextDisplay(new Vector2(0, 7.5f), "Logged in as: " + SupabaseManager.Client.Auth.CurrentUser.Id));
             }
 
             // reset the camera
@@ -49,7 +49,7 @@ namespace GiraffeShooterClient.Container.Menu
             PhysicsSystem.Update(gameTime);
             SpriteSystem.Update(gameTime);
             TextSystem.Update(gameTime);
-            TextInputSystem.Update(gameTime);
+            InputSystem.Update(gameTime);
             
             // update the entity collection
             _collection.Update(gameTime);

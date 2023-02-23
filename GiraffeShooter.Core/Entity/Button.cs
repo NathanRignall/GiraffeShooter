@@ -12,19 +12,18 @@ namespace GiraffeShooterClient.Entity
     {
         private Action _action;
         
-        public Button(Vector3 position, Texture2D texture, Action action)
+        public Button(Vector2 offset, Texture2D texture, Action action, ScreenManager.CenterType center = ScreenManager.CenterType.MiddleCenter)
         {
             Id = Guid.NewGuid();
-            Name = "Button";
+            Name = "ScreenButton";
             
             _action = action;
-            
-            Physics physics = new Physics();
-            physics.Position = position;
-            physics.IsStatic = true;
-            AddComponent(physics);
+
+            Screen screen = new Screen(offset, center);
+            AddComponent(screen);
 
             Sprite sprite = new Sprite(texture);
+            sprite.zOrder = 9;
             AddComponent(sprite);
 
         }

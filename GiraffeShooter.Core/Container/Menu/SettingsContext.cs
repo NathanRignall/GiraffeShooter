@@ -22,9 +22,9 @@ namespace GiraffeShooterClient.Container.Menu
             Base.Clear();
             
             // register entities
-            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector3(0, -7.5f, 0), AssetManager.BackButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.MainMenu)));
-            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector3(0, -1.25f, 0), AssetManager.LoginButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Login)));
-            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector3(0, 1.25f, 0), AssetManager.RegisterButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Register)));
+            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector2(0, 7.5f), AssetManager.BackButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.MainMenu)));
+            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector2(0, 1.25f), AssetManager.LoginButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Login)));
+            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector2(0, -1.25f), AssetManager.RegisterButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Register)));
 
             // reset the camera
             Camera.Reset(ScreenManager.GetScaleFactor());
@@ -43,7 +43,7 @@ namespace GiraffeShooterClient.Container.Menu
             PhysicsSystem.Update(gameTime);
             SpriteSystem.Update(gameTime);
             TextSystem.Update(gameTime);
-            TextInputSystem.Update(gameTime);
+            InputSystem.Update(gameTime);
             
             // update the entity collection
             _collection.Update(gameTime);

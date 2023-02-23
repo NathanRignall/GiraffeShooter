@@ -7,18 +7,16 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
-    class TextBaseInput : Entity
+    class TextInput : Entity
     {
 
-        public TextBaseInput(Vector3 position)
+        public TextInput(Vector2 offset, string placeholder, string popupText, bool IsPassword = false, ScreenManager.CenterType center = ScreenManager.CenterType.MiddleCenter)
         {
             Id = Guid.NewGuid();
             Name = "TextInput";
         
-            Physics physics = new Physics();
-            physics.Position = position;
-            physics.IsStatic = true;
-            AddComponent(physics);
+            Screen screen = new Screen(offset, center);
+            AddComponent(screen);
         
             Sprite sprite = new Sprite(AssetManager.InputTexture, new Rectangle(0,0,512,64));
             AddComponent(sprite);
@@ -27,23 +25,23 @@ namespace GiraffeShooterClient.Entity
             text.String = "";
             AddComponent(text);
             
-            TextInput textInput = new TextInput();
-            AddComponent(textInput);
+            Input input = new Input();
+            AddComponent(input);
         }
         
         public override void HandleEvents(List<Event> events)
         {
-            GetComponent<TextInput>().HandleEvents(events);
+            GetComponent<Input>().HandleEvents(events);
         }
 
         public string GetString()
         {
-            return GetComponent<TextInput>().String;
+            return GetComponent<Input>().String;
         }
         
         public void ResetString()
         {
-            GetComponent<TextInput>().ResetString();
+            GetComponent<Input>().ResetString();
         }
 
     }
