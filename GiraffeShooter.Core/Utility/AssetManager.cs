@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-
+using GiraffeShooterClient.Entity;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
@@ -47,6 +47,7 @@ namespace GiraffeShooterClient.Utility
         
         public static Texture2D InventoryBarTexture { get; private set; }
         public static Texture2D InventoryItemTexture { get; private set; }
+        public static Texture2D HealthBarTexture { get; private set; }
         
         public static Texture2D VirtualControlBallTexture { get; private set; }
         public static Texture2D VirtualControlStickTexture { get; private set; }
@@ -99,6 +100,7 @@ namespace GiraffeShooterClient.Utility
             
             InventoryBarTexture = content.Load<Texture2D>("Sprites/InventoryBar");
             InventoryItemTexture = content.Load<Texture2D>("Sprites/InventoryItem");
+            HealthBarTexture = content.Load<Texture2D>("Sprites/HealthBar");
 
             VirtualControlBallTexture = content.Load<Texture2D>("Sprites/VirtualControlBall");
             VirtualControlStickTexture = content.Load<Texture2D>("Sprites/VirtualControlStick");

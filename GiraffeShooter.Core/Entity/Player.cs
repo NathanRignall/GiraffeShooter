@@ -30,6 +30,7 @@ namespace GiraffeShooterClient.Entity
         Animation.Frame[] walkShootRightFrames = new Animation.Frame[4];
         
         private InventoryBar _inventoryBar;
+        private HealthBar _healthBar;
         
         public Player()
         {
@@ -41,6 +42,9 @@ namespace GiraffeShooterClient.Entity
 
             // inventory bar component
             _inventoryBar = new InventoryBar();
+            
+            // health bar component
+            _healthBar = new HealthBar();
             
             Physics physics = new Physics();
             physics.Position = new Vector3(0.5f, 0.5f, 0);
@@ -104,8 +108,9 @@ namespace GiraffeShooterClient.Entity
             
             _inventoryBar.Inventory = inventory;
             
-            Health health = new Health();
+            Health health = new Health(_healthBar);
             AddComponent(health);
+            
         }
 
         public void Move(Control.Direction direction) 
