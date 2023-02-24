@@ -7,7 +7,7 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
-    class Collider : Component
+    public class Collider : Component
     {
         
         // dictionary of component types and their respective collision responses
@@ -40,7 +40,7 @@ namespace GiraffeShooterClient.Entity
             foreach (Collider collider in ColliderSystem.components)
             {
                 
-                if (collider != this)
+                if (collider != this && collider.entity.IsDeleted == false)
                 {   
                     
                     // check if the two cubes are intersecting

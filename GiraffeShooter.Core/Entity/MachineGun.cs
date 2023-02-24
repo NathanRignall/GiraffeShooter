@@ -4,31 +4,32 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
-    class MetaMachineGun : MetaGun
+    public class MetaMachineGun : MetaGun
     {
         public MetaMachineGun()
         {
+            MetaType = MetaType.Weapon;
+
             TimeDelay = TimeSpan.FromSeconds(0.1);
             RequiredQuanity = 1;
-            
             Damage = 1;
         }
         
         public override void Create(Vector3 position, Vector3 velocity)
         {
-            new MachineGun(position, velocity, this);
+            new MachineGun(position, velocity, Id, this);
         }
     }
     
-    class MachineGun : Gun
+    public class MachineGun : Gun
     {
-        public MachineGun(Vector3 position, Vector3 velocity, Meta meta = null) : base(position, velocity, meta)
+        public MachineGun(Vector3 position, Vector3 velocity, Guid id = default, Meta meta = null) : base(position, velocity, id, meta)
         {
             if (meta == null)
-                _meta = new MetaMachineGun();
+                Meta = new MetaMachineGun();
             else
-                _meta = (MetaMachineGun)meta;
-            
+                Meta = (MetaMachineGun)meta;
+
             // get the sprite component
             var sprite = GetComponent<Sprite>();
             sprite.UpdateSprite(AssetManager.MachineGunTexture);

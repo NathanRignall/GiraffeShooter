@@ -6,20 +6,25 @@ using GiraffeShooterClient.Utility;
 namespace GiraffeShooterClient.Entity
 {
     
-    class MetaGun : Meta
+    public class MetaGun : Meta
     {
         public Type RequiredAmmo = typeof(MetaAmmunition);
         protected int RequiredQuanity = 1;
-        public bool Automatic = false;
-        
+
         public int Damage = 10;
         
         public TimeSpan TimeDelay = TimeSpan.FromSeconds(1);
         public TimeSpan PreviousShoot;
         
+        public MetaGun()
+        {
+            MetaType = MetaType.Weapon;
+            MaxQuantity = 0;
+        }
+        
         public override void Create(Vector3 position, Vector3 velocity)
         {
-            new Gun(position, velocity, this);
+            new Gun(position, velocity, Id, this);
         }
 
         public override bool Action(TimeSpan time, Entity subject)
@@ -63,21 +68,18 @@ namespace GiraffeShooterClient.Entity
         }
     }
     
-    class Gun : Entity
+    public class Gun : Entity
     {
-        
-        public MetaGun _meta;
-
-        public Gun(Vector3 position, Vector3 velocity, Meta meta = null)
+        public Gun(Vector3 position, Vector3 velocity, Guid id = default, Meta meta = null)
         {
-            Id = Guid.NewGuid();
+            Id = (id == default) ? Guid.NewGuid() : id;
             Name = "Gun";
-            
+
             if (meta == null)
-                _meta = new MetaGun();
+                Meta = new MetaGun();
             else
-                _meta = (MetaGun)meta;
-            
+                Meta = (MetaGun)meta;
+
             Physics physics = new Physics();
             physics.Position = position;
             physics.Velocity = velocity;
@@ -87,7 +89,7 @@ namespace GiraffeShooterClient.Entity
             Collider collider = new Collider();
             Action<Entity> pickupAction = (Entity subject) =>
             {
-                if (subject.GetComponent<Inventory>().AddItem(_meta))
+                if (subject.GetComponent<Inventory>().AddItem(Meta))
                     Delete();
             };
             collider.AddResponse<Player>(pickupAction);

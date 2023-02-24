@@ -4,7 +4,7 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
-    class HealthBar : Entity
+    public class HealthBar : Entity
     {
         public HealthBar()
         {

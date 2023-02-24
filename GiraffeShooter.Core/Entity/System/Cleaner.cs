@@ -6,7 +6,7 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
-    class Cleaner : Component
+    public class Cleaner : Component
     {
         public TimeSpan TimeToDestroy;
         

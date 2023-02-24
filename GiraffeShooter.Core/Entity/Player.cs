@@ -7,7 +7,15 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GiraffeShooterClient.Entity
 {
-    class Player : Entity
+    public class MetaPlayer : Meta
+    {
+        public MetaPlayer()
+        {
+            MetaType = MetaType.Player;
+        }
+    }
+    
+    public class Player : Entity
     {
         
         public enum State
@@ -36,6 +44,8 @@ namespace GiraffeShooterClient.Entity
         {
             Id = Guid.NewGuid();
             Name = "Player";
+            
+            Meta = new MetaPlayer();
 
             // state
             PlayerState = State.Idle;
@@ -62,10 +72,7 @@ namespace GiraffeShooterClient.Entity
             Sprite sprite = new Sprite(AssetManager.GiraffeSpriteTexture, new Vector2(0,-24));
             sprite.zOrder = 7;
             AddComponent(sprite);
-            
-            Aim aim = new Aim();
-            AddComponent(aim);
-            
+
             // stand animation frames
             standLeftFrames[0] = new Animation.Frame(0, 0, 32, 64, 100, true);
             standRightFrames[0] = new Animation.Frame(96, 0, 32, 64, 100, true);
@@ -102,6 +109,9 @@ namespace GiraffeShooterClient.Entity
 
             Animation animation = new Animation(standLeftFrames);
             AddComponent(animation);
+            
+            Aim aim = new Aim();
+            AddComponent(aim);
 
             Inventory inventory = new Inventory(_inventoryBar);
             AddComponent(inventory);

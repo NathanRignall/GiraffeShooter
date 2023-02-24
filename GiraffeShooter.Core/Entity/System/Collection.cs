@@ -5,7 +5,7 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
-    class Collection
+    public class Collection
     {
         public List<Entity> entities = new List<Entity>();
         public List<Entity> entitiesToRemove = new List<Entity>();
@@ -52,6 +52,22 @@ namespace GiraffeShooterClient.Entity
             return entitiesOfType;
         }
         
+        public List<Entity> GetEntities(MetaType type)
+        {
+            List<Entity> entitiesOfType = new List<Entity>();
+            foreach (Entity entity in entities)
+            {
+                if (entity.Meta != null)
+                {
+                    if (entity.Meta.MetaType == type)
+                    {
+                        entitiesOfType.Add(entity);
+                    }
+                }
+            }
+            return entitiesOfType;
+        }
+
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             CleanUp();

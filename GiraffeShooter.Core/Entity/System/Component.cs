@@ -1,7 +1,7 @@
 
 namespace GiraffeShooterClient.Entity
 {
-    class Component
+    public class Component
     {
         public Entity entity;
         public int zOrder = 0;

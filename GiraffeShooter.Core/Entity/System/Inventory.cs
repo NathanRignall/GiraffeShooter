@@ -7,11 +7,11 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
-    class Inventory : Component
+    public class Inventory : Component
     {
         private InventoryBar _inventoryBar;
         
-        public List<Meta> items = new List<Meta>();
+        public List<Meta> Items = new List<Meta>();
         public Meta selectedItem;
         public int MaxItems = 5;
 
@@ -34,7 +34,7 @@ namespace GiraffeShooterClient.Entity
             if (item.Quantity != 0)
             {
                 // find item of same type
-                foreach (var i in items)
+                foreach (var i in Items)
                 {
                     if (i.GetType() == item.GetType())
                     {
@@ -59,11 +59,11 @@ namespace GiraffeShooterClient.Entity
             }
             
             // check if full
-            if (items.Count >= MaxItems)
+            if (Items.Count >= MaxItems)
                 return false;
             
             // then add item
-            items.Add(item);
+            Items.Add(item);
             
             // check if the inventory bar is set
             if (_inventoryBar != null)
@@ -95,12 +95,12 @@ namespace GiraffeShooterClient.Entity
             item.Create(position, velocity);
             
             // remove item from inventory
-            items.Remove(item);
+            Items.Remove(item);
         }
         
         public bool HasItem(Type type)
         {
-            foreach (var item in items)
+            foreach (var item in Items)
             {
                 if (item.GetType() == type)
                     return true;
@@ -111,7 +111,7 @@ namespace GiraffeShooterClient.Entity
         
         public bool ReduceItem(Type type, int quantity)
         {
-            foreach (var item in items)
+            foreach (var item in Items)
             {
                 if (item.GetType() == type)
                 {
@@ -124,7 +124,7 @@ namespace GiraffeShooterClient.Entity
                             if (_inventoryBar != null)
                                 _inventoryBar.RemoveItem(item);
                         
-                            items.Remove(item);
+                            Items.Remove(item);
                         }
                         
                         return true;
@@ -151,11 +151,11 @@ namespace GiraffeShooterClient.Entity
                 return;
             
             // clear the inventory of items with 0 quantity
-            for (int i = 0; i < items.Count; i++)
+            for (int i = 0; i < Items.Count; i++)
             {
-                if (items[i].Quantity == 0 && items[i].MaxQuantity != 0)
+                if (Items[i].Quantity == 0 && Items[i].MaxQuantity != 0)
                 {
-                    items.RemoveAt(i);
+                    Items.RemoveAt(i);
                     i--;
                 }
             }

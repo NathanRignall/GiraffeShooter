@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using GiraffeShooterClient.Utility;
 
-namespace GiraffeShooterClient.Container.Win
+namespace GiraffeShooterClient.Container.Lose
 {
-    public class WinContext : Context
+    public class LoseContext : Context
     {
         private bool _isInitialized = false;
         TimeSpan _timeSpan;
         
-        public WinContext()
+        public LoseContext()
         {
         }
         
@@ -51,7 +51,7 @@ namespace GiraffeShooterClient.Container.Win
             spriteBatch.Draw(AssetManager.GiraffeSpriteTexture, destination, source, Microsoft.Xna.Framework.Color.White);
             
             var textLine1 = "YOU";
-            var textLine2 = "WIN!";
+            var textLine2 = "LOOSE!";
             
             var textLine1Size = font.MeasureString(textLine1);
             var textLine2Size = font.MeasureString(textLine2);

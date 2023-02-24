@@ -12,7 +12,8 @@ namespace GiraffeShooterClient.Container.World
 
     public class WorldContext : Context
     {
-        Collection _collection;
+        public Collection EntityCollection { get; private set; }
+
         InventoryBar _inventoryBar;
         Player _player;
         
@@ -24,59 +25,60 @@ namespace GiraffeShooterClient.Container.World
         public WorldContext()
         {
             // setup the entity collection
-            _collection = new Collection();
+            EntityCollection = new Collection();
             
             // clear the base
             Base.Clear();
 
             // register entities
-            _collection.AddEntity(new MasterMap());
-            _collection.AddEntity(_player = new Player());
+            EntityCollection.AddEntity(new MasterMap());
+            EntityCollection.AddEntity(_player = new Player());
 
             if (SupabaseManager.Client.Auth.CurrentUser != null)
-                _collection.AddEntity(new TextDisplay(new Vector2(0, 0), SupabaseManager.Client.Auth.CurrentUser.Id));
+                EntityCollection.AddEntity(new TextDisplay(new Vector2(0, 0), SupabaseManager.Client.Auth.CurrentUser.Id));
 
             // add 10 giraffes at random positions
             Random random = new Random();
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 1; i++)
             {
-                _collection.AddEntity(new Giraffe(new Vector3(random.Next(-5, 5), random.Next(-5, 5), 0), new Vector3(random.Next(-5, 5), random.Next(-5, 5), 0)));
+                EntityCollection.AddEntity(new Giraffe(new Vector3(random.Next(-5, 5), random.Next(-5, 5), 0), new Vector3(random.Next(-5, 5), random.Next(-5, 5), 0)));
             }
             
             // add 50 ammunition at random positions
             for (int i = 0; i < 400; i++)
             {
-                _collection.AddEntity(new Ammunition(new Vector3(random.Next(-45, 45), random.Next(-45, 45),0), Vector3.Zero));
+                EntityCollection.AddEntity(new Ammunition(new Vector3(random.Next(-45, -20), random.Next(-45, -20),0), Vector3.Zero));
+                EntityCollection.AddEntity(new Ammunition(new Vector3(random.Next(20, 45), random.Next(20, 45),0), Vector3.Zero));
             }
             
             // add 30 pistol at random positions
             for (int i = 0; i < 30; i++)
             {
-                _collection.AddEntity(new Gun(new Vector3(random.Next(-45, 45), random.Next(-45, 45), 0), Vector3.Zero));
+                EntityCollection.AddEntity(new Gun(new Vector3(random.Next(-45, -30), random.Next(-45, -30), 0), Vector3.Zero));
             }
             
-            // add 30 machine gun at random positions
-            for (int i = 0; i < 30; i++)
-            {
-                _collection.AddEntity(new MachineGun(new Vector3(random.Next(-45, 45), random.Next(-45, 45), 0), Vector3.Zero));
-            }
+            // // add 30 machine gun at random positions
+            // for (int i = 0; i < 30; i++)
+            // {
+            //     EntityCollection.AddEntity(new MachineGun(new Vector3(random.Next(-45, 45), random.Next(-45, 45), 0), Vector3.Zero));
+            // }
 
             // add exit button to pause entities and collection then hide it
             var exitButton = new Button(new Vector2(0f, -1.25f),  AssetManager.ExitButtonTexture, () => { ContextManager.SetState(ContextManager.State.Menu); });
             _pauseEntities.Add(exitButton);
-            _collection.AddEntity(exitButton);
+            EntityCollection.AddEntity(exitButton);
             exitButton.GetComponent<Sprite>().Visible = false;
             
             // add resume button to pause entities and collection then hide it
             var resumeButton = new Button(new Vector2(0f, 1.25f),  AssetManager.ResumeButtonTexture, ContextManager.TogglePause);
             _pauseEntities.Add(resumeButton);
-            _collection.AddEntity(resumeButton);
+            EntityCollection.AddEntity(resumeButton);
             resumeButton.GetComponent<Sprite>().Visible = false;
             
             // add paused cover to pause entities and collection then hide it
             var pausedCover = new PausedCover(Vector2.Zero);
             _pauseEntities.Add(pausedCover);
-            _collection.AddEntity(pausedCover);
+            EntityCollection.AddEntity(pausedCover);
             pausedCover.GetComponent<Sprite>().Visible = false;
 
             // reset the camera
@@ -103,7 +105,7 @@ namespace GiraffeShooterClient.Container.World
         //                 var Guid = new Guid(entity.Id);
         //         
         //                 // get the player
-        //                 Giraffe giraffe = _collection.GetEntity(Guid) as Giraffe;
+        //                 Giraffe giraffe = EntityCollection.GetEntity(Guid) as Giraffe;
         //
         //                 // if the player does not exist
         //                 if (giraffe == null)
@@ -112,7 +114,7 @@ namespace GiraffeShooterClient.Container.World
         //                     giraffe = new Giraffe(new Vector3(entity.Position.X, entity.Position.Y, entity.Position.Z), 
         //                         new Vector3(entity.Velocity.X, entity.Velocity.Y, entity.Velocity.Z), Guid);
         //                     
-        //                     _collection.AddEntity(giraffe);
+        //                     EntityCollection.AddEntity(giraffe);
         //
         //                     // cosnole log the player
         //                     Console.WriteLine("Player " + Guid + " joined the game ");
@@ -134,7 +136,7 @@ namespace GiraffeShooterClient.Container.World
         public override void HandleEvents(List<Event> events)
         {
             if (Camera.CurrentState == Camera.State.Follow)
-                _collection.HandleEvents(events);
+                EntityCollection.HandleEvents(events);
             
             foreach (Event e in events)
             {
@@ -162,17 +164,27 @@ namespace GiraffeShooterClient.Container.World
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            // core game logic
+            // -- update game logic --
             
             // check if there are any giraffes left
-            if (_collection.GetEntities<Giraffe>().Count == 0)
+            if (EntityCollection.GetEntities<Giraffe>().Count == 0)
             {
                 // if there are no giraffes left then the player has won
                 ContextManager.SetState(ContextManager.State.Win);
             }
+            
+            // check if player is deleted
+            if (_player == null || _player.IsDeleted)
+            {
+                // if the player is deleted then the player has lost
+                ContextManager.SetState(ContextManager.State.Lose);
+            }
 
             // update the player position (convert from tile to pixel coordinates)
             Camera.FollowTarget = _player.GetPosition() * 1000f / 32f;
+            
+            
+            // -- update systems --
 
             // update components
             ScreenSystem.Update(gameTime);
@@ -188,9 +200,10 @@ namespace GiraffeShooterClient.Container.World
             AimSystem.Update(gameTime);
             HealthSystem.Update(gameTime);
             CleanerSystem.Update(gameTime);
+            BotSystem.Update(gameTime);
             
             // update the entity collection
-            _collection.Update(gameTime);
+            EntityCollection.Update(gameTime);
             
             // timer update
             var timer = (float) gameTime.ElapsedGameTime.TotalSeconds;

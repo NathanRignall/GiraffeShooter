@@ -111,6 +111,11 @@ public class GiraffeShooter : Game
                 ContextManager.WinContext.HandleEvents(events);
                 ContextManager.WinContext.Update(gameTime);
                 break;
+            
+            case ContextManager.State.Lose:
+                ContextManager.LoseContext.HandleEvents(events);
+                ContextManager.LoseContext.Update(gameTime);
+                break;
 
             default:
                 throw new System.Exception();
@@ -165,6 +170,13 @@ public class GiraffeShooter : Game
                 IsMouseVisible = false;
                 _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
                 ContextManager.WinContext.Draw(gameTime, _spriteBatch);
+                _spriteBatch.End();
+                break;
+            
+            case ContextManager.State.Lose:
+                IsMouseVisible = false;
+                _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
+                ContextManager.LoseContext.Draw(gameTime, _spriteBatch);
                 _spriteBatch.End();
                 break;
 

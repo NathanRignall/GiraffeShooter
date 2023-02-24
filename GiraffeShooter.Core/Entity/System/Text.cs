@@ -6,7 +6,7 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
-    class Text : Component
+    public class Text : Component
     {
         public string String { get; set; } = "";
         public bool Visible { get; set; } = true;

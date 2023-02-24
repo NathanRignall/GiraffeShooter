@@ -4,7 +4,7 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
-    class Animation : Component
+    public class Animation : Component
     {
         
         // animation frame struct

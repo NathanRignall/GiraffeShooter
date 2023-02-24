@@ -11,7 +11,8 @@ namespace GiraffeShooterClient.Utility
             Menu,
             Leaderboard,
             World,
-            Win
+            Win,
+            Lose,
         }
 
         public static State CurrentState { get; private set; }
@@ -23,6 +24,7 @@ namespace GiraffeShooterClient.Utility
         public static Container.Leaderboard.LeaderboardContext LeaderboardContext;
         public static Container.World.WorldContext WorldContext;
         public static Container.Win.WinContext WinContext;
+        public static Container.Lose.LoseContext LoseContext;
 
         public static void Initialize()
         {
@@ -52,6 +54,9 @@ namespace GiraffeShooterClient.Utility
                     break;
                 case State.Win:
                     WinContext = new Container.Win.WinContext();
+                    break;
+                case State.Lose:
+                    LoseContext = new Container.Lose.LoseContext();
                     break;
             }
         }

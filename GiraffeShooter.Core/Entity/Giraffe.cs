@@ -7,19 +7,21 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
-    class MetaGiraffe : Meta
+    public class MetaGiraffe : Meta
     {
+        public MetaGiraffe()
+        {
+            MetaType = MetaType.Player;
+        }
+        
         public override void Create(Vector3 position, Vector3 velocity)
         {
             new Giraffe(position, velocity, Id,this);
         }
     }
     
-    class Giraffe : Entity
+    public class Giraffe : Entity
     {
-        
-        public MetaGiraffe Meta { get; private set; }
-        
         enum State
         {
             Idle,
@@ -40,8 +42,12 @@ namespace GiraffeShooterClient.Entity
         {
             Id = (id == default) ? Guid.NewGuid() : id;
             Name = "Giraffe";
-            Meta = (meta == null) ? new MetaGiraffe() : (MetaGiraffe)meta;
             
+            if (meta == null)
+                Meta = new MetaGiraffe();
+            else
+                Meta = (MetaGiraffe)meta;
+
             Physics physics = new Physics();
             physics.Position = position;
             physics.Size = new Vector3(1, 1, 2);
@@ -84,11 +90,36 @@ namespace GiraffeShooterClient.Entity
             Animation animation = new Animation(standLeftFrames);
             AddComponent(animation);
             
+            Aim aim = new Aim();
+            AddComponent(aim);
+            
             Inventory inventory = new Inventory();
             AddComponent(inventory);
             
             Health health = new Health();
             AddComponent(health);
+            
+            Bot bot = new Bot();
+            AddComponent(bot);
+        }
+        
+        public void Shoot(TimeSpan time)
+        {
+            // get the current shoot direction
+            var rotation = GetComponent<Aim>().Rotation;
+            
+            // set the animation to the correct direction if left or right based on rotation
+            Animation animation = GetComponent<Animation>();
+            if ((rotation > 0 && rotation < Math.PI * 0.5) || (rotation < 0 && rotation > -Math.PI * 0.5)) {
+                animation.SetFrames(shootRightFrames, false);
+            } else {
+                animation.SetFrames(shootLeftFrames, false);
+            }
+            _state = State.Shooting;
+            
+            // action the inventory item
+            Inventory inventory = GetComponent<Inventory>();
+            inventory.Action(time);
         }
         
         public void SetPosition(Vector3 position)

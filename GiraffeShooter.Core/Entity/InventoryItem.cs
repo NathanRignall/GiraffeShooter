@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace GiraffeShooterClient.Entity
 {
     
-    class InventoryItem : Entity
+    public class InventoryItem : Entity
     {
         private static Dictionary<Type, Texture2D> _textures = new Dictionary<Type, Texture2D>
         {

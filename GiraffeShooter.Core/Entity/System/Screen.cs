@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace GiraffeShooterClient.Entity
 {
-    class Screen : Component
+    public class Screen : Component
     {
 
         public Vector2 Offset;

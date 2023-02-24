@@ -4,7 +4,7 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
-    class Physics : Component
+    public class Physics : Component
     {
         public bool IsStatic = false;
         public bool IsKinematic = false;

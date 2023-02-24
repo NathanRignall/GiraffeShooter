@@ -7,7 +7,7 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
-    class TextInput : Entity
+    public class TextInput : Entity
     {
 
         public TextInput(Vector2 offset, string placeholder, string popupText, bool IsPassword = false, ScreenManager.CenterType center = ScreenManager.CenterType.MiddleCenter)

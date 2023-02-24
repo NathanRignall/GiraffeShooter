@@ -4,7 +4,7 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
-    class PausedCover : Entity
+    public class PausedCover : Entity
     {
         public PausedCover(Vector2 offset, ScreenManager.CenterType center = ScreenManager.CenterType.MiddleCenter)
         {

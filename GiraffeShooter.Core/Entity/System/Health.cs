@@ -3,11 +3,11 @@ using Microsoft.Xna.Framework;
 
 namespace GiraffeShooterClient.Entity
 {
-    class Health : Component
+    public class Health : Component
     {
         private HealthBar _healthBar;
         
-        public int Value { get; set; } = 75;
+        public int Value { get; set; } = 100;
         public int MaxValue { get; set; } = 100;
         public bool IsDead { get; set; }
 

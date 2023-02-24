@@ -7,9 +7,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GiraffeShooterClient.Entity
 {
-    class Aim : Component
+    public class Aim : Component
     {
-        public float Rotation { get; private set; }
+        public float Rotation { get; set; }
 
         private Texture2D _aimTexture;
         private Rectangle _sourceRectangle { get; set; }

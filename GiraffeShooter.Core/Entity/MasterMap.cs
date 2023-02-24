@@ -5,7 +5,7 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
-    class MasterMap : Entity
+    public class MasterMap : Entity
     {
         public MasterMap()
         {

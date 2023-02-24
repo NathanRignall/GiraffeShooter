@@ -11,7 +11,7 @@ using TiledCS;
 
 namespace GiraffeShooterClient.Entity
 {
-    class Tiled : Component
+    public class Tiled : Component
     {
 
         public TiledMap Map;

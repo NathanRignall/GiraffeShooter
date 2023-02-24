@@ -6,7 +6,7 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
-    class TextDisplay : Entity
+    public class TextDisplay : Entity
     {
 
         public TextDisplay(Vector2 offset, string message, ScreenManager.CenterType center = ScreenManager.CenterType.MiddleCenter)

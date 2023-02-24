@@ -7,7 +7,7 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
-    class Sprite : Component
+    public class Sprite : Component
     {
         public Texture2D Texture { get; set; }
         public int Scale { get; set; } = 1;

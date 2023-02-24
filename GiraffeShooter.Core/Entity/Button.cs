@@ -8,7 +8,7 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
-    class Button : Entity
+    public class Button : Entity
     {
         private Action _action;
         

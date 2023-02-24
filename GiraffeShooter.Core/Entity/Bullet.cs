@@ -5,7 +5,7 @@ using GiraffeShooterClient.Utility;
 namespace GiraffeShooterClient.Entity
 {
     // Inheritance: MetaBullet inherits from Meta class
-    class MetaBullet : Meta
+    public class MetaBullet : Meta
     {
         // How much damage the bullet does
         public int Damage = 1;
@@ -19,7 +19,7 @@ namespace GiraffeShooterClient.Entity
     }
 
     // Inheritance: Bullet inherits from Entity class
-    class Bullet : Entity
+    public class Bullet : Entity
     {
         // how much damage the bullet does
         int Damage;
@@ -59,6 +59,7 @@ namespace GiraffeShooterClient.Entity
                 Delete();
             };
             collider.AddResponse<Giraffe>(hitAction);
+            collider.AddResponse<Player>(hitAction);
             AddComponent(collider);
 
             // Creates a new Sprite object with AssetManager.AmmunitionFireTexture and adds it to the Bullet entity

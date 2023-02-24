@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace GiraffeShooterClient.Entity
 {
-    class Wall : Entity
+    public class Wall : Entity
     {
         public Wall(Vector3 position, Vector3 size)
         {

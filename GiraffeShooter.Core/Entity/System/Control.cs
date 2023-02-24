@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace GiraffeShooterClient.Entity
 {
-    class Control : Component
+    public class Control : Component
     {
         public enum Direction { up, down, left, right };
         public int Speed { get; set; } = 10;

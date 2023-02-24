@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GiraffeShooterClient.Entity
 {
-    class InventoryBar : Entity
+    public class InventoryBar : Entity
     {
         // TEMP RECORD TO CALL REMOVE ITEM
         public Inventory Inventory;

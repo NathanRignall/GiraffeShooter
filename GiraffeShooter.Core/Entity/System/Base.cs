@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace GiraffeShooterClient.Entity
 {
-    class BaseComponent<T> where T : Component
+    public class BaseComponent<T> where T : Component
     {
 
         public static List<T> components = new List<T>();
@@ -59,21 +59,22 @@ namespace GiraffeShooterClient.Entity
 
     }
 
-    class ScreenSystem : BaseComponent<Screen> { }
-    class PhysicsSystem : BaseComponent<Physics> { }
-    class ColliderSystem : BaseComponent<Collider> { }
-    class ControlSystem : BaseComponent<Control> { }
-    class TiledSystem : BaseComponent<Tiled> { }
-    class AnimationSystem : BaseComponent<Animation> { }
-    class SpriteSystem : BaseComponent<Sprite> { }
-    class TextSystem : BaseComponent<Text> { }
-    class InputSystem : BaseComponent<Input> { }
-    class InventorySystem : BaseComponent<Inventory> { }
-    class AimSystem : BaseComponent<Aim> { }
-    class HealthSystem : BaseComponent<Health> { }
-    class CleanerSystem : BaseComponent<Cleaner> { }
+    public class ScreenSystem : BaseComponent<Screen> { }
+    public class PhysicsSystem : BaseComponent<Physics> { }
+    public class ColliderSystem : BaseComponent<Collider> { }
+    public class ControlSystem : BaseComponent<Control> { }
+    public class TiledSystem : BaseComponent<Tiled> { }
+    public class AnimationSystem : BaseComponent<Animation> { }
+    public class SpriteSystem : BaseComponent<Sprite> { }
+    public class TextSystem : BaseComponent<Text> { }
+    public class InputSystem : BaseComponent<Input> { }
+    public class InventorySystem : BaseComponent<Inventory> { }
+    public class AimSystem : BaseComponent<Aim> { }
+    public class HealthSystem : BaseComponent<Health> { }
+    public class CleanerSystem : BaseComponent<Cleaner> { }
+    public class BotSystem : BaseComponent<Bot> { }
     
-    class Base
+    public class Base
     {
         public static void Clear()
         {
@@ -89,6 +90,7 @@ namespace GiraffeShooterClient.Entity
             InventorySystem.components.Clear();
             HealthSystem.components.Clear();
             CleanerSystem.components.Clear();
+            BotSystem.components.Clear();
         }
     }
 }

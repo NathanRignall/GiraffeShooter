@@ -9,7 +9,7 @@ using GiraffeShooterClient.Utility;
 
 namespace GiraffeShooterClient.Entity
 {
-    class Input : Component
+    public class Input : Component
     {
         public string String { get; set; } = "";
         public string Placeholder { get; set; } = "";
