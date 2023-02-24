@@ -34,7 +34,7 @@ namespace GiraffeShooterClient.Entity
             // Assigns Name value as "Ammunition"
             Name = "Ammunition";
             // Assigns Meta value as meta parameter if not null, otherwise creates a new MetaBullet object
-            Meta = (meta == null) ? new MetaBullet() : (MetaGiraffe)meta;
+            Meta = (meta == null) ? new MetaBullet() : (MetaAmmunition)meta;
             
             // Assigns _meta value as a new MetaAmmunition object if meta parameter is null, otherwise assigns it as the meta parameter casted to MetaAmmunition type
             if (meta == null)

@@ -40,7 +40,6 @@ namespace GiraffeShooterClient.Entity
             Texture = texture;
             SourceRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
             Offset = offset;
-            SpriteSystem.Register(this);
         }
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)

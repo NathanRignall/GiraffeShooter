@@ -27,7 +27,7 @@ namespace GiraffeShooterClient.Entity
             if (meta == null)
                 _meta = new MetaMachineGun();
             else
-                _meta = (MetaGun)meta;
+                _meta = (MetaMachineGun)meta;
             
             // get the sprite component
             var sprite = GetComponent<Sprite>();
