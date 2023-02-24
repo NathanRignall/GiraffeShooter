@@ -177,9 +177,16 @@ public class GiraffeShooter : Game
                 _spriteBatch.End();
                 break;
             
+#if !__IOS__ &&  !__TVOS__
             case ContextManager.State.Exit:
                 Exit();
                 break;
+#else
+            case ContextManager.State.Exit:
+                ContextManager.SetState(ContextManager.State.Menu);
+                break;
+#endif
+
         }
 
         base.Draw(gameTime);

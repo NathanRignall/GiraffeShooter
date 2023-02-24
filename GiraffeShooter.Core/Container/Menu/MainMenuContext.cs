@@ -25,7 +25,10 @@ namespace GiraffeShooterClient.Container.Menu
             _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector2(0, 3.75f), AssetManager.PlayButtonTexture, () => ContextManager.SetState(ContextManager.State.World)));
             _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector2(0, 1.25f), AssetManager.LeaderboardButtonTexture, () => ContextManager.SetState(ContextManager.State.Leaderboard)));
             _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector2(0, -1.25f), AssetManager.SettingsButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Settings)));
+            
+#if !__IOS__ &&  !__TVOS__            
             _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector2(0, -3.75f), AssetManager.ExitButtonTexture, () => ContextManager.SetState(ContextManager.State.Exit)));
+#endif
             
             // if the user is logged in show userid
             if (SupabaseManager.Client.Auth.CurrentSession != null)

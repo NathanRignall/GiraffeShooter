@@ -26,6 +26,9 @@ namespace GiraffeShooterClient.Entity
             AddComponent(text);
             
             Input input = new Input();
+            input.IsPassword = IsPassword;
+            input.Placeholder = placeholder;
+            input.PopupText = popupText;
             AddComponent(input);
         }
         
