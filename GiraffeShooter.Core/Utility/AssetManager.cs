@@ -14,6 +14,7 @@ namespace GiraffeShooterClient.Utility
         public static TiledMap MapMaster { get; private set; }
         public static Dictionary<int, TiledTileset> MapTilesets { get; private set; }
         public static Texture2D MapTilesetTextureMain { get; private set; }
+        public static Texture2D MapTilesetTextureMap { get; private set; }
 
         public static Texture2D PlayerTexture { get; private set; }
         public static Texture2D GiraffeTextureTest { get; private set; }
@@ -68,6 +69,7 @@ namespace GiraffeShooterClient.Utility
             MapMaster = new TiledMap("Content/Tiles/map_master.tmx");
             MapTilesets = MapMaster.GetTiledTilesets("Content/Tiles/");
             MapTilesetTextureMain = content.Load<Texture2D>("Tiles/master_tileset");
+            MapTilesetTextureMap = content.Load<Texture2D>("Tiles/map_tileset");
             
             PlayerTexture = content.Load<Texture2D>("player_texture");
             GiraffeTextureTest = content.Load<Texture2D>("giraffe_texture_test");

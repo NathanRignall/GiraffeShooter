@@ -45,23 +45,22 @@ namespace GiraffeShooterClient.Container.World
             }
             
             // add 50 ammunition at random positions
-            for (int i = 0; i < 400; i++)
+            for (int i = 0; i < 20; i++)
             {
-                EntityCollection.AddEntity(new Ammunition(new Vector3(random.Next(-45, -20), random.Next(-45, -20),0), Vector3.Zero));
-                EntityCollection.AddEntity(new Ammunition(new Vector3(random.Next(20, 45), random.Next(20, 45),0), Vector3.Zero));
+                EntityCollection.AddEntity(new Ammunition(new Vector3(random.Next(-15, 15), random.Next(-15, 15),0), Vector3.Zero));
             }
             
             // add 30 pistol at random positions
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 3; i++)
             {
-                EntityCollection.AddEntity(new Gun(new Vector3(random.Next(-45, -30), random.Next(-45, -30), 0), Vector3.Zero));
+                EntityCollection.AddEntity(new Gun(new Vector3(random.Next(-15, 15), random.Next(-15, 15), 0), Vector3.Zero));
             }
             
-            // // add 30 machine gun at random positions
-            // for (int i = 0; i < 30; i++)
-            // {
-            //     EntityCollection.AddEntity(new MachineGun(new Vector3(random.Next(-45, 45), random.Next(-45, 45), 0), Vector3.Zero));
-            // }
+            // add 30 machine gun at random positions
+            for (int i = 0; i < 2; i++)
+            {
+                EntityCollection.AddEntity(new MachineGun(new Vector3(random.Next(-15, 15), random.Next(-15, 15), 0), Vector3.Zero));
+            }
 
             // add exit button to pause entities and collection then hide it
             var exitButton = new Button(new Vector2(0f, -1.25f),  AssetManager.ExitButtonTexture, () => { ContextManager.SetState(ContextManager.State.Menu); });

@@ -33,9 +33,9 @@ namespace GiraffeShooterClient.Entity
             if (ContextManager.Paused)
                 return;
             
-            // temporary code to only check for collisions with a moving entity
-            if (entity.GetComponent<Physics>().Velocity == Vector3.Zero)
-                return;
+            // // temporary code to only check for collisions with a moving entity
+            // if (entity.GetComponent<Physics>().Velocity == Vector3.Zero)
+            //     return;
 
             foreach (Collider collider in ColliderSystem.components)
             {
@@ -82,7 +82,10 @@ namespace GiraffeShooterClient.Entity
                         if (collider.entity.GetComponent<Physics>().IsStatic)
                         {
                             // move the first entity out of the second entity (TEST CODE DOES NOT WORK)
-                            entity.GetComponent<Physics>().Position = entity.GetComponent<Physics>().Position + entity.GetComponent<Physics>().Velocity;
+                            entity.GetComponent<Physics>().Position = entity.GetComponent<Physics>().Position - entity.GetComponent<Physics>().Velocity / 2;
+                            
+                            // invert the velocity of the first entity
+                            entity.GetComponent<Physics>().Velocity = -entity.GetComponent<Physics>().Velocity * 2;
 
                         }
 

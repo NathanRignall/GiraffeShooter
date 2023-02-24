@@ -58,8 +58,14 @@ namespace GiraffeShooterClient.Entity
                 // delete the bullet
                 Delete();
             };
+            Action<Entity> hitAction2 = (Entity subject) =>
+            {
+                // delete the bullet
+                Delete();
+            };
             collider.AddResponse<Giraffe>(hitAction);
             collider.AddResponse<Player>(hitAction);
+            collider.AddResponse<Wall>(hitAction2);
             AddComponent(collider);
 
             // Creates a new Sprite object with AssetManager.AmmunitionFireTexture and adds it to the Bullet entity

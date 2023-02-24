@@ -49,8 +49,13 @@ namespace GiraffeShooterClient.Entity
                 if (subject.GetComponent<Inventory>().AddItem(Meta))
                     Delete();
             };
+            Action<Entity> pickupAction2 = (Entity subject) =>
+            {
+                Delete();
+            };
             collider.AddResponse<Player>(pickupAction);
             collider.AddResponse<Giraffe>(pickupAction);
+            collider.AddResponse<Wall>(pickupAction2);
             AddComponent(collider);
             
             Sprite sprite = new Sprite(AssetManager.AmmunitionTexture);
