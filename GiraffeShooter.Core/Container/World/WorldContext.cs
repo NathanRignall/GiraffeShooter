@@ -38,9 +38,9 @@ namespace GiraffeShooterClient.Container.World
 
             // add 10 giraffes at random positions
             Random random = new Random();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 2; i++)
             {
-                _collection.AddEntity(new Giraffe(new Vector3(random.Next(-45, 45), random.Next(-45, 45), 0), new Vector3(random.Next(-5, 5), random.Next(-5, 5), 0)));
+                _collection.AddEntity(new Giraffe(new Vector3(random.Next(-5, 5), random.Next(-5, 5), 0), new Vector3(random.Next(-5, 5), random.Next(-5, 5), 0)));
             }
             
             // add 50 ammunition at random positions
@@ -49,10 +49,16 @@ namespace GiraffeShooterClient.Container.World
                 _collection.AddEntity(new Ammunition(new Vector3(random.Next(-45, 45), random.Next(-45, 45),0), Vector3.Zero));
             }
             
-            // add 20 pistol at random positions
-            for (int i = 0; i < 100; i++)
+            // add 30 pistol at random positions
+            for (int i = 0; i < 30; i++)
             {
                 _collection.AddEntity(new Gun(new Vector3(random.Next(-45, 45), random.Next(-45, 45), 0), Vector3.Zero));
+            }
+            
+            // add 30 machine gun at random positions
+            for (int i = 0; i < 30; i++)
+            {
+                _collection.AddEntity(new MachineGun(new Vector3(random.Next(-45, 45), random.Next(-45, 45), 0), Vector3.Zero));
             }
 
             // add exit button to pause entities and collection then hide it
@@ -156,22 +162,17 @@ namespace GiraffeShooterClient.Container.World
 
         public override void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
+            // core game logic
+            
+            // check if there are any giraffes left
+            if (_collection.GetEntities<Giraffe>().Count == 0)
+            {
+                // if there are no giraffes left then the player has won
+                ContextManager.SetState(ContextManager.State.Win);
+            }
+
             // update the player position (convert from tile to pixel coordinates)
             Camera.FollowTarget = _player.GetPosition() * 1000f / 32f;
-
-            // remove all giraffes
-            if (InputManager.IsKeyDown(Keys.Space))
-            {
-                // for all entities
-                foreach (Entity.Entity entity in _collection.GetEntities())
-                {
-                    // if the entity is a giraffe
-                    if (entity is Giraffe)
-                    {
-                        entity.Delete();
-                    }
-                }
-            }
 
             // update components
             ScreenSystem.Update(gameTime);
@@ -185,6 +186,7 @@ namespace GiraffeShooterClient.Container.World
             InputSystem.Update(gameTime);
             InventorySystem.Update(gameTime);
             AimSystem.Update(gameTime);
+            HealthSystem.Update(gameTime);
             CleanerSystem.Update(gameTime);
             
             // update the entity collection

@@ -9,15 +9,28 @@ namespace GiraffeShooterClient.Entity
     class MetaGun : Meta
     {
         public Type RequiredAmmo = typeof(MetaAmmunition);
-        public int RequiredQuanity = 1;
+        protected int RequiredQuanity = 1;
+        public bool Automatic = false;
+        
+        public int Damage = 10;
+        
+        public TimeSpan TimeDelay = TimeSpan.FromSeconds(1);
+        public TimeSpan PreviousShoot;
         
         public override void Create(Vector3 position, Vector3 velocity)
         {
             new Gun(position, velocity, this);
         }
 
-        public override bool Action(Entity subject)
+        public override bool Action(TimeSpan time, Entity subject)
         {
+            // check if the previous shoot is greater than the time delay
+            if (time - PreviousShoot < TimeDelay)
+                return false;
+            
+            // set the previous shoot to the current time
+            PreviousShoot = time;
+            
             // get the inventory
             Inventory inventory = subject.GetComponent<Inventory>();
             
@@ -40,7 +53,7 @@ namespace GiraffeShooterClient.Entity
                 var velocity = new Vector3((float)Math.Cos(rotation), (float)Math.Sin(rotation), 0) * 50;
 
                 // create a bullet
-                new Bullet(position, velocity);
+                new Bullet(position, velocity, Damage);
 
                 // return true
                 return true;

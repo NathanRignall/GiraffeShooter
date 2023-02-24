@@ -39,6 +39,19 @@ namespace GiraffeShooterClient.Entity
             return entities;
         }
         
+        public List<Entity> GetEntities<Type>()
+        {
+            List<Entity> entitiesOfType = new List<Entity>();
+            foreach (Entity entity in entities)
+            {
+                if (entity is Type)
+                {
+                    entitiesOfType.Add(entity);
+                }
+            }
+            return entitiesOfType;
+        }
+        
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
             CleanUp();

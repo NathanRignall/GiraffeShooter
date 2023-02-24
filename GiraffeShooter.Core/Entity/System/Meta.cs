@@ -34,6 +34,6 @@ namespace GiraffeShooterClient.Entity
 
         public virtual void Create(Vector3 position, Vector3 velocity) { }
         
-        public virtual bool Action(Entity entity) { return false; }
+        public virtual bool Action(TimeSpan time, Entity entity) { return false; }
     }
 }

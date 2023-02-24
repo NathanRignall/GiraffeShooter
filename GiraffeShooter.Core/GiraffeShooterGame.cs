@@ -106,6 +106,11 @@ public class GiraffeShooter : Game
                 ContextManager.WorldContext.HandleEvents(events);
                 ContextManager.WorldContext.Update(gameTime);
                 break;
+            
+            case ContextManager.State.Win:
+                ContextManager.WinContext.HandleEvents(events);
+                ContextManager.WinContext.Update(gameTime);
+                break;
 
             default:
                 throw new System.Exception();
@@ -154,6 +159,13 @@ public class GiraffeShooter : Game
 
                 _spriteBatch.End();
                 
+                break;
+            
+            case ContextManager.State.Win:
+                IsMouseVisible = false;
+                _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: transformMatrix);
+                ContextManager.WinContext.Draw(gameTime, _spriteBatch);
+                _spriteBatch.End();
                 break;
 
             default:

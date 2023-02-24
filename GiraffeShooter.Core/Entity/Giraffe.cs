@@ -86,6 +86,9 @@ namespace GiraffeShooterClient.Entity
             
             Inventory inventory = new Inventory();
             AddComponent(inventory);
+            
+            Health health = new Health();
+            AddComponent(health);
         }
         
         public void SetPosition(Vector3 position)

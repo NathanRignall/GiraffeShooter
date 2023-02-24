@@ -24,6 +24,8 @@ namespace GiraffeShooterClient.Utility
         public static Texture2D AmmunitionFireTexture { get; private set; }
         public static Texture2D PistolTexture { get; private set; }
         public static Texture2D PistolInventoryTexture { get; private set; }
+        public static Texture2D MachineGunTexture { get; private set; }
+        public static Texture2D MachineGunInventoryTexture { get; private set; }
         public static Texture2D ShootSpriteTexture { get; private set; }
         
         public static Texture2D PlayButtonTexture { get; private set; }
@@ -75,6 +77,8 @@ namespace GiraffeShooterClient.Utility
             AmmunitionFireTexture = content.Load<Texture2D>("Sprites/AmmunitionFire");
             PistolTexture = content.Load<Texture2D>("Sprites/Pistol");
             PistolInventoryTexture = content.Load<Texture2D>("Sprites/PistolInventory");
+            MachineGunTexture = content.Load<Texture2D>("Sprites/MachineGun");
+            MachineGunInventoryTexture = content.Load<Texture2D>("Sprites/MachineGunInventory");
             ShootSpriteTexture = content.Load<Texture2D>("Sprites/Shoot");
             
             PlayButtonTexture = content.Load<Texture2D>("Sprites/PlayButton");

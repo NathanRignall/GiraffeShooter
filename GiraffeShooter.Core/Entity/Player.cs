@@ -103,6 +103,9 @@ namespace GiraffeShooterClient.Entity
             AddComponent(inventory);
             
             _inventoryBar.Inventory = inventory;
+            
+            Health health = new Health();
+            AddComponent(health);
         }
 
         public void Move(Control.Direction direction) 
@@ -117,7 +120,7 @@ namespace GiraffeShooterClient.Entity
             control.Move(angle, speedFactor);
         }
         
-        public void Shoot()
+        public void Shoot(TimeSpan time)
         {
             // get the current shoot direction
             var rotation = GetComponent<Aim>().Rotation;
@@ -133,7 +136,7 @@ namespace GiraffeShooterClient.Entity
             
             // action the inventory item
             Inventory inventory = GetComponent<Inventory>();
-            inventory.Action();
+            inventory.Action(time);
         }
 
         public Vector2 GetPosition() {
@@ -266,7 +269,7 @@ namespace GiraffeShooterClient.Entity
                         switch (e.Key)
                         {
                             case Keys.Space:
-                                Shoot();
+                                Shoot(e.Time);
                                 break;
                         }
                         break;
@@ -274,7 +277,7 @@ namespace GiraffeShooterClient.Entity
                     case EventType.MousePress:
                     case EventType.MouseDrag:
                     case EventType.MouseHold:
-                        Shoot();
+                        Shoot(e.Time);
                         break;
                     
                     case EventType.StickLeftMove:

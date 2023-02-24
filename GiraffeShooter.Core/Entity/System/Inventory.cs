@@ -135,11 +135,11 @@ namespace GiraffeShooterClient.Entity
             return false;
         }
         
-        public bool Action()
+        public bool Action(TimeSpan time)
         {
             if (selectedItem != null)
             {
-                return selectedItem.Action(entity);
+                return selectedItem.Action(time, entity);
             }
             
             return false;

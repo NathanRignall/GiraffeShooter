@@ -10,7 +10,8 @@ namespace GiraffeShooterClient.Utility
             SplashScreen,
             Menu,
             Leaderboard,
-            World
+            World,
+            Win
         }
 
         public static State CurrentState { get; private set; }
@@ -21,6 +22,7 @@ namespace GiraffeShooterClient.Utility
         public static Container.Menu.MenuContext MenuContext;
         public static Container.Leaderboard.LeaderboardContext LeaderboardContext;
         public static Container.World.WorldContext WorldContext;
+        public static Container.Win.WinContext WinContext;
 
         public static void Initialize()
         {
@@ -47,6 +49,9 @@ namespace GiraffeShooterClient.Utility
                 case State.World:
                     Paused = false;
                     WorldContext = new Container.World.WorldContext();
+                    break;
+                case State.Win:
+                    WinContext = new Container.Win.WinContext();
                     break;
             }
         }
