@@ -11,7 +11,7 @@ namespace GiraffeShooterClient.Entity
             Id = Guid.NewGuid();
             Name = "HealthBar";
 
-            Screen screen = new Screen(new Vector2(0f, -3.0f), ScreenManager.CenterType.TopCenter);
+            Screen screen = new Screen(new Vector2(0f, -1.0f), ScreenManager.CenterType.TopCenter);
             AddComponent(screen);
 
             Sprite sprite = new Sprite(AssetManager.HealthBarTexture, new Rectangle(0, 0, 260, 21));

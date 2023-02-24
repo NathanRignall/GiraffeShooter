@@ -32,6 +32,10 @@ namespace GiraffeShooterClient.Utility
         private static Rectangle _pauseButton;
         private static bool _pauseButtonPressed;
         private static TimeSpan _pauseButtonPressedTime;
+        
+        private static Rectangle _cameraButton;
+        private static bool _cameraButtonPressed;
+        private static TimeSpan _cameraButtonPressedTime;
 
         public static void Initialize()
         {
@@ -102,17 +106,31 @@ namespace GiraffeShooterClient.Utility
             
             
             // pause button size
-            var pauseButtonSize = new Vector2(64, 64) * screenScale;
+            var pauseButtonSize = new Vector2(96, 96) * screenScale;
             
             
             // pause button position top right
-            var pauseButtonPosition = new Vector2(ScreenManager.Size.X - pauseButtonSize.X * 1.5f, pauseButtonSize.Y * 1.5f);
+            var pauseButtonPosition = new Vector2(ScreenManager.Size.X - pauseButtonSize.X * 1.5f, pauseButtonSize.Y * 0.5f);
             
             // create the pause button rectangle
             _pauseButton = new Rectangle((int)pauseButtonPosition.X, (int)pauseButtonPosition.Y, (int)pauseButtonSize.X, (int)pauseButtonSize.Y);
             
             // set pause pressed state
             _pauseButtonPressed = false;
+            
+            
+            // camera button size
+            var cameraButtonSize = new Vector2(96, 96) * screenScale;
+            
+            
+            // camera button position top left
+            var cameraButtonPosition = new Vector2(cameraButtonSize.X * 0.5f, cameraButtonSize.Y * 0.5f);
+            
+            // create the camera button rectangle
+            _cameraButton = new Rectangle((int)cameraButtonPosition.X, (int)cameraButtonPosition.Y, (int)cameraButtonSize.X, (int)cameraButtonSize.Y);
+            
+            // set camera pressed state
+            _cameraButtonPressed = false;
 
         }
 
@@ -171,6 +189,19 @@ namespace GiraffeShooterClient.Utility
                             
                             // add the event
                             eventsToAdd.Add(new Event(Keys.Escape, EventType.KeyPress, gameTime.TotalGameTime));
+                            
+                            // remove the event
+                            eventsToRemove.Add(e);
+                        }
+                        
+                        // check if the camera button is pressed
+                        if (_cameraButton.Contains(e.Position) && !_cameraButtonPressed)
+                        {
+                            _cameraButtonPressed = true;
+                            _cameraButtonPressedTime = e.Time;
+                            
+                            // add the event
+                            eventsToAdd.Add(new Event(Keys.C, EventType.KeyPress, gameTime.TotalGameTime));
                             
                             // remove the event
                             eventsToRemove.Add(e);
@@ -375,6 +406,23 @@ namespace GiraffeShooterClient.Utility
 
         public static void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
+            // source rectangle for the camera button
+            var cameraButtonSource = new Rectangle(0, 0, 96, 96);
+            
+            
+            // draw the camera button
+            spriteBatch.Draw(AssetManager.CameraButtonTexture, _cameraButton, cameraButtonSource, Color.White);
+            
+            // reset the camera button pressed if time is up
+            if (gameTime.TotalGameTime - _cameraButtonPressedTime > TimeSpan.FromMilliseconds(1000))
+                _cameraButtonPressed = false;
+            
+            
+            // check if the camera is not free
+            if (Camera.CurrentState == Camera.State.Free)
+                return;
+            
+            
             // source rectangle for the control sticks
             var controlStickSource = new Rectangle(0, 0, 256, 256);
             var controlBallSource = new Rectangle(0, 0, 64, 64);
@@ -428,16 +476,6 @@ namespace GiraffeShooterClient.Utility
                 _rightShootButtonPressed = false;
             
             
-            // source rectangle for the pause button
-            var pauseButtonSource = new Rectangle(0, 0, 128, 128);
-            
-            // draw the pause button
-            spriteBatch.Draw(AssetManager.PauseButtonTexture, _pauseButton, pauseButtonSource, Color.White);
-            
-            // reset the pause button pressed if time is up
-            if (gameTime.TotalGameTime - _pauseButtonPressedTime > TimeSpan.FromMilliseconds(1000))
-                _pauseButtonPressed = false;
-
             // default source rectangle for the buttons
             var defaultDropButtonSource = new Rectangle(0, 0, 128, 128);
             
@@ -454,6 +492,16 @@ namespace GiraffeShooterClient.Utility
             if (gameTime.TotalGameTime - _dropButtonPressedTime > TimeSpan.FromMilliseconds(100))
                 _dropButtonPressed = false;
             
+            
+            // source rectangle for the pause button
+            var pauseButtonSource = new Rectangle(0, 0, 96, 96);
+            
+            // draw the pause button
+            spriteBatch.Draw(AssetManager.PauseButtonTexture, _pauseButton, pauseButtonSource, Color.White);
+            
+            // reset the pause button pressed if time is up
+            if (gameTime.TotalGameTime - _pauseButtonPressedTime > TimeSpan.FromMilliseconds(1000))
+                _pauseButtonPressed = false;
         }
     }
 }
