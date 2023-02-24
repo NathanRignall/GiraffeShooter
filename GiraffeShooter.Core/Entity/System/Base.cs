@@ -88,6 +88,7 @@ namespace GiraffeShooterClient.Entity
             TextSystem.components.Clear();
             InputSystem.components.Clear();
             InventorySystem.components.Clear();
+            AimSystem.components.Clear();
             HealthSystem.components.Clear();
             CleanerSystem.components.Clear();
             BotSystem.components.Clear();
