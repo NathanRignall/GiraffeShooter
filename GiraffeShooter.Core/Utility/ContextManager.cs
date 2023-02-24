@@ -13,6 +13,7 @@ namespace GiraffeShooterClient.Utility
             World,
             Win,
             Lose,
+            Exit
         }
 
         public static State CurrentState { get; private set; }

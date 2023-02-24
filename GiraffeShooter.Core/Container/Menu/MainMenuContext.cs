@@ -22,9 +22,10 @@ namespace GiraffeShooterClient.Container.Menu
             Base.Clear();
             
             // register entities
-            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector2(0, 2.5f), AssetManager.PlayButtonTexture, () => ContextManager.SetState(ContextManager.State.World)));
-            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector2(0, 0), AssetManager.LeaderboardButtonTexture, () => ContextManager.SetState(ContextManager.State.Leaderboard)));
-            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector2(0, -2.5f), AssetManager.SettingsButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Settings)));
+            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector2(0, 3.75f), AssetManager.PlayButtonTexture, () => ContextManager.SetState(ContextManager.State.World)));
+            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector2(0, 1.25f), AssetManager.LeaderboardButtonTexture, () => ContextManager.SetState(ContextManager.State.Leaderboard)));
+            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector2(0, -1.25f), AssetManager.SettingsButtonTexture, () => ContextManager.MenuContext.SetState(MenuContext.State.Settings)));
+            _collection.AddEntity(new GiraffeShooterClient.Entity.Button(new Vector2(0, -3.75f), AssetManager.ExitButtonTexture, () => ContextManager.SetState(ContextManager.State.Exit)));
             
             // if the user is logged in show userid
             if (SupabaseManager.Client.Auth.CurrentSession != null)

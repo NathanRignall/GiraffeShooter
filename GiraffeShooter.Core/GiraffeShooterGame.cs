@@ -116,9 +116,6 @@ public class GiraffeShooter : Game
                 ContextManager.LoseContext.HandleEvents(events);
                 ContextManager.LoseContext.Update(gameTime);
                 break;
-
-            default:
-                throw new System.Exception();
         }
 
         // update monogame
@@ -179,9 +176,10 @@ public class GiraffeShooter : Game
                 ContextManager.LoseContext.Draw(gameTime, _spriteBatch);
                 _spriteBatch.End();
                 break;
-
-            default:
-                throw new System.Exception();
+            
+            case ContextManager.State.Exit:
+                Exit();
+                break;
         }
 
         base.Draw(gameTime);
