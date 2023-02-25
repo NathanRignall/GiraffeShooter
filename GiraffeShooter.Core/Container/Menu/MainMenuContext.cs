@@ -33,7 +33,7 @@ namespace GiraffeShooterClient.Container.Menu
             // if the user is logged in show userid
             if (SupabaseManager.Client.Auth.CurrentSession != null)
             {
-                _collection.AddEntity(new TextDisplay(new Vector2(0, 7.5f), "Logged in as: " + SupabaseManager.Client.Auth.CurrentUser.Id));
+                _collection.AddEntity(new TextDisplay(new Vector2(0, 7.5f), "Logged in as: " + SupabaseManager.Client.Auth.CurrentUser.Email));
             }
 
             // reset the camera
