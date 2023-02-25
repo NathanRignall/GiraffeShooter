@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 
 using GiraffeShooterClient.Utility;
+using Microsoft.Xna.Framework.Audio;
 
 namespace GiraffeShooterClient.Entity
 {
@@ -16,10 +17,13 @@ namespace GiraffeShooterClient.Entity
         public TimeSpan TimeDelay = TimeSpan.FromSeconds(1);
         public TimeSpan PreviousShoot;
         
+        public SoundEffect GunSound;
+        
         public MetaGun()
         {
             MetaType = MetaType.Weapon;
             MaxQuantity = 0;
+            GunSound = AssetManager.GunEffect;
         }
         
         public override void Create(Vector3 position, Vector3 velocity)
@@ -59,6 +63,9 @@ namespace GiraffeShooterClient.Entity
 
                 // create a bullet
                 new Bullet(position, velocity, Damage);
+                
+                // play the gun sound
+                GunSound.Play();
 
                 // return true
                 return true;

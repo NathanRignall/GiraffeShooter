@@ -90,7 +90,7 @@ namespace GiraffeShooterClient.Entity
             Animation animation = new Animation(standLeftFrames);
             AddComponent(animation);
             
-            Aim aim = new Aim();
+            Aim aim = new Aim(false);
             AddComponent(aim);
             
             Inventory inventory = new Inventory();
@@ -157,46 +157,70 @@ namespace GiraffeShooterClient.Entity
             double velocityAngle = Math.Atan2(physics.Velocity.Y, physics.Velocity.X);
             
             // switch case for state
-            switch (_state) {
+            switch (_state)
+            {
                 case State.Idle:
                     // if velocity is greater than 0.1, set animation to walking animation
-                    if (velocityMagnitude > 0.1) {
-                        if ((velocityAngle > 0 && velocityAngle < Math.PI * 0.5) || (velocityAngle < 0 && velocityAngle > -Math.PI * 0.5)) {
+                    if (velocityMagnitude > 0.1)
+                    {
+                        if ((velocityAngle >= 0 && velocityAngle < Math.PI * 0.5) ||
+                            (velocityAngle < 0 && velocityAngle > -Math.PI * 0.5))
+                        {
                             animation.SetFrames(walkingRightFrames);
-                        } else {
+                        }
+                        else
+                        {
                             animation.SetFrames(walkingLeftFrames);
                         }
+
                         _state = State.Walking;
                     }
                     break;
                 case State.Walking:
                     // if velocity is greater than 0.1, set animation to walking animation
-                    if (velocityMagnitude > 0.1) {
-                        if ((velocityAngle > 0 && velocityAngle < Math.PI * 0.5) || (velocityAngle < 0 && velocityAngle > -Math.PI * 0.5)) {
+                    if (velocityMagnitude > 0.1)
+                    {
+                        if ((velocityAngle >= 0 && velocityAngle < Math.PI * 0.5) ||
+                            (velocityAngle < 0 && velocityAngle > -Math.PI * 0.5))
+                        {
                             animation.SetFrames(walkingRightFrames);
-                        } else {
+                        }
+                        else
+                        {
                             animation.SetFrames(walkingLeftFrames);
                         }
+
                         _state = State.Walking;
                     }
                     else
                     {
-                        if ((velocityAngle > 0 && velocityAngle < Math.PI * 0.5) || (velocityAngle < 0 && velocityAngle > -Math.PI * 0.5)) {
+                        if ((velocityAngle >= 0 && velocityAngle < Math.PI * 0.5) ||
+                            (velocityAngle < 0 && velocityAngle > -Math.PI * 0.5))
+                        {
                             animation.SetFrames(standRightFrames);
-                        } else {
+                        }
+                        else
+                        {
                             animation.SetFrames(standLeftFrames);
                         }
+
                         _state = State.Idle;
                     }
                     break;
                 case State.Shooting:
                     // if animation is finished, set animation to idle animation
-                    if (animation.Finished) {
-                        if ((velocityAngle > 0 && velocityAngle < Math.PI * 0.5) || (velocityAngle < 0 && velocityAngle > -Math.PI * 0.5)) {
+                    if (animation.Finished)
+                    {
+                        if ((velocityAngle >= 0 && velocityAngle < Math.PI * 0.5) ||
+                            (velocityAngle < 0 && velocityAngle > -Math.PI * 0.5))
+                        {
                             animation.SetFrames(standRightFrames);
-                        } else {
+                        }
+                        else
+                        {
                             animation.SetFrames(standLeftFrames);
                         }
+
                         _state = State.Idle;
                     }
                     break;

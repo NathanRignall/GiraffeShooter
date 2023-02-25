@@ -9,10 +9,10 @@ namespace GiraffeShooterClient.Entity
         public MetaMachineGun()
         {
             MetaType = MetaType.Weapon;
-
             TimeDelay = TimeSpan.FromSeconds(0.1);
             RequiredQuanity = 1;
-            Damage = 1;
+            Damage = 5;
+            GunSound = AssetManager.MachineGunEffect;
         }
         
         public override void Create(Vector3 position, Vector3 velocity)

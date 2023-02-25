@@ -53,6 +53,18 @@
 /processorParam:TextureFormat=Color
 /build:giraffe_texture_test.jpeg
 
+#begin Music/Gun.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Music/Gun.mp3
+
+#begin Music/MachineGun.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Music/MachineGun.mp3
+
 #begin Music/Song.mp3
 /importer:Mp3Importer
 /processor:SoundEffectProcessor
@@ -434,6 +446,21 @@
 #begin Tiles/map_master.tmx
 /copy:Tiles/map_master.tmx
 
+#begin Tiles/map_tileset.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Tiles/map_tileset.png
+
+#begin Tiles/map_tileset.tsx
+/copy:Tiles/map_tileset.tsx
+
 #begin Tiles/master_tileset.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -449,17 +476,3 @@
 #begin Tiles/master_tileset.tsx
 /copy:Tiles/master_tileset.tsx
 
-#begin Tiles/map_tileset.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Tiles/map_tileset.png
-
-#begin Tiles/map_tileset.tsx
-/copy:Tiles/map_tileset.tsx

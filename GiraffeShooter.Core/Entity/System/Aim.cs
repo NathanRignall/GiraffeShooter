@@ -13,12 +13,14 @@ namespace GiraffeShooterClient.Entity
 
         private Texture2D _aimTexture;
         private Rectangle _sourceRectangle { get; set; }
+        private bool _visible = true;
         
-        public Aim()
+        public Aim(bool Visible = true)
         {
             Rotation = 0f;
             _aimTexture = AssetManager.ShootSpriteTexture;
             _sourceRectangle = new Rectangle(0, 0, _aimTexture.Width, _aimTexture.Height);
+            _visible = Visible;
             
             AimSystem.Register(this);
         }
@@ -39,6 +41,9 @@ namespace GiraffeShooterClient.Entity
         
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
+            // if false, don't draw
+            if (!_visible || ContextManager.Paused)
+                return;
             
             // calculate the position of the sprite
             var physics = entity.GetComponent<Physics>();

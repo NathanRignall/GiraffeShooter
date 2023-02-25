@@ -41,25 +41,25 @@ namespace GiraffeShooterClient.Container.World
             Random random = new Random();
             for (int i = 0; i < 1; i++)
             {
-                EntityCollection.AddEntity(new Giraffe(new Vector3(random.Next(-5, 5), random.Next(-5, 5), 0), new Vector3(random.Next(-5, 5), random.Next(-5, 5), 0)));
+                EntityCollection.AddEntity(new Giraffe(new Vector3(random.Next(-10, 10), random.Next(-10, 10), 0), new Vector3(random.Next(-5, 5), random.Next(-5, 5), 0)));
             }
             
             // add 50 ammunition at random positions
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 50; i++)
             {
-                EntityCollection.AddEntity(new Ammunition(new Vector3(random.Next(-15, 15), random.Next(-15, 15),0), Vector3.Zero));
+                EntityCollection.AddEntity(new Ammunition(new Vector3(random.Next(-40, 40), random.Next(-15, 15),0), Vector3.Zero));
             }
             
-            // add 30 pistol at random positions
-            for (int i = 0; i < 3; i++)
+            // add 5 pistol at random positions
+            for (int i = 0; i < 5; i++)
             {
-                EntityCollection.AddEntity(new Gun(new Vector3(random.Next(-15, 15), random.Next(-15, 15), 0), Vector3.Zero));
+                EntityCollection.AddEntity(new Gun(new Vector3(random.Next(-40, 40), random.Next(-15, 15), 0), Vector3.Zero));
             }
             
-            // add 30 machine gun at random positions
+            // add 2 machine gun at random positions
             for (int i = 0; i < 2; i++)
             {
-                EntityCollection.AddEntity(new MachineGun(new Vector3(random.Next(-15, 15), random.Next(-15, 15), 0), Vector3.Zero));
+                EntityCollection.AddEntity(new MachineGun(new Vector3(random.Next(-40, 40), random.Next(-40, 40), 0), Vector3.Zero));
             }
 
             // add exit button to pause entities and collection then hide it

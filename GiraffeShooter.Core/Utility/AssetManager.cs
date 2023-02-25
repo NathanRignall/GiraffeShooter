@@ -62,6 +62,8 @@ namespace GiraffeShooterClient.Utility
         public static SpriteFont Fontx2Title { get; private set; }
         
         public static SoundEffect Song { get; private set; }
+        public static SoundEffect GunEffect { get; private set; }
+        public static SoundEffect MachineGunEffect { get; private set; }
 
         public static void LoadContent(ContentManager content)
         {
@@ -116,7 +118,10 @@ namespace GiraffeShooterClient.Utility
             Fontx2Title = content.Load<SpriteFont>("Fonts/x2/Title");
 
             Song = content.Load<SoundEffect>("Music/Song");
-            Song.Play();
+            //Song.Play();
+            
+            GunEffect = content.Load<SoundEffect>("Music/Gun");
+            MachineGunEffect = content.Load<SoundEffect>("Music/MachineGun");
 
         }
 

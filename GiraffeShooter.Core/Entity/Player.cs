@@ -178,7 +178,7 @@ namespace GiraffeShooterClient.Entity
                     // if velocity is greater than 0.1, set animation to walking animation
                     if (velocityMagnitude > 0.1)
                     {
-                        if ((velocityAngle > 0 && velocityAngle < Math.PI * 0.5) ||
+                        if ((velocityAngle >= 0 && velocityAngle < Math.PI * 0.5) ||
                             (velocityAngle < 0 && velocityAngle > -Math.PI * 0.5))
                         {
                             animation.SetFrames(walkingRightFrames);
@@ -195,7 +195,7 @@ namespace GiraffeShooterClient.Entity
                     // if velocity is greater than 0.1, set animation to walking animation
                     if (velocityMagnitude > 0.1)
                     {
-                        if ((velocityAngle > 0 && velocityAngle < Math.PI * 0.5) ||
+                        if ((velocityAngle >= 0 && velocityAngle < Math.PI * 0.5) ||
                             (velocityAngle < 0 && velocityAngle > -Math.PI * 0.5))
                         {
                             animation.SetFrames(walkingRightFrames);
@@ -209,7 +209,7 @@ namespace GiraffeShooterClient.Entity
                     }
                     else
                     {
-                        if ((velocityAngle > 0 && velocityAngle < Math.PI * 0.5) ||
+                        if ((velocityAngle >= 0 && velocityAngle < Math.PI * 0.5) ||
                             (velocityAngle < 0 && velocityAngle > -Math.PI * 0.5))
                         {
                             animation.SetFrames(standRightFrames);
@@ -226,7 +226,7 @@ namespace GiraffeShooterClient.Entity
                     // if animation is finished, set animation to idle animation
                     if (animation.Finished)
                     {
-                        if ((velocityAngle > 0 && velocityAngle < Math.PI * 0.5) ||
+                        if ((velocityAngle >= 0 && velocityAngle < Math.PI * 0.5) ||
                             (velocityAngle < 0 && velocityAngle > -Math.PI * 0.5))
                         {
                             animation.SetFrames(standRightFrames);
@@ -240,12 +240,6 @@ namespace GiraffeShooterClient.Entity
                     }
                     break;
             }
-
-            // // set shoot position to player position depending if shooting or not
-            // if (_state == State.Shooting)
-            //     _shoot.SetPosition(physics.Position + new Vector3(0, -0.7f, 0));
-            // else
-            //     _shoot.SetPosition(physics.Position + new Vector3(0, -0.35f, 0));
         }
 
         public override void HandleEvents(List<Event> events)
