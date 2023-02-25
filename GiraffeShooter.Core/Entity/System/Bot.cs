@@ -13,12 +13,12 @@ namespace GiraffeShooterClient.Entity
             Patrol,
             Chase,
             Attack,
-            Flee
+            // Flee
         }
         
         private State _state;
         private Entity _target;
-        
+
         public Bot()
         {
             _state = State.Patrol;
@@ -77,7 +77,7 @@ namespace GiraffeShooterClient.Entity
                             var distance1 = Vector3.Distance(location1, targetLocation1);
                             
                             // if the distance is less than 100
-                            if (distance1 < 100)
+                            if (distance1 < 30)
                             {
                                 // set the target
                                 _target = player;
@@ -152,7 +152,7 @@ namespace GiraffeShooterClient.Entity
                     // move towards the target
                     var control2 = entity.GetComponent<Control>();
                     
-                    control2.Move(angle2, 0.5f);
+                    control2.Move(angle2, 0.7f);
 
 
                     // only check attack if player
@@ -169,7 +169,7 @@ namespace GiraffeShooterClient.Entity
                         }
 
                         // if we are too far, go back to patrol
-                        if (distance2 > 100)
+                        if (distance2 > 30)
                         {
                             // go to the patrol state
                             _state = State.Patrol;
@@ -247,21 +247,36 @@ namespace GiraffeShooterClient.Entity
                         _state = State.Patrol;
                     }
                     
-                    // if we run out of health, flee
-                    if (entity.GetComponent<Health>().Value <= 10)
-                    {
-                        // go to the flee state
-                        _state = State.Flee;
-                    }
+                    // // if we run out of health, flee
+                    // if (entity.GetComponent<Health>().Value <= 10)
+                    // {
+                    //     // go to the flee state
+                    //     _state = State.Flee;
+                    // }
                     
                     break;
-                case State.Flee:
-                    
-                    Console.WriteLine("Fleeing");
-                    
-                    // if we are far enough, go back to patrol
-                    
-                    break;
+                // case State.Flee:
+                //     
+                //     // get the current location
+                //     var location4 = entity.GetComponent<Physics>().Position;
+                //     
+                //     // get the location of the target
+                //     var targetLocation4 = _target.GetComponent<Physics>().Position;
+                //     
+                //     // get the direction
+                //     var direction4 = location4 - targetLocation4;
+                //     
+                //     // get the angle using x and y
+                //     var angle4 = (float) Math.Atan2(direction4.Y, direction4.X);
+                //     
+                //     // move away from the target
+                //     var control4 = entity.GetComponent<Control>();
+                //     
+                //     control4.Move(angle4, 1f);
+                //     
+                //     // if we are far enough, go back to patrol
+                //     
+                //     break;
             }
         }
         

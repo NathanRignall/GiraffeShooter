@@ -37,27 +37,27 @@ namespace GiraffeShooterClient.Container.World
             if (SupabaseManager.Client.Auth.CurrentUser != null)
                 EntityCollection.AddEntity(new TextDisplay(new Vector2(0, 0), SupabaseManager.Client.Auth.CurrentUser.Id));
 
-            // add 10 giraffes at random positions
+            // add 9 giraffes at random positions
             Random random = new Random();
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 9; i++)
             {
-                EntityCollection.AddEntity(new Giraffe(new Vector3(random.Next(-10, 10), random.Next(-10, 10), 0), new Vector3(random.Next(-5, 5), random.Next(-5, 5), 0)));
+                EntityCollection.AddEntity(new Giraffe(new Vector3(random.Next(-40, 40), random.Next(-40, 40), 0), new Vector3(random.Next(-5, 5), random.Next(-5, 5), 0)));
             }
             
             // add 50 ammunition at random positions
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 100; i++)
             {
                 EntityCollection.AddEntity(new Ammunition(new Vector3(random.Next(-40, 40), random.Next(-15, 15),0), Vector3.Zero));
             }
             
-            // add 5 pistol at random positions
-            for (int i = 0; i < 5; i++)
+            // add 8 pistol at random positions
+            for (int i = 0; i < 8; i++)
             {
                 EntityCollection.AddEntity(new Gun(new Vector3(random.Next(-40, 40), random.Next(-15, 15), 0), Vector3.Zero));
             }
             
-            // add 2 machine gun at random positions
-            for (int i = 0; i < 2; i++)
+            // add 4 machine gun at random positions
+            for (int i = 0; i < 6; i++)
             {
                 EntityCollection.AddEntity(new MachineGun(new Vector3(random.Next(-40, 40), random.Next(-40, 40), 0), Vector3.Zero));
             }
